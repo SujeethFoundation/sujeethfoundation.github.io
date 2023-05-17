@@ -18,15 +18,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: avisuj
+title: The Sujeeth Foundation
 email: ''
 description: >- # this means to ignore newlines until "baseurl:"
-  Avi Sujeeth's personal blog. This blog captures my adventures 
-  trying to guide my family through the 21st century. It's my hope 
-  that it'll help me lead an intentional life and one day provide some 
-  inspiration for my children's adventures.
+Let's fix the education experience.  The Sujeeth Foundation provides scholarships to college students pursuing a STEM degree or graduate studies.  Scholarships are awarded based on Grit scores.  All applicants can take advantage of provided growth mindset training and other services.
 baseurl: # the subpath of your site, e.g. /blog
-url: https://avisuj.github.io # the base hostname & protocol for your site, e.g. http://example.com
+url: https://www.sujeeth.org # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: avisuj
 github_username:  avisuj
 disqus_shortname: sujeethfoundation
