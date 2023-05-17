@@ -1,7 +1,7 @@
 # sujeeth.github.io
 Education can train our youth to undertake professions that can enrich their lives.  Today, education is broken:
-	• Only 34% of workers in the US are engaged. This means that most people are not happy with their jobs.  
-	• Student borrowers accumulated nearly $30,000 in undergraduate debt. This debt can be a burden for years after graduation.
+- Only 34% of workers in the US are engaged. This means that most people are not happy with their jobs.  
+- Student borrowers accumulated nearly $30,000 in undergraduate debt. This debt can be a burden for years after graduation.
 
 It doesn't have to be this way:
 	• Teaching youth growth mindset unlocks the potential for development.  Failure is part of success and embracing failure helps people take risks that lead to change.
