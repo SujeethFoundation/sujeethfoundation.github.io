@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Fixing the Education Experience"
-date:   2023-04-14 00:00:00 -0600
+date:   2023-05-16 00:00:00 -0600
 categories: [announcement, spotlight]
 excerpt: "This is the origin story of the Sujeeth Foundation. The mission is to improve the education experience for students.  The foundation provides scholarships to college students pursuing a STEM degree or graduate studies.  Scholarships are awarded based on Grit scores.  All applicants can take advantage of provided growth mindset training and other services."
 ---
