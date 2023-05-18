@@ -1,4 +1,4 @@
-# sujeethfoundation.github.io
+# sujeeth.org
 
 Education can train our youth to undertake professions that can enrich their lives.  Today, education is broken:
 - Only 34% of workers in the US are engaged. This means that most people are not happy with their jobs.  
