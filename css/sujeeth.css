@@ -1,0 +1,14 @@
+/** Post Lists */
+div.post-content li, ul, ol { 
+    list-style: disc;
+    font-size: 14px;
+}
+
+ul.post-list {
+    list-style: none;
+}
+
+main.page-area {
+    margin-top: 98px;
+}
+
