@@ -21,15 +21,15 @@
 title: The Sujeeth Foundation
 email: ''
 description: >- # this means to ignore newlines until "baseurl:"
-  Let's fix the education experience. The Sujeeth Foundation provides 
+  Unlocking opportunity through education. The Sujeeth Foundation provides 
   scholarships to college students pursuing a STEM degree or graduate studies. 
   Scholarships are awarded based on Grit scores. All applicants can take advantage 
   of provided growth mindset training and other services.
 baseurl: # the subpath of your site, e.g. /blog
 url: https://www.sujeeth.org # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: avisuj
-github_username:  avisuj
-disqus_shortname: sujeethfoundation
+#twitter_username: avisuj
+github_username:  SujeethFoundation
+#disqus_shortname: #sujeethfoundation
 rss:  RSS
 google_analytics: G-8XBVF9CL9P
 show_excerpts: true
@@ -47,9 +47,9 @@ collections:
   posts:
     title: Posts
     output: true
-  steps:
-    title: Steps
-    output: false
+  legal:
+    title: Legal
+    output: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

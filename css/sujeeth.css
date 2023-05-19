@@ -1,7 +1,11 @@
 /** Post Lists */
-div.post-content li, ul, ol { 
+div.post-content ul > li { 
     list-style: disc;
     font-size: 14px;
+}
+
+div.post-content ol > li {
+    list-style:decimal;
 }
 
 ul.post-list {
@@ -10,5 +14,13 @@ ul.post-list {
 
 main.page-area {
     margin-top: 98px;
+}
+
+div.social a {
+    color: #fff;
+}
+
+div.social svg-icon {
+    fill: #fff
 }
 

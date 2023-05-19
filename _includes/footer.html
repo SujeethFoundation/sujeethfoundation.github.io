@@ -1,22 +1,58 @@
+
+  <!-- Begin footer -->
+  <footer class="text-off-white">
+            
+    <div class="footer-top">
+      <div class="container">
+          <div>
+
+                <div class="col-sm-3">
+                  <h4>Useful Links</h4>
+                    <ul class="imp-links">
+                      <li><a href="/#about-section">About</a></li>
+                      <li><a href="/blog">Blog</a></li>
+<!--
+                      <li><a href="">Portal</a></li>
+                      <li><a href="">Give</a></li>
+-->
+                      <li><a href="/legal">Legal</a></li>
+                    </ul>
+                </div>
+            
+                <div class="col-sm-6">
+                  <h2 class="footer-heading">{{ site.title | escape }}</h2>
+
+                  <ul class="contact-list">
+                    <li class="p-name">
+                        {{ site.author | escape }}
+                      </li>
+                      <li>{{- site.description | escape -}}</li>
+                    </ul>
+                </div>               
+                
+                <div class="col-sm-3 social">
+                  {%- include social.html -%}        
+                </div>   
+            </div> <!-- /.row -->
+        </div> <!-- /.container -->
+    </div>
+    
+    <a href="#" class="scrolltotop"><i class="fa fa-arrow-up"></i></a> <!-- Scroll to top button -->
+
+
+</footer>
+<!-- End footer -->
+
+                            
 <footer class="site-footer h-card">
   <data class="u-url" href="{{ "/" | relative_url }}"></data>
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">{{ site.title | escape }}</h2>
 
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-3">
-        <ul class="contact-list">
-          <li class="p-name">
-              {{ site.author | escape }}
-            </li>
-            <li>{{- site.description | escape -}}</li>
-        </ul>
-      </div>
 
       <div class="footer-col footer-col-1" style="float: right;">
-        {%- include social.html -%}        
+      
       </div>
     </div>
 

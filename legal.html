@@ -1,0 +1,36 @@
+---
+layout: page
+permalink: /legal/
+title: Legal
+skip: true
+---
+
+
+<div class="home">
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  {% assign legals = site.legal | sort: 'date' %}
+  {%- if site.legal.size > 0 -%}
+    <ul class="post-list">
+      {%- for legal in legals limit:10 -%}
+      <li>
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        <span class="post-meta">{{ legal.date | date: date_format }} 
+        </span>
+        <h3>
+          <a class="post-link" href="{{ legal.url | relative_url }}">
+            {{ legal.title | escape }}
+          </a>
+        </h3>
+        <h5</h5>
+        {%- if site.show_excerpts -%}
+          {{ legal.excerpt }}
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+</div>
