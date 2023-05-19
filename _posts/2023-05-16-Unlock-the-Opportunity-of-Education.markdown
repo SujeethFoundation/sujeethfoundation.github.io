@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Unlocking Opportunity Through Education"
+title:  "The Sujeeth Foundation starts today"
 date:   2023-05-16 00:00:00 -0600
 categories: [announcements, spotlight]
-excerpt: "This is the origin story of the Sujeeth Foundation. The mission is to improve the education experience for students.  The foundation provides scholarships to college students pursuing a STEM degree or graduate studies.  Scholarships are awarded based on Grit scores.  All applicants can take advantage of provided growth mindset training and other services."
+excerpt: "This is the origin story of the Sujeeth Foundation. The mission is to unlock the opportunity of education.  The foundation provides scholarships to college students pursuing a STEM degree or graduate studies.  Scholarships are awarded based on Grit scores.  All applicants can take advantage of provided growth mindset training and other services."
 ---
-This week I filed the paperwork to start the Sujeeth Foundation.  I want to use the foundation to improve the education experience.  Education can train our youth to undertake professions that can enrich their lives.
+This week I filed the paperwork to start the Sujeeth Foundation.  I want to use the foundation to unlock the opportunity of education.  Education can train our youth to undertake professions that can enrich their lives.
 
 Today, education is broken:
 - Only 34% of workers in the US are engaged. This means that most people are not happy with their jobs.  

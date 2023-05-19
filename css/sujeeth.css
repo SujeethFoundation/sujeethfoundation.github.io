@@ -1,3 +1,14 @@
+/* ===== Posts ===== */
+/* Begin text blog intro */
+#blog-intro-section {
+	height: 20%;
+}
+#blog-intro-section .container {
+	height: 100%;
+}
+
+/* End text carousel intro */
+
 /** Post Lists */
 div.post-content ul > li { 
     list-style: disc;
@@ -15,7 +26,11 @@ ul.post-list {
 main.page-area {
     margin-top: 98px;
 }
+/* End Post Lists */
+/* ===== End Posts ===== */
 
+
+/* Begin Social Footer */
 div.social a {
     color: #fff;
 }
@@ -23,4 +38,50 @@ div.social a {
 div.social svg-icon {
     fill: #fff
 }
+/* End Social Footer */
+
+
+/* ===== Home ===== */
+/* Begin cta section */
+#cta-section {
+	padding: 70px 0 80px;
+}
+.cta-btn {
+	margin-top: 30px;
+}
+/* End cta section */
+
+/* Begin financial section */
+#financial-section {
+	padding: 70px 0 80px;
+}
+.financial-btn {
+	margin-top: 30px;
+}
+/* End financial section */
+
+/* Begin give section */
+#give-section {
+	padding: 70px 0 80px;
+}
+.give-btn {
+	margin-top: 30px;
+}
+/* End give section */
+
+/* Begin testimonial section */
+#testimonial-section a {
+	color: #fff;
+}
+/* End testimonial section */
+
+
+/* Begin text carousel intro */
+#text-carousel-intro-section a {
+	color: #fff;
+}
+
+/* End text carousel intro */
+
+/* ===== End Home ===== */
 

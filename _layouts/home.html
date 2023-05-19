@@ -1,37 +1,281 @@
 ---
-layout: default
+layout: page
 ---
 
-<div class="home">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- endif -%}
+        	<!-- Begin text carousel intro section -->
+          <section id="text-carousel-intro-section" class="parallax" data-stellar-background-ratio="0.5" style="background:rgba(0,0,0,.2) url(/img/slider-bg.jpg); background-size: cover; background-blend-mode: darken;">
+				
+            <div class="container">
+              <div class="caption text-center text-white" data-stellar-ratio="0.7">
+    
+                <div id="owl-intro-text" class="owl-carousel">
+                  <div class="item">
+                    <h1>Unlock the opportunity of education</h1>
+                    <p>Our Mission</p>
+                                    <div class="extra-space-l"></div>
+                    <a class="btn btn-blank" href="/#about-section" target="_self" role="button">View More!</a>
+                  </div>
+                  <div class="item">
+                    <h1>Connect with us</h1>
+                    <p>We communicate via Blog</p>
+                    <div class="extra-space-l"></div>
+                    <a class="btn btn-blank" href="/blog" target="_self" role="button">View More!</a>
+                  </div>
+<!--
+                  <div class="item">
+                    <h1>I'm Unika</h1>
+                    <p>One Page Responsive Theme</p>
+                    <div class="extra-space-l"></div>
+                    <a class="btn btn-blank" href="https://creativemarket.com/Themetorium" target="_blank" role="button">View More!</a>
+                  </div>
+-->
+                </div>
+    
+              </div> <!-- /.caption -->
+            </div> <!-- /.container -->
+    
+          </section>
+          <!-- End text carousel intro section -->
 
-  {{ content }}
+            <!-- Begin about section -->
+            <section id="about-section" class="page bg-style1">
+              <!-- Begin page header-->
+              <div class="page-header-wrapper">
+                  <div class="container">
+                      <div class="page-header text-center wow fadeInUp" data-wow-delay="0.3s">
+                          <h2>About Us</h2>
+                          <div class="devider"></div>
+                          <p class="subtitle">the bullets</p>
+                      </div>
+                  </div>
+              </div>
+              <!-- End page header-->      
 
-  {%- if site.posts.size > 0 -%}
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
-    <ul class="post-list">
-      {%- for post in site.posts limit:10 -%}
-      <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }} -- 
-          {%- for category in post.categories -%}
-          &nbsp; <a href="/categories/{{ category }}">{{ category }}</a>  
-          {%- endfor -%}
-        </span>
-        <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
-        </h3>
-        <h5</h5>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
-        {%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
-  {%- endif -%}
+                <!-- Begin rotate box-1 -->
+                <div class="rotate-box-1-wrapper">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-md-3 col-sm-6">
+                              <a href="#about-section" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0">
+                                  <span class="rotate-box-icon"><i class="fa fa-users"></i></span>
+                                  <div class="rotate-box-info">
+                                      <h4>Who We Are?</h4>
+                                      <p>The Sujeeth Foundation is a non-profit organization dedicated to unlocking the opportunity of education.</p>
+                                  </div>
+                              </a>
+                          </div>
 
-</div>
+                          <div class="col-md-3 col-sm-6">
+                              <a href="#about-section" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.2s">
+                                  <span class="rotate-box-icon"><i class="fa fa-diamond"></i></span>
+                                  <div class="rotate-box-info">
+                                      <h4>What We Do?</h4>
+                                      <p>We provides scholarships and services to college students pursuing a STEM degree or graduate studies.</p>
+                                  </div>
+                              </a>
+                          </div>
+
+                          <div class="col-md-3 col-sm-6">
+                              <a href="#about-section" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.4s">
+                                  <span class="rotate-box-icon"><i class="fa fa-heart"></i></span>
+                                  <div class="rotate-box-info">
+                                      <h4>Why We Do It?</h4>
+                                      <p>Academic institutions are a place where experimentation thrives and opportunities to grow are abundant.  We want to unlock that value.</p>
+                                  </div>
+                              </a>
+                          </div>
+                          
+                          <div class="col-md-3 col-sm-6">
+                              <a href="#about-section" class="rotate-box-1 square-icon wow zoomIn" data-wow-delay="0.6s">
+                                  <span class="rotate-box-icon"><i class="fa fa-clock-o"></i></span>
+                                  <div class="rotate-box-info">
+                                      <h4>Since When?</h4>
+                                      <p>We launched on May 2023.  We plan to award our first scholarship this year.</p>
+                                  </div>
+                              </a>
+                          </div>
+                          
+                      </div> <!-- /.row -->
+                  </div> <!-- /.container -->
+              </div>
+              <!-- End rotate box-1 -->
+              
+              <div class="extra-space-l"></div>
+              
+        </section>
+        <!-- End about section -->
+
+        <!-- Begin cta ->
+        <section id="cta-section">
+         	<div class="cta">
+           	<div class="container">
+               	<div class="row">
+                    
+                   	<div class="col-md-9">
+                       	<h1>Student Portal</h1>
+                           <p>Inspired by nature, follow technology, appreciate the classics. You can build modern & professional websites with Unika. The possibilities are just endless.</p>
+                       </div>
+                        
+                       <div class="col-md-3">
+                       	<div class="cta-btn wow bounceInRight" data-wow-delay="0.4s">
+                       <a class="btn btn-default btn-lg" href="http://www.imransdesign.com/" target="_blank" role="button">Download</a>
+                       	</div>
+                       </div>
+                       
+                   </div> <!- /.row ->
+               </div> <!- /.container ->
+           </div>
+          </section>
+          <!- End cta -->     
+          
+            <!-- Begin testimonials -->
+            <section id="testimonial-section">
+              <div id="testimonial-trigger" class="testimonial text-white parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/testimonial-bg.jpg);">
+                  <div class="cover"></div>
+                  <!-- Begin page header-->
+                  <div class="page-header-wrapper">
+                      <div class="container">
+                          <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
+                              <h2>Blog</h2>
+                              <div class="devider"></div>
+                              <p class="subtitle">Our latest posts</p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- End page header-->
+                  <div class="container">
+                      <div class="testimonial-inner center-block text-center">
+                          <div id="owl-testimonial" class="owl-carousel">
+                              {%- for post in site.posts limit:3 -%}
+                              <div class="item">
+                                  <blockquote>
+                                      <cite title="Source Title">
+                                        <a class="post-link" href="{{ post.url | relative_url }}">
+                                          {{ post.title | escape }}
+                                        </a>
+                                      </cite>
+                                      <br/>
+                                      <p>{{ post.excerpt }}</p>
+                                  </blockquote>
+                              </div>
+                              {%- endfor -%}
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <!-- End testimonials -->               
+<!--
+        <!- Begin finnancial ->
+        <section id="financial-section">
+          <div class="cta">
+            <div class="container">
+                <div class="row">
+                   
+                    <div class="col-md-9">
+                        <h1>2023 Annual Report</h1>
+                          <p>Inspired by nature, follow technology, appreciate the classics. You can build modern & professional websites with Unika. The possibilities are just endless.</p>
+                      </div>
+                       
+                      <div class="col-md-3">
+                        <div class="financial-btn wow bounceInRight" data-wow-delay="0.4s">
+                      <a class="btn btn-default btn-lg" href="http://www.imransdesign.com/" target="_blank" role="button">Download</a>
+                        </div>
+                      </div>
+                      
+                  </div> <!- /.row ->
+              </div> <!- /.container ->
+          </div>
+         </section>
+         <!- End financial ->               
+
+            <!- Begin counter up ->
+            <section id="counter-section">                					
+              <div id="counter-up-trigger" class="counter-up text-white parallax" data-stellar-background-ratio="0.5" style="background-image: url(img/counter-bg.jpg);">
+                <div class="cover"></div>
+                          <!- Begin page header ->
+                          <div class="page-header-wrapper">
+                              <div class="container">
+                                  <div class="page-header text-center wow fadeInDown" data-wow-delay="0.4s">
+                                      <h2>Some Fun Facts</h2>
+                                      <div class="devider"></div>
+                                      <p class="subtitle">Before anyone is not told</p>
+                                  </div>
+                              </div>
+                          </div> 
+                          <!- End page header ->
+
+                <div class="container">
+      
+                  <div class="row">
+      
+                    <div class="fact text-center col-md-3 col-sm-6">
+                      <div class="fact-inner">
+                        <i class="fa fa-users fa-3x"></i>
+                                          <div class="extra-space-l"></div>
+                        <span class="counter">6666</span>
+                        <p class="lead">Clients Worked With</p>
+                      </div>
+                    </div>
+      
+                    <div class="fact text-center col-md-3 col-sm-6">
+                      <div class="fact-inner">
+                        <i class="fa fa-leaf fa-3x"></i>
+                                          <div class="extra-space-l"></div>
+                        <span class="counter">800</span>
+                        <p class="lead">Completed Projects</p>
+                      </div>
+                    </div>
+      
+                    <div class="fact text-center col-md-3 col-sm-6">
+                      <div class="fact-inner">
+                        <i class="fa fa-trophy fa-3x"></i>
+                                          <div class="extra-space-l"></div>
+                        <span class="counter">55</span>
+                        <p class="lead">Winning Awards</p>
+                      </div>
+                    </div>
+      
+                    <div class="fact last text-center col-md-3 col-sm-6">
+                      <div class="fact-inner">
+                        <i class="fa fa-coffee fa-3x"></i>
+                                          <div class="extra-space-l"></div>
+                        <span class="counter">1100</span>
+                        <p class="lead">Cups of coffee drinking</p>
+                      </div>
+                    </div>
+      
+                  </div> <!- /.row ->
+                </div> <!- /.container ->
+              </div>
+                  </section>
+            <!- End counter up ->
+
+
+        <!- Begin donation ->
+        <section id="give-section">
+          <div class="cta">
+            <div class="container">
+                <div class="row">
+                   
+                    <div class="col-md-9">
+                        <h1>Give</h1>
+                          <p>Inspired by nature, follow technology, appreciate the classics. You can build modern & professional websites with Unika. The possibilities are just endless.</p>
+                      </div>
+                       
+                      <div class="col-md-3">
+                        <div class="give-btn wow bounceInRight" data-wow-delay="0.4s">
+                      <a class="btn btn-default btn-lg" href="http://www.imransdesign.com/" target="_blank" role="button">Download</a>
+                        </div>
+                      </div>
+                      
+                  </div> <!- /.row ->
+              </div> <!- /.container ->
+          </div>
+         </section>
+         <!- End donation ->     
+-->
+
+          
+
