@@ -2,17 +2,14 @@
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
 
   {%- include head.html -%}
-
-  <body>
+  <body class="vsc-initialized" >
 
     {%- include header.html -%}
-    <div class="body">
 
     {{ content }}
 
     {%- include footer.html -%}
 
-  </div> <!--/.body -->
 
             <!-- Plugins JS -->
 		<script src="/inc/jquery/jquery-1.11.1.min.js"></script>

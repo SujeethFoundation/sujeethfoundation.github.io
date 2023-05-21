@@ -13,19 +13,30 @@ div.social a {
 div.social svg-icon {
     fill: #fff
 }
+/* Begin intro */
+#default-intro-section {
+	height: 20%;
+}
+#default-intro-section .container {
+	height: 100%;
+}
+#page-intro-section {
+	height: 20%;
+	margin-bottom: 20px;
+}
+#page-intro-section .container {
+	height: 100%;
+}
+/* End intro */
 /* End Social Footer */
 /* ===== End Includes ===== */
 
 /* ===== Posts ===== */
-/* Begin text blog intro */
-#blog-intro-section {
-	height: 20%;
+h1.page-heading{
+	font-size: 42px;
+    letter-spacing: -1px;
+    line-height: 1;
 }
-#blog-intro-section .container {
-	height: 100%;
-}
-
-/* End text carousel intro */
 
 /** Post Lists */
 div.post-content ul > li { 
@@ -36,16 +47,6 @@ div.post-content ul > li {
 div.post-content ol > li {
     list-style:decimal;
 }
-
-ul.post-list {
-    list-style: none;
-}
-
-main.page-area {
-    margin-top: 98px;
-}
-
-
 /* End Post Lists */
 /* ===== End Posts ===== */
 

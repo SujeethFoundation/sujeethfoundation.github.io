@@ -1,11 +1,12 @@
         <!--========== BEGIN HEADER ==========-->
+        <div class="body">
         <header id="header" class="header-main">
 
           <!-- Begin Navbar -->
           <nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation"> <!-- Classes: navbar-default, navbar-inverse, navbar-fixed-top, navbar-fixed-bottom, navbar-transparent. Note: If you use non-transparent navbar, set "height: 98px;" to #header -->
           <!-- notification alerts -->
           {% assign timeframe = 604800 %} <!-- 7 days == 604800 seconds -->
-          {% for alert in site.alerts limit: 3 %}
+          {% for alert in site.alerts limit: 1 %}
             {% assign alert_in_seconds = alert.date | date: "%s" | plus: 0 %}
             {% assign recent_alerts = "now" | date: "%s" | minus: timeframe %}
             {% if alert_in_seconds > recent_alerts %}

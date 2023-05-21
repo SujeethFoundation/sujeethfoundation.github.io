@@ -62,7 +62,8 @@
   <link rel="stylesheet" href="/assets/main.css">
   <link rel="stylesheet" href="/css/sujeeth.css">
 </head>
-<body>        <!--========== BEGIN HEADER ==========-->
+<body class="vsc-initialized">        <!--========== BEGIN HEADER ==========-->
+        <div class="body">
         <header id="header" class="header-main">
 
           <!-- Begin Navbar -->
@@ -72,6 +73,8 @@
           
             
             
+            
+              <div markdown="span" class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> <b>Note:</b><a class="alert-info" href="/alerts/2023-05-14-Example-Notification/" > This is an example notification. </a> </div>
             
           
           <!-- end notification alerts-->
@@ -103,7 +106,11 @@
         </header>
         <!-- ========= END HEADER =========-->
 
-<main class="page-area" aria-label="Content">
+<!-- Begin text carousel intro section -->
+    <section id="default-intro-section" class="parallax" data-stellar-background-ratio="0.5"></section>
+    <!-- End text carousel intro section -->
+
+    <main class="page-area" aria-label="Content">
       <div class="wrapper">
         <style type="text/css" media="screen">
   .container {
@@ -187,6 +194,7 @@
   </div>
 
 </footer>
+</div> <!--/.body -->
 <!-- Plugins JS -->
 		<script src="/inc/jquery/jquery-1.11.1.min.js"></script>
 		<script src="/inc/bootstrap/js/bootstrap.min.js"></script>
