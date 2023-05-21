@@ -15,14 +15,14 @@ div.social svg-icon {
 }
 /* Begin intro */
 #default-intro-section {
-	height: 160px;
+	height: 200px;
 	margin-bottom: 40px;
 }
 #default-intro-section .container {
 	height: 100%;
 }
 #page-intro-section {
-	height: 160px;
+	height: 200px;
 	margin-bottom: 40px;
 }
 #page-intro-section .container {
