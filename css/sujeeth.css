@@ -1,3 +1,21 @@
+/* ===== Begin Includes ===== */
+/* Begin Alerts */
+div.alert {
+	margin-bottom: 0px;
+}
+/* End Alerts */
+
+/* Begin Social Footer */
+div.social a {
+    color: #fff;
+}
+
+div.social svg-icon {
+    fill: #fff
+}
+/* End Social Footer */
+/* ===== End Includes ===== */
+
 /* ===== Posts ===== */
 /* Begin text blog intro */
 #blog-intro-section {
@@ -30,18 +48,6 @@ main.page-area {
 
 /* End Post Lists */
 /* ===== End Posts ===== */
-
-
-/* Begin Social Footer */
-div.social a {
-    color: #fff;
-}
-
-div.social svg-icon {
-    fill: #fff
-}
-/* End Social Footer */
-
 
 /* ===== Home ===== */
 /* Begin cta section */

@@ -42,13 +42,15 @@ theme: minima
 plugins:
   - jekyll-feed
 
-#adding another collection for timeline
 collections:
-  posts:
+  posts: #collection for blog posts
     title: Posts
     output: true
-  legal:
+  legal: #collection for legal notices
     title: Legal
+    output: true
+  alerts: #collection for alerts
+    title: Alerts
     output: true
 
 # Exclude from processing.
