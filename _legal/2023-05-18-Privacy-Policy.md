@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The Sujeeth Foundation Privacy Policy
+title: Privacy Policy
 date: 2023-05-18 00:00:00 -0600
 excerpt: We collect personal information voluntarily provided through our website for donation processing and scholarship applications. Your information may be shared with third-party service providers, and scholarship application data is retained for twelve months. You have the right to review, update, or delete your personal information and can exercise your right to be forgotten through our website portal or by contacting us directly.
 ---
