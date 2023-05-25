@@ -1,3 +1,4 @@
 [submodule "_posts"]
 	path = _posts
 	url = https://github.com/SujeethFoundation/posts
+	branch = master
