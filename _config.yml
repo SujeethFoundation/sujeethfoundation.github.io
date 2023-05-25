@@ -19,12 +19,10 @@
 # in the templates via {{ site.myvariable }}.
 
 title: The Sujeeth Foundation
-email: ''
+email: hello@sujeeth.org
 description: >- # this means to ignore newlines until "baseurl:"
   Unlocking opportunity through education. The Sujeeth Foundation provides 
-  scholarships to college students pursuing a STEM degree or graduate studies. 
-  Scholarships are awarded based on Grit scores. All applicants can take advantage 
-  of provided growth mindset training and other services.
+  scholarships, training, and other services to college students. 
 baseurl: # the subpath of your site, e.g. /blog
 url: https://www.sujeeth.org # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: avisuj
