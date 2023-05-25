@@ -1,6 +1,6 @@
 ---
 layout: post
-title: The Student Portal Usage Policy
+title: Student Portal Usage Policy
 date: 2023-05-18 00:00:00 -0600
 excerpt: Our Student Portal is meant for students to apply for scholarships, sign up for events, and access training. Participants are expected to treat each other with respect and support. Any threatening or negative behavior may result in removal from the portal.
 ---
