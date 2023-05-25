@@ -4,5 +4,5 @@
 
 layout: home
 permalink: /
-title: Unlocking Opportunity Through Education
+title: Unlocking Opportunity Through Education | Scholarships
 ---
