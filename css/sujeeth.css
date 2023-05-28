@@ -95,3 +95,9 @@ div.post-content ol > li {
 
 /* ===== End Home ===== */
 
+table.cards tr {
+    float: left;
+}
+table.cards td {
+    display: block;
+}
