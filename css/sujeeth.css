@@ -95,6 +95,10 @@ div.post-content ol > li {
 
 /* ===== End Home ===== */
 
+
+table.table.cards thead {
+    visibility:hidden;
+}
 table.table.cards tr {
     float: left;
 }
