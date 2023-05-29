@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Student Portal Usage Policy
+title: Programs Portal Usage Policy
 date: 2023-05-18 00:00:00 -0600
-excerpt: Our Student Portal is meant for students to apply for scholarships, sign up for events, and access training. Participants are expected to treat each other with respect and support. Any threatening or negative behavior may result in removal from the portal.
+excerpt: Our Programs Portal is meant for students to apply for scholarships, sign up for events, and access training. Participants are expected to treat each other with respect and support. Any threatening or negative behavior may result in removal from the portal.
 ---
-This usage policy outlines the guidelines for using the Student Portal to ensure a positive and supportive environment for all participants. By accessing and using the portal, you agree to comply with the following terms:
+This usage policy outlines the guidelines for using the Programs Portal to ensure a positive and supportive environment for all participants. By accessing and using the portal, you agree to comply with the following terms:
 
 1. Purpose of the Portal:
-The Student Portal is intended for students to apply for scholarships, sign up for meetups, conferences, and access provided training. It is a platform for educational and collaborative purposes, fostering a supportive community.
+The Programs Portal is intended for students to apply for scholarships, sign up for meetups, conferences, and access provided training. It is a platform for educational and collaborative purposes, fostering a supportive community.
 
 2. Respectful and Supportive Environment:
 We expect all participants to treat each other with respect and support. Engage in positive and constructive interactions, offering assistance and encouragement to fellow students. Discrimination, harassment, bullying, or any form of disrespectful behavior will not be tolerated.
@@ -34,6 +34,6 @@ Violation of this usage policy may result in disciplinary actions, including tem
 7. Amendments to the Usage Policy:
 This usage policy may be updated from time to time to reflect changes in our practices or requirements. We will notify you of any significant changes by posting a notice on the portal or through other means. Continued use of the portal after modifications constitutes your acceptance of the updated policy.
 
-By using the Student Portal, you acknowledge that you have read, understood, and agreed to abide by this usage policy. Let's create a positive and supportive learning environment together!
+By using the Programs Portal, you acknowledge that you have read, understood, and agreed to abide by this usage policy. Let's create a positive and supportive learning environment together!
 
 Last updated: May 18, 2023
