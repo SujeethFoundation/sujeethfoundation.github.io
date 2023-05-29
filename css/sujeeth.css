@@ -96,9 +96,12 @@ div.post-content ol > li {
 /* ===== End Home ===== */
 
 
-table.table.cards thead {
-    visibility:hidden;
+table.table.cards th {
+	display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
 }
+
 table.table.cards tr {
     float: left;
 	width: 20rem;
