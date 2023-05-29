@@ -145,13 +145,14 @@ table.cards.brand td:nth-child(1){
   background: #7f0000;
 }
 
-table.cards.brand td:nth-child(2)
+table.cards.brand.col3 td:nth-child(3)
 {
-  color: #333333;
-  background: #ffffff;
+  background: #efefef;
+  color: #8d8d8d;
+  font-weight: 500;
 }
 
-table.cards.brand td:nth-child(3)
+table.cards.brand.col4 td:nth-child(4)
 {
   background: #efefef;
   color: #8d8d8d;
