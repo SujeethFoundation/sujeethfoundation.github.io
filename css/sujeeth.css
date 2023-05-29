@@ -103,6 +103,10 @@ table.table.cards thead{
     opacity: 0.3
 }
 
+table.table.cards tbody label{
+    display: inline;
+}
+
 table.table.cards th {
 	display: table-cell;
     vertical-align: inherit;
