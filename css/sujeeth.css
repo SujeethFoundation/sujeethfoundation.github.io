@@ -112,16 +112,17 @@ table.cards tbody {
 }
 
 table.table.cards tr {
-	grid-column:1/4;
-	isplay:grid; 
+	padding: 10px;
+	display:grid; 
 	border:1px solid #ccc;
 	margin: 0.5rem;
 	border-radius: .25rem;
 	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0,0,0,0.25);
-	border-top: 0px;
 }
 
 table.table.cards td {
-    display: block;
+	border-top: 0px;
+	display: block;
 }
+
 /* ==== End Converting Data Table to Cards ==== */
