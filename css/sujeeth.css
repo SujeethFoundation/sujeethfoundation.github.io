@@ -95,7 +95,8 @@ div.post-content ol > li {
 
 /* ===== End Home ===== */
 
-/* ==== Converting Data Table to Cards ==== */
+/* ==== Power Portal Branding ==== */
+/* Converting Data Table to Cards */
 table.cards thead{
 	display: none;
 }
@@ -129,4 +130,33 @@ table.table.cards td {
 div.entitylist {
 	background-color: transparent;
 }
-/* ==== End Converting Data Table to Cards ==== */
+/* End Data Table to Card */
+
+/* Branded Cards */
+/* Styling Individual Columns 
+  nth-child(1) = Title
+  nth-child(2) = Mission
+  nth-child(3) = Website
+*/
+table.cards.brand td:nth-child(1){
+  font-weight: 100;
+  font-size: 2rem;
+  color: #fff;
+  background: #7f0000;
+}
+
+table.cards.brand td:nth-child(2)
+{
+  color: #333333;
+  background: #ffffff;
+}
+
+table.cards.brand td:nth-child(3)
+{
+  background: #efefef;
+  color: #8d8d8d;
+  font-size: 0.8rem;
+  font-weight: 500
+}
+/* End Branded Cards*/
+/* ==== End Power Portal Branding ==== */
