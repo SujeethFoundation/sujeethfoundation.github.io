@@ -97,20 +97,7 @@ div.post-content ol > li {
 
 /* ==== Converting Data Table to Cards ==== */
 table.table.cards thead{
-	position: absolute;
-    bottom: 0.9em;
-    display: block;
-    opacity: 0.3
-}
-
-table.table.cards tbody label{
-    display: inline;
-}
-
-table.table.cards th {
-	display: table-cell;
-    vertical-align: inherit;
-    font-weight: bold;
+	position: none;
 }
 
 table.table.cards tr {
