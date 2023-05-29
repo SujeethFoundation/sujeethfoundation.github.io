@@ -114,6 +114,7 @@ table.cards tbody {
 table.table.cards tr {
 	padding: 10px;
 	display:grid; 
+	background-color: #fff;
 	border:1px solid #ccc;
 	margin: 0.5rem;
 	border-radius: .25rem;
