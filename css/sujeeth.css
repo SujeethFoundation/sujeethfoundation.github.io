@@ -96,19 +96,31 @@ div.post-content ol > li {
 /* ===== End Home ===== */
 
 /* ==== Converting Data Table to Cards ==== */
-table.table.cards thead{
-	position: none;
+table.cards thead{
+	display: none;
+}
+
+table.cards {
+	display: grid;
+	border:0;
+}
+
+table.cards tbody {
+	display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 350px));
+    grid-gap:20px;	
 }
 
 table.table.cards tr {
-    float: left;
-	width: 20rem;
+	grid-column:1/4;
+	isplay:grid; 
+	border:1px solid #ccc;
 	margin: 0.5rem;
-	border: 0.0625rem solid rgba(0,0,0,.125);
 	border-radius: .25rem;
 	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0,0,0,0.25);
-	border-top: 0px
+	border-top: 0px;
 }
+
 table.table.cards td {
     display: block;
 }
