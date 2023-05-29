@@ -135,8 +135,7 @@ div.entitylist {
 /* Branded Cards */
 /* Styling Individual Columns 
   nth-child(1) = Title
-  nth-child(2) = Mission
-  nth-child(3) = Website
+  nth-child(n) = Footer
 */
 table.cards.brand td:nth-child(1){
   font-weight: 100;
