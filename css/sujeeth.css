@@ -121,6 +121,7 @@ table.table.cards tr {
 	border-radius: .25rem;
 	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0,0,0,0.25);
 	overflow: hidden;
+	white-space: inherit;
 }
 
 table.table.cards td {
