@@ -133,14 +133,8 @@ div.entitylist {
 }
 
 @media screen and (max-width: 767px) {
-    .cards .table-responsive>.table>thead>tr>th,
-    .cards .table-responsive>.table>thead>tr>td,
-    .cards .table-responsive>.table>tbody>tr>th,
-    .cards .table-responsive>.table>tbody>tr>td,
-    .cards .table-responsive>.table>tfoot>tr>th,
-    .cards .table-responsive>.table>tfoot>tr>td {
-        white-space: inherit !important;
-		
+    .table-responsive>.table>tbody>tr>td{
+		white-space: inherit !important;		
     }
 }
 
@@ -155,6 +149,7 @@ table.cards.brand td:nth-child(1){
   font-weight: 100;
   color: #fff;
   background: #7f0000;
+  font-size: 2rem;
 }
 
 table.cards.brand.col3 td:nth-child(3)
