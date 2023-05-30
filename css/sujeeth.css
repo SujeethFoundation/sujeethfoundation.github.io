@@ -158,4 +158,9 @@ table.cards.brand.col4 td:nth-child(4)
   font-weight: 500;
 }
 /* End Branded Cards*/
+
+/* Fix Address Control */
+textarea#address1_composite {
+	height: 100px;
+}
 /* ==== End Power Portal Branding ==== */
