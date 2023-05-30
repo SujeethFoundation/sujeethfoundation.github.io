@@ -121,7 +121,6 @@ table.table.cards tr {
 	border-radius: .25rem;
 	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0,0,0,0.25);
 	overflow: hidden;
-	white-space: inherit;
 }
 
 table.table.cards td {
@@ -132,6 +131,19 @@ table.table.cards td {
 div.entitylist {
 	background-color: transparent;
 }
+
+@media screen and (max-width: 767px) {
+    .cards .table-responsive>.table>thead>tr>th,
+    .cards .table-responsive>.table>thead>tr>td,
+    .cards .table-responsive>.table>tbody>tr>th,
+    .cards .table-responsive>.table>tbody>tr>td,
+    .cards .table-responsive>.table>tfoot>tr>th,
+    .cards .table-responsive>.table>tfoot>tr>td {
+        white-space: inherit !important;
+		
+    }
+}
+
 /* End Data Table to Card */
 
 /* Branded Cards */
