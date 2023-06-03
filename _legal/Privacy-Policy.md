@@ -22,7 +22,7 @@ We may use the personal information you provide for the following purposes:
 We may share your personal information with third-party service providers who assist us in operating our website, processing donations, or providing specific services. These service providers are bound by contractual obligations to handle your information securely and use it only for the purposes specified by us.
 
 3. Data Retention
-We retain personal information for as long as necessary to fulfill the purposes outlined in this privacy statement, unless a longer retention period is required or permitted by law. Scholarship application data is retained for a period of twelve months to allow for review and processing.
+We retain personal information for as long as necessary to fulfill the purposes outlined in this privacy statement, unless a longer retention period is required or permitted by law. However, in cases where an account or personal data remains inactive for a continuous period of 36 months, we will delete the data to ensure the protection and privacy of our users.
 
 4. Security Measures
 We have implemented appropriate technical and organizational security measures to protect your personal information against unauthorized access, loss, misuse, or alteration. However, please be aware that no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
