@@ -36,7 +36,10 @@ Our website may contain links to third-party websites. We are not responsible fo
 7. Children's Privacy
 Our website is not intended for children under the age of 13. We do not knowingly collect or solicit personal information from children. If you believe that we have inadvertently collected personal information from a child, please contact us, and we will take steps to delete the information.
 
-8. Changes to this Privacy Statement
+8. Information from Partners
+Sujeeth Foundation's use of information received from Google APIs will adhere to Google API Services User Data Policy, including the Limited Use requirements.
+
+9. Changes to this Privacy Statement
 We may update this privacy statement from time to time to reflect changes in our practices or legal requirements. We will notify you of any significant changes by posting a prominent notice on our website or by other means. Your continued use of our website after such modifications will constitute your acknowledgment of the modified privacy statement.
 
 If you have any questions or concerns regarding this privacy statement or our privacy practices, please contact us using the information provided on our website.
