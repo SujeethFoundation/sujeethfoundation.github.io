@@ -1,8 +1,8 @@
 ---
 layout: default
-permalink: /blog/spotlight
-title: Spotlight 
-desc: Explore inspiring stories.  Individual spotlights.
+permalink: /blog/career
+title: Career
+desc: Sujeeth Foundation News.  Helping in your career journey.
 skip: true
 ---
 
@@ -12,7 +12,7 @@ skip: true
   {%- endif -%}
 
   <ul class="post-list">
-    {%- for post in site.categories.spotlight limit:10 -%}
+    {%- for post in site.categories.announcements limit:10 -%}
     <li>
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       <span class="post-meta">{{ post.date | date: date_format }} -- 
