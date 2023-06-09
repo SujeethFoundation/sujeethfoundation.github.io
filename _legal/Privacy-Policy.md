@@ -44,4 +44,4 @@ At The Sujeeth Foundation, we are committed to protecting the privacy and securi
 
 If you have any questions or concerns regarding this privacy statement or our privacy practices, please contact us using the information provided on our website.
 
-Last updated: May 18, 2023
+Last updated: June 8, 2023
