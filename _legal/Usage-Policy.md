@@ -28,12 +28,15 @@ The following activities are strictly prohibited on the portal:
 5. Reporting Inappropriate Behavior:
 If you witness or experience any behavior that violates this usage policy, please report it immediately to the portal administrators. We will investigate all reported incidents promptly and take appropriate actions, which may include removing the offending individual from the portal.
 
-6. Consequences of Policy Violations:
+6. User Information Sharing:
+By opting in, you agree that your user information, including engagement data (such as the number of applications, books, and circles) and application data, may be shared with the career office at the school you identify. This sharing of information aims to provide support and assistance with your career development.
+
+7. Consequences of Policy Violations:
 Violation of this usage policy may result in disciplinary actions, including temporary or permanent removal from the portal. The severity of the action taken will depend on the nature and frequency of the violation, as determined by the portal administrators.
 
-7. Amendments to the Usage Policy:
+8. Amendments to the Usage Policy:
 This usage policy may be updated from time to time to reflect changes in our practices or requirements. We will notify you of any significant changes by posting a notice on the portal or through other means. Continued use of the portal after modifications constitutes your acceptance of the updated policy.
 
 By using the Programs Portal, you acknowledge that you have read, understood, and agreed to abide by this usage policy. Let's create a positive and supportive learning environment together!
 
-Last updated: May 18, 2023
+Last updated: June 25, 2023
