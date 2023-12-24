@@ -21,8 +21,7 @@
 title: The Sujeeth Foundation - Scholarships
 email: hello@sujeeth.org
 description: >- # this means to ignore newlines until "baseurl:"
-  Unlocking opportunity through education. The Sujeeth Foundation provides 
-  scholarships, training, and other services to college students. 
+  Unlocking opportunity through education. The Sujeeth Foundation helps students network into their first job. 
 baseurl: # the subpath of your site, e.g. /blog
 url: https://www.sujeeth.org # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: avisuj
