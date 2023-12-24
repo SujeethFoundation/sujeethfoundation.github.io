@@ -2,7 +2,7 @@
 
 > Together we can make a lasting impact on a student's life and help them achieve their dreams.
 
-At Sujeeth Foundation, we understand that higher education is a transformative voyage that produces opportunities for personal growth, career advancement, and a fulfilling life.
+At Sujeeth Foundation, we understand that higher education is a transformative journey that produces opportunities for personal growth, career advancement, and a fulfilling life.
 
 “Unlocking the Value of Education”  The Sujeeth Foundation is a non-profit organization that helps students network into their first job.  We  empowers students to optimize their education by providing essential resources and interactive "Work Out Loud" circles that foster hands-on learning.
 
