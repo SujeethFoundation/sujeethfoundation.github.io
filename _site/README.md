@@ -31,7 +31,7 @@ We provide a variety of services to support students in their academic journey, 
 ### Why are we doing this? — Higher education can be expensive, but the benefits are worth it
 We strongly believe that investing in students means investing in a better world. Through scholarships, training, and various services, we support college students. By helping students pursue their educational dreams, we're creating a brighter future—for both them and our communities. Together, we strive to build a fair and equal society where everyone can reach their fullest potential.
 
-### Our Latest Partnerships
-#### Trulaske School of Business - University of Missouri
+## Our Latest Partnerships
+### Trulaske School of Business - University of Missouri
 We are currently partners in the Sales and Customer Service program at the Trulaske School of Business.  We provide $5000/year for students to attend case study competitions.  In addition, we are working with Dr. Anthony Vaterrott to incorporate the concepts of Grit into the program.  As part of the partnership, we are providing 300 copies of Grit to students.
 
