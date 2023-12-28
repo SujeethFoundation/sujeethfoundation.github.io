@@ -6,6 +6,8 @@ At the Sujeeth Foundation, we help students network into their first job. Nearly
 
 College is a place where experimentation thrives and opportunities to grow are abundant. We help students unlock the opportunity of education.
 
+Together we make a lasting impact. [Subscribe](https://www.sujeeth.org/subscribe) to our newsletter to follow our journey.
+
 ## Our Sauce 
 We nurture an environment that allows students to explore and develop their passion.
 
