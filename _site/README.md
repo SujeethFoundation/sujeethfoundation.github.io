@@ -2,23 +2,19 @@
 
 > Together we can make a lasting impact on a student's life and help them achieve their dreams.
 
-At Sujeeth Foundation, we understand that higher education is a transformative journey that produces opportunities for personal growth, career advancement, and a fulfilling life.
+At the Sujeeth Foundation, we help students network into their first job. Nearly half of college graduates struggle with job placement. The Sujeeth Foundation strives to help students practice agency by introducing the concepts of Grit by Angela Duckworth, Mindset by Carol Dweck, and Work Out Loud by John Stepper.
 
-“Unlocking the Value of Education”  The Sujeeth Foundation is a non-profit organization that helps students network into their first job.  We  empowers students to optimize their education by providing essential resources and interactive "Work Out Loud" circles that foster hands-on learning.
+College is a place where experimentation thrives and opportunities to grow are abundant. We help students unlock the opportunity of education.
 
-“Our mission is to teach students to shape their own life through their actions and choices.”
+Together we make a lasting impact. [Subscribe](https://www.sujeeth.org/subscribe) to our newsletter to follow our journey.
 
-We entitle students to take charge of their education, guiding them to pave the way for a future they are passionate about. Our agency is committed to helping students find their passion and create a path to a passion-filled career.
-
-## Our key aspects 
+## Our Sauce 
 We nurture an environment that allows students to explore and develop their passion.
 
 ### Building a Brighter Future
-We journey with a dedication to enriching students' educational paths through the core principles of "Grit," "Mindset," and "Work Out Loud." Our inventive methodology promotes an interactive learning environment. Within tailored circles, we nurture practical learning, encouraging students to immerse themselves in their education actively.
+We enhance students' educational journeys through the principles of "Grit," "Mindset," and "Work Out Loud." Our innovative approach facilitates a dynamic learning environment. Through specialized circles, we cultivate hands-on learning experiences, allowing students to actively engage with their education.
 
-We advocate for instilling a mindset of resilience, an unwavering work ethic, and a transparent exchange of knowledge. Our platform catalyzes quality education by imparting these principles to students, preparing them for a future where adaptability and ongoing learning take precedence.
-
-We believe that students when developing a Growth Mindset, Grit, and Working Out Loud, they can reach their goals and unlock their potential.
+We believe in promoting a mindset of resilience, a determined work ethic, and the transparent sharing of knowledge. Empowering students with these principles, we help them network into their first job.
 
 ### What do we do? — Help students to transform their lives and find their career path
 We provide a variety of services to support students in their academic journey, including,
