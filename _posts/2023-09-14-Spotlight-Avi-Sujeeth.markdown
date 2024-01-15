@@ -42,4 +42,4 @@ Avi shares:
 
 As you embark on your academic and career journey, remember that you have agency. You can shape your path, navigate challenges, and find purpose in unexpected places. The Sujeeth Foundation encourages you to view education as a tool, just as Avi did, and to embrace concepts from books like "Grit," "Work Out Loud," and "Mindset" to guide your way.  [Download the whitepaper](https://portal.sujeeth.org/#whitepaper) to learn more.
 
-We'd love to spot light you.  Tell us your story at [https://www.sujeeth.org/stories](https://WWW.sujeeth.org/stories).
+We'd love to spot light you.  Tell us your story at [https://www.sujeeth.org/stories](https://www.sujeeth.org/stories).

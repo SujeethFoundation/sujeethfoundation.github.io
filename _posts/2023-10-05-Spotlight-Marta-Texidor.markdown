@@ -35,4 +35,4 @@ Marta leaves college students with a valuable piece of advice - there are no wro
 # Conclusion: Your Journey Awaits
 As you embark on your academic and career journey, remember Marta's story. Embrace adaptability, network, maintain a positive attitude, and celebrate diversity. The Sujeeth Foundation encourages you to find your unique path, just as Marta did, and to view education as a tool and to embrace concepts from books like "Grit," "Work Out Loud," and "Mindset" to guide your way. [Download the whitepaper](https://portal.sujeeth.org/#whitepaper) to learn more. Her story serves as an inspiration for all aspiring professionals, reminding them that their career paths may take unexpected turns, but with the right mindset and determination, they can achieve their goals.
 
-We'd love to spot light you.  Tell us your story at [https://www.sujeeth.org/stories](https://WWW.sujeeth.org/stories).
+We'd love to spot light you.  Tell us your story at [https://www.sujeeth.org/stories](https://www.sujeeth.org/stories).
