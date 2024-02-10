@@ -6,6 +6,10 @@ div.alert {
 /* End Alerts */
 
 /* Begin Social Footer */
+a.btn:visited {
+	color: #fff		
+}
+
 div.social a {
     color: #fff;
 }
