@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /legal
+Disallow: /wol
 Sitemap: https://sujeeth.org/sitemap.xml
