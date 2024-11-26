@@ -49,6 +49,9 @@ collections:
   alerts: #collection for alerts
     title: Alerts
     output: true
+  feedbacks: #collection for feedbacks
+    title: Feedbacks
+    output: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
