@@ -22,8 +22,8 @@ At The Sujeeth Foundation, we are committed to protecting the privacy and securi
 - We may share your personal information with third-party service providers who assist us in operating our website, processing donations, or providing specific services. These service providers are bound by contractual obligations to handle your information securely and use it only for the purposes specified by us.
 
 4. Data Retention
-- We retain personal information for as long as necessary to fulfill the purposes outlined in this privacy statement, unless a longer retention period is required or permitted by law. However, in cases where an account or personal data remains inactive for a continuous period of 36 months, we will delete the data to ensure the protection and privacy of our users.
-
+- In order to benchmark and improve the services we provide, we retain activity information indefinately.  In order to delete your account with us you can use self-service process available from the "Profile" page or contact us.
+  
 5. Security Measures
 - We have implemented appropriate technical and organizational security measures to protect your personal information against unauthorized access, loss, misuse, or alteration. However, please be aware that no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
 
@@ -44,4 +44,4 @@ At The Sujeeth Foundation, we are committed to protecting the privacy and securi
 
 If you have any questions or concerns regarding this privacy statement or our privacy practices, please contact us using the information provided on our website.
 
-Last updated: June 8, 2023
+Last updated: November 30, 2024
