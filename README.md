@@ -2,14 +2,14 @@
 
 > Together we can make a lasting impact on a student's life and help them achieve their dreams.
 
-At the Sujeeth Foundation, we help students network into their first job. Nearly half of college graduates struggle with job placement. The Sujeeth Foundation strives to help students practice agency through Career Circles.  We partner students with a mentor for an six week program that explores a job candidates' journey.  
+At the Sujeeth Foundation, we help students network into their first job. Nearly half of college graduates struggle with job placement. The Sujeeth Foundation strives to help students practice agency through Career Circles.  We partner students with a mentor for a six-week program that encourages students to exercise agency in their career.  
 
 College is a place where experimentation thrives and opportunities to grow are abundant. We help students unlock the opportunity of education.
 
 Together we make a lasting impact. 
 
 ## Our Sauce 
-We nurture an environment that allows students to explore and develop their passion.
+We partner students with a mentor for a six-week program that encourages students to exercise agency in their career.
 
 ### Building a Brighter Future
 The magic of the program happens in the weekly career circle calls.  Ideally, students are leading and facilitating these circles themselves.  In practice, volunteers are often guiding early sessions encouraging students to engage deeper so that they get to the purpose of the week. 
