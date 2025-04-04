@@ -3,7 +3,7 @@ layout: post
 title:  "Career Circle Volunteer FAQ"
 date:   2025-04-03 00:00:00 -0600
 categories: [announcements]
-excerpt: "The Career Circle Program is a 6-week virtual mentorship initiative aimed at helping college juniors navigate the job search process. Each week, mentors guide students through topics such as self-assessment, resume building, networking, interviews, and follow-up strategies. Mentors provide valuable support, share personal experiences, and offer actionable advice, fostering a nurturing environment where students can ask questions and gain insight from experienced professionals. As a mentor, your role is to encourage, guide, and share your experiences. While you won’t be grading or evaluating students, you will help them reflect on their goals, overcome challenges, and build confidence. You can engage with students during sessions and outside of them through LinkedIn. The sessions involve active discussions, videos, and exercises, so it’s important to prepare ahead of time to contribute meaningfully. Building relationships with your mentees is key to making the most of this mentorship experience."
+excerpt: "Find detailed answers to common questions about the Sujeeth Foundation's Career Circle Program for mentors. Learn about the program's structure, including weekly themes like self-assessment, resume building, and networking. Understand how to engage with students, the logistics of joining sessions, and how to best support students through open communication and constructive feedback. Discover tips on preparing for sessions, building relationships, and making the most of your mentorship experience."
 ---
 # Mentor FAQ – Sujeeth Foundation Career Circle
 
