@@ -3,7 +3,7 @@ layout: post
 title:  "Stepping Stones: Will Kyle"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "The blog post highlights Will Kyle's career journey from selling steel buildings to becoming an Enterprise Sales Leader at Amazon Web Services (AWS), emphasizing the importance of perseverance, mentorship, and continuous learning. It offers advice to college juniors, encouraging them to view their first job as a stepping stone and to embrace opportunities that foster growth and skill development."
+excerpt: "Explore the inspiring career journey of Will Kyle, from selling steel buildings to becoming an Enterprise Sales Leader at AWS. Learn how perseverance, mentorship, and strategic networking helped him navigate challenges and achieve success. Discover practical tips for students on building experience, embracing opportunities, and making the most of their first job."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
