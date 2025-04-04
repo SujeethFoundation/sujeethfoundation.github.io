@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "From AT&T Sales to Building Meaningful Client Relationships: Dave D'Abate’s Career Journey"
+title:  "Prepare and Adapt: Dave D'Abate"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "The Sujeeth Foundation Spotlight shares inspiring stories of individuals transitioning from academia to industry, offering valuable insights for students. Dave D'Abate, a successful Account Executive, emphasizes the importance of relationships, continuous learning, and adaptability in building a fulfilling career. He encourages students to stay prepared, embrace feedback, and always keep learning as they embark on their career journeys."
+excerpt: "Explore Dave D'Abate's inspiring career journey from retail sales consultant at AT&T to Account Executive. Learn how relationships, continuous learning, and adaptability helped him succeed. Discover practical tips for students on building experience, embracing challenges, and navigating their career paths effectively."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 

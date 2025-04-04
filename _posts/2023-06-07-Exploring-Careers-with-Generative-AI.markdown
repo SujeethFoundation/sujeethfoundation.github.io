@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Using Generative AI to Explore Career Opportunities"
+title:  "Exploring Careers with Gen AI"
 date:   2023-06-03 00:00:00 -0600
 categories: [career]
 excerpt: "Generative AI, like ChatGPT, can serve as a valuable tool in career exploration by providing insights and recommendations. It can help individuals uncover potential paths, discover resources such as online courses and professional associations, and prioritize efforts based on personalized feedback. However, while generative AI is beneficial, it should be complemented by real-world engagement, taking risks, and pursuing opportunities to validate and develop interests for a truly fulfilling career journey."

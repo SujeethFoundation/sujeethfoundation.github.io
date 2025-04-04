@@ -1,11 +1,11 @@
 ---
+
 layout: post
 title:  "Career Circle Student FAQ"
 date:   2025-04-03 00:00:00 -0600
 categories: [announcements]
-excerpt: "The Career Circle Program is a 6-week virtual program designed to help college juniors gain the skills and confidence needed for a successful job search. Through weekly sessions focused on topics like resume building, networking, interviews, and follow-up strategies, students will engage in group discussions, reflection exercises, and learn from professionals in their field. The program is tailored to help students develop their personal and professional growth, particularly those who may be the first in their family to pursue a career.
+excerpt: "Find answers to common questions about the Sujeeth Foundation's Career Circle Program for college students. Learn about the program's structure, weekly activities, mentor-student interactions, and how to make the most of your mentorship experience."
 
-As a student, your role is to actively participate in the sessions, share your experiences, and ask questions to deepen your understanding. You’ll receive feedback and mentorship from experienced professionals, allowing you to gain insights into your job search strategies and career development. You are encouraged to connect with mentors and peers outside of the sessions to build your network. By engaging in each weekly topic and reflecting on the lessons learned, you will increase your chances of success in landing your first job."
 ---
 
 ## General Program Info

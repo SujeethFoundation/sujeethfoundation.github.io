@@ -1,9 +1,11 @@
 ---
+
 layout: post
 title:  "Career Circle Content"
 date:   2025-04-03 00:00:00 -0600
 categories: [announcements]
-excerpt: "The Career Circle Program incorporates a diverse set of content designed to help students explore their strengths, prepare for job opportunities, and build a strong professional presence. Below is a breakdown of the key content pieces, along with the guiding principle and reasons for its inclusion."
+excerpt: "Explore the Sujeeth Foundation's Career Circle Program, featuring a diverse set of content designed to help students build a strong professional presence. Learn about self-assessment exercises, resume building, networking strategies, job application tips, and interview preparation. Empower your career journey with our comprehensive guide."
+
 ---
 
 The **Career Circle Program** incorporates a diverse set of content designed to help students explore their strengths, prepare for job opportunities, and build a strong professional presence. Below is a breakdown of the key content pieces, along with the guiding principle and reasons for its inclusion.

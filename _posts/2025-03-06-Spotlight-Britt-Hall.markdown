@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Charting Your Own Path: Lessons from Britt Hall’s Career Journey"
+title:  "Yes Now, Learn It Later: Britt Hall"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "The Sujeeth Foundation Spotlight shares stories of individuals who transitioned from academia to industry to inspire and educate students. Britt Hall's journey exemplifies adaptability and resilience, showing how embracing change, building relationships, and staying true to one's values can lead to a fulfilling career. Her story encourages college students to trust their unique paths, take risks, and align their careers with their passions and strengths."
+excerpt: "Explore Britt Hall's inspiring career journey from journalism to corporate leadership. Learn how adaptability, resilience, and strategic networking helped her succeed. Discover practical tips for students on building experience, embracing change, and aligning their careers with their passions and strengths."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
