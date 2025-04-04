@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Marta Texidor - Embracing Adaptability and Diversity"
+title:  "Embrace Adaptability: Marta Texidor's Key"
 date:   2023-10-05 00:00:00 -0600
 categories: [spotlight]
 excerpt: "Marta Texidor's inspiring career journey in the tech industry reflects her adaptability and commitment to helping others thrive. From starting as a software developer at Atos to excelling as a Customer Success Manager at Microsoft, Marta's path highlights the power of networking, a positive attitude, and celebrating diversity. Her story serves as a reminder that unexpected career paths can lead to success when aligned with one's values and a willingness to explore the grey areas of opportunity."
