@@ -5,6 +5,6 @@
 layout: home
 permalink: /
 title: "Home"
-desc: "Unlock educational opportunities with the Sujeeth Foundation. Explore our Career Circle Program, a 6-week virtual mentorship initiative for college juniors, and learn how we support students through resume building, networking, and interview preparation. Join us to volunteer, donate, and make a difference in students' lives."
+excerpt: "Unlock educational opportunities with the Sujeeth Foundation. Explore our Career Circle Program, a 6-week virtual mentorship initiative for college juniors, and learn how we support students through resume building, networking, and interview preparation. Join us to volunteer, donate, and make a difference in students' lives."
 
 ---
