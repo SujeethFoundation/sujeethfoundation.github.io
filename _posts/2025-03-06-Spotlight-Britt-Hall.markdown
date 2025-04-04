@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Yes Now, Figure It Out Later: Britt Hall"
+title:  "Yes Now, Learn It Later: Britt Hall"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
 excerpt: "The Sujeeth Foundation Spotlight shares stories of individuals who transitioned from academia to industry to inspire and educate students. Britt Hall's journey exemplifies adaptability and resilience, showing how embracing change, building relationships, and staying true to one's values can lead to a fulfilling career. Her story encourages college students to trust their unique paths, take risks, and align their careers with their passions and strengths."
