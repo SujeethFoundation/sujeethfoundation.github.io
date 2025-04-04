@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Finding Your Why: Valerie Bergman's Journey"
+title:  "Find Your Why: Valerie Bergman"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
 excerpt: "The Sujeeth Foundation Spotlight features Valerie Bergman, a Microsoft Field Sales Specialist, whose 20-year career journey offers valuable lessons for students transitioning from academia to industry. Valerie emphasizes the importance of aligning passion with profession, focusing on the why behind career choices, and the power of networking, resilience, and continuous learning. Her story inspires students to embrace challenges, stay authentic, and take bold steps toward their goals."
