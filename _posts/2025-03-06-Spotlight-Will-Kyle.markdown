@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "From Steel Buildings to Cloud Innovation: Will Kyle’s Career Journey"
+title:  "Stepping Stones: Will Kyle"
 date:   2025-06-03 00:00:00 -0600
 categories: [spotlight]
 excerpt: "The blog post highlights Will Kyle's career journey from selling steel buildings to becoming an Enterprise Sales Leader at Amazon Web Services (AWS), emphasizing the importance of perseverance, mentorship, and continuous learning. It offers advice to college juniors, encouraging them to view their first job as a stepping stone and to embrace opportunities that foster growth and skill development."
