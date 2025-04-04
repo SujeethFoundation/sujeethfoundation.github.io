@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Adaptability: Michelle Leaverton's Career Journey"
+title:  "Adaptability: Michelle Leaverton"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
 excerpt: "The Sujeeth Foundation Spotlight highlights individuals like Michelle Leaverton, who transitioned from academia to industry, showcasing diverse career paths that inspire and educate students. Michelle's journey spans corporate project management, nonprofit leadership, and ministry, demonstrating resilience, adaptability, and a commitment to social impact. She now leads Collateral Designs, offering expertise in communication and project development while embracing life’s challenges with a focus on personal and professional growth."
