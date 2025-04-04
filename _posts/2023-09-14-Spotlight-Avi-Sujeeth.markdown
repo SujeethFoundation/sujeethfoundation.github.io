@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Craft Your Narrative: Avi Sujeeth's Advice"
+title:  "Craft Your Narrative: Avi Sujeeth"
 date:   2023-09-14 00:00:00 -0600
 categories: [spotlight]
 excerpt: "A SpotLight on Avi Sujeeth's career journey.  Avi Sujeeth is a Director of the Sujeeth Foundation.  Avi worked for Microsoft for fifteen years in field sales roles like Customer Success Manager and Sales Engineer.  The Sujeeth Foundation Spotlight highlights the stories of individuals to inspire and educate."
