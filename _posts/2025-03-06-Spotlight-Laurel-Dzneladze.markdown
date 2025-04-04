@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Start Small: Laurel Dzneladze's Networking Advice"
+title:  "Start Small: Laurel Dzneladze"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
 excerpt: "Laurel Dzneladze’s career journey, from an unpaid marketing role to a full-time position at Johnson Controls, shows how even small roles can lead to significant opportunities. Laurel’s advice to students is to embrace an open mindset, explore different career paths, and focus on what excites them to build a fulfilling career."
