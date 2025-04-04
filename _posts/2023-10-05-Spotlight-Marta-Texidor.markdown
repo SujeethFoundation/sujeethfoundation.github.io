@@ -3,7 +3,7 @@ layout: post
 title:  "Adaptability: Marta Texidor's Key"
 date:   2023-10-05 00:00:00 -0600
 categories: [spotlight]
-excerpt: "Marta Texidor's inspiring career journey in the tech industry reflects her adaptability and commitment to helping others thrive. From starting as a software developer at Atos to excelling as a Customer Success Manager at Microsoft, Marta's path highlights the power of networking, a positive attitude, and celebrating diversity. Her story serves as a reminder that unexpected career paths can lead to success when aligned with one's values and a willingness to explore the grey areas of opportunity."
+excerpt: "Explore Marta Texidor's inspiring career journey from software developer to Director of Customer Success at Microsoft. Learn how adaptability, networking, and a positive attitude helped her succeed. Discover practical tips for students on embracing diversity, finding common ground, and navigating their career paths effectively."
 ---
 The Sujeeth Foundation Spotlight series shares stories of individuals who have successfully transitioned from academia to industry, aiming to inspire and educate college students on their own career journeys. In this spotlight, we introduce [Marta Texidor](https://www.linkedin.com/in/martatexidor/), a dedicated professional who has made a significant impact in the tech industry.
 
