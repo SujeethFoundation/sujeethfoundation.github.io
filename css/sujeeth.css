@@ -36,6 +36,17 @@ div.social svg-icon {
 /* End Social Footer */
 /* ===== End Includes ===== */
 
+/* Hide on Mobile */
+@media only screen and (max-width: 600px) {
+	.hide-mobile 
+	{display:none;}   
+   .sujflex 
+   {
+	flex-direction: column;
+   }
+}
+/* End Hide On Mobile */
+
 /* ===== Posts ===== */
 h1.page-heading{
 	font-size: 42px;
@@ -56,6 +67,7 @@ div.post-content ol > li {
 /* ===== End Posts ===== */
 
 /* ===== Home ===== */
+
 a.btn {
 	color: #fff;
 	background-color: #E04F00;
@@ -155,15 +167,19 @@ h2 {
 }
 /* End testimonial section */
 
-
-/* Begin text carousel intro */
-#text-carousel-intro-section a {
-	color: #000;
+/* week sections */
+#week1-section, 
+#week2-section,
+#week3-section,
+#week4-section,
+#week5-section,
+#week6-section
+{
+	padding: 100px 10% 100px 10%;
 }
+/* end week section */
 
-/* End text carousel intro */
-
-/* ===== End Home ===== */
+/* ===== End sujeeth.org ===== */
 
 /* ==== Power Portal Branding ==== */
 /* Converting Data Table to Cards */
