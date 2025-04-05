@@ -56,14 +56,44 @@ div.post-content ol > li {
 /* ===== End Posts ===== */
 
 /* ===== Home ===== */
-/* Begin cta section */
-#cta-section {
-	padding: 70px 0 80px;
+a.btn {
+	color: #fff;
+	background-color: #E04F00;
+	margin: 10px;
 }
-.cta-btn {
-	margin-top: 30px;
+
+h2 {
+	font-size: 38px;
 }
-/* End cta section */
+
+/* intro section */
+#intro-section {
+	padding: 100px 10% 100px 10%;
+}
+#intro-trigger p {
+	letter-spacing: 2px;
+	padding-bottom: 20px;
+	color: #fff;
+}
+
+#intro-trigger h2 {
+	font-style: normal;
+	color: #fff;
+}
+
+/* End Intro Section */
+
+/* about section */
+#about-section {
+	padding: 100px 10% 100px 10%;
+}
+/* end about section */
+
+/* circle section */
+#circle-section {
+	padding: 100px 10% 100px 10%;
+}
+/* end circle section */
 
 /* Begin financial section */
 #financial-section {

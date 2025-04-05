@@ -3,7 +3,7 @@
         <header id="header" class="header-main">
 
           <!-- Begin Navbar -->
-          <nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation"> <!-- Classes: navbar-default, navbar-inverse, navbar-fixed-top, navbar-fixed-bottom, navbar-transparent. Note: If you use non-transparent navbar, set "height: 98px;" to #header -->
+          <nav id="main-navbar" class="navbar navbar-default navbar-fixed-top" role="navigation" style="position: relative;"> <!-- Classes: navbar-default, navbar-inverse, navbar-fixed-top, navbar-fixed-bottom, navbar-transparent. Note: If you use non-transparent navbar, set "height: 98px;" to #header -->
           <!-- notification alerts -->
           {% assign timeframe = 604800 %} <!-- 7 days == 604800 seconds -->
           {% for alert in site.alerts limit: 1 %}
@@ -31,11 +31,9 @@
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a class="page-scroll" href="/#about-section">About</a></li>
                       <li><a class="page-scroll" href="/partner">Partner</a></li>
                       <li><a class="page-scroll" href="/volunteer">Volunteer</a></li>
                       <li><a class="page-scroll" href="https://portal.sujeeth.org">Portal</a></li>
-                      <li><a class="page-scroll" href="/#give-section" style="font-size: large;">Give</a></li>
                       {%- if page_paths -%}
                         {%- for path in page_paths -%}
                           {%- assign my_page = site.pages | where: "path", path | first -%}
