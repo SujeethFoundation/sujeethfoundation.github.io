@@ -5,8 +5,6 @@ date:   2025-04-03 00:00:00 -0600
 categories: [announcements]
 excerpt: "Find detailed answers to common questions about the Sujeeth Foundation's Career Circle Program for mentors. Learn about the program's structure, including weekly themes like self-assessment, resume building, and networking. Understand how to engage with students, the logistics of joining sessions, and how to best support students through open communication and constructive feedback. Discover tips on preparing for sessions, building relationships, and making the most of your mentorship experience."
 ---
-# Mentor FAQ – Sujeeth Foundation Career Circle
-
 ## General Program Info
 
 ### Q: What is the Career Circle Program?

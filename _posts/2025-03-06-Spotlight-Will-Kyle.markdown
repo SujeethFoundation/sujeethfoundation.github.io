@@ -16,17 +16,17 @@ At the time, the economy was in a recession, making job opportunities scarce. Wi
 
 With no structured training in sales, Will took ownership of his own professional development. He read books, sought mentorship, and pushed himself out of his comfort zone. The key lesson? Success is rarely handed to you—it’s something you must actively pursue.
 
-# Climbing the Ladder: Will’s Career at Amazon and AWS
+## Climbing the Ladder: Will’s Career at Amazon and AWS
 Will’s persistence and commitment to learning paved the way for his entry into major corporate roles. He spent have spent 12 years at Amazon, 8 years in ecommerce and 4 years at AWS.
 
 Today, as an Enterprise Sales Leader at AWS, Will is responsible for business planning, consultative selling, and leading high-impact initiatives. Over the past four years at AWS, he has excelled in multiple roles, including Senior Account Executive, where he leveraged his deep expertise in sales presentations and strategic client engagement.
 
 His career at AWS has given him the opportunity to lead a team of professionals, drive enterprise growth, and work at the cutting edge of cloud technology. Most importantly, he has continued to develop his passion for mentorship—helping individuals advance their careers both within and outside of Amazon.
 
-# Lessons from the Journey: Building a Network and Asking for Help
+## Lessons from the Journey: Building a Network and Asking for Help
 Reflecting on his career, Will emphasizes the importance of networking and mentorship. “Every single person you meet is an opportunity to expand your network. Never burn a bridge,” he advises. Throughout his career, he has found that there are always people willing to help—but it’s up to you to ask for guidance. Taking initiative in building relationships and seeking mentorship can be game-changing.
 
-# Advice for College Juniors: The First Job is Just a Stepping Stone
+## Advice for College Juniors: The First Job is Just a Stepping Stone
 For college juniors about to embark on their professional journeys, Will offers one crucial piece of advice: Be patient and focus on building experience.
 
 Your first job out of school doesn’t have to be your dream job. It’s a stepping stone—a chance to learn, build skills, and prove yourself to future employers. Instead of limiting yourself to roles that seem perfect, embrace opportunities that allow you to grow. Your passions and goals will evolve over time, and the most important thing is to keep moving forward.
