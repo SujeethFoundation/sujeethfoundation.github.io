@@ -7,7 +7,9 @@ categories: [announcements]
 excerpt: "Explore the Sujeeth Foundation's Career Circle Guide, detailing a 6-week mentorship program for college juniors. Learn about weekly activities, self-assessment, research, resume building, networking, job applications, and interview preparation. Gain insights to navigate the job search process effectively."
 
 ---
-The **Career Circle Program** is a 6-week mentorship program designed to help college juniors navigate the job search process. Each week focuses on a specific aspect of career development, offering students the tools and strategies they need to succeed in landing their first job. Mentors provide guidance, share personal experiences, and help students grow both personally and professionally. Here’s an overview of the program week by week:
+The **Career Circle Program** is a 6-week mentorship program designed to help college juniors navigate the job search process. Each week focuses on a specific aspect of career development, offering students the tools and strategies they need to succeed in landing their first job. Mentors provide guidance, share personal experiences, and help students grow both personally and professionally. 
+
+Here’s an overview of the program week by week ([Download Now](https://sujeeth-my.sharepoint.com/:p:/g/personal/avisuj_sujeeth_org/EZ84TmTmxwJMuKYm91IDq4YBFCmjL6MPoCSB1OndvbdDWQ?e=81DUEf)):
 
 ### [Week 1: Self-Assessment Presentation](https://sway.cloud.microsoft/kepypoEuftS0WnYy)
 
