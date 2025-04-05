@@ -62,6 +62,42 @@ a.btn {
 	margin: 10px;
 }
 
+.pyramid-centered {
+	padding-top: 25px;
+  }
+
+.pyramid-top {
+	background-image: url(/img/pyramid-top.png);
+	height: 60px;
+	min-width: 290px;
+	background-size: 290px;
+	margin-bottom: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+.pyramid-middle {
+	background-image: url(/img/pyramid-middle.png);
+	background-size: 200px;
+	background-position: 50px ;
+	min-width: 290px;
+	background-repeat: no-repeat;
+	height: 60px;
+	margin-bottom: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.pyramid-bottom {
+	background-image: url(/img/pyramid-bottom.png);
+	min-width: 290px;
+	background-size: 290px;
+	background-repeat: no-repeat;
+	height: 70px;
+	margin-bottom: 10px;
+	text-align: center;
+	vertical-align: middle;
+}
+
 h2 {
 	font-size: 38px;
 }
@@ -97,7 +133,7 @@ h2 {
 
 /* Begin financial section */
 #financial-section {
-	padding: 70px 0 80px;
+	padding: 100px 10% 100px 10%;
 }
 .financial-btn {
 	margin-top: 30px;
@@ -106,7 +142,7 @@ h2 {
 
 /* Begin give section */
 #give-section {
-	padding: 70px 0 80px;
+	padding: 100px 10% 100px 10%;
 }
 .give-btn {
 	margin-top: 30px;
