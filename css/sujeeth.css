@@ -57,7 +57,7 @@ h1.page-heading{
 /** Post Lists */
 div.post-content ul > li { 
     list-style: disc;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 div.post-content ol > li {
