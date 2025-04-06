@@ -179,15 +179,23 @@ h2 {
 }
 /* end week section */
 
-/* week sections */
+/* volunteer sections */
 #volunteer-section, 
 #onboarding-section,
 #additional-section
 {
 	padding: 100px 10% 100px 10%;
 }
-/* end week section */
+/* end volunteer section */
 
+/* partner sections */
+#problem-section,
+#impact-section,
+#mission-section
+{
+	padding: 100px 10% 100px 10%;
+}
+/* end partner section */
 
 /* ===== End sujeeth.org ===== */
 
