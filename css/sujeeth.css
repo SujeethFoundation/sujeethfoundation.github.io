@@ -179,6 +179,16 @@ h2 {
 }
 /* end week section */
 
+/* week sections */
+#volunteer-section, 
+#onboarding-section,
+#additional-section
+{
+	padding: 100px 10% 100px 10%;
+}
+/* end week section */
+
+
 /* ===== End sujeeth.org ===== */
 
 /* ==== Power Portal Branding ==== */
