@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Announcing the Creation of Our GitHub Community"
-date:   2025-03-06 00:00:00 -0600
+date:   2025-04-05 00:00:00 -0600
 categories: [announcement]
 excerpt: "Announcing the launch of our GitHub community! Join us to share best practices, discuss challenges, and exchange resources. Support our mission to bridge the gap between higher education and meaningful employment for college students. Get involved and make a difference!"
 ---
