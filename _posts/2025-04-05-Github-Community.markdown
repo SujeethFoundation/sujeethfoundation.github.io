@@ -2,7 +2,7 @@
 layout: post
 title:  "Announcing the Creation of Our GitHub Community"
 date:   2025-04-05 00:00:00 -0600
-categories: [announcement]
+categories: [announcements]
 excerpt: "Announcing the launch of our GitHub community! Join us to share best practices, discuss challenges, and exchange resources. Support our mission to bridge the gap between higher education and meaningful employment for college students. Get involved and make a difference!"
 ---
 We are thrilled to announce the launch of our new [GitHub community](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki)! This platform is designed to bring together passionate individuals who are eager to collaborate, share knowledge, and contribute to our mission help unlock the opportunity of education for every college student.
