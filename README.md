@@ -8,7 +8,6 @@ College is a place where experimentation thrives and opportunities to grow are a
 
 Together we make a lasting impact. 
 
----
 - [Wiki](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki) 
 - [Discussions](https://github.com/SujeethFoundation/sujeethfoundation.github.io/discussions)
 
