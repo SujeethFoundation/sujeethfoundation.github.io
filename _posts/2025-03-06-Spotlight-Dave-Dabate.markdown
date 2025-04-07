@@ -3,7 +3,7 @@ layout: post
 title:  "Prepare and Adapt: Dave D'Abate"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "Explore Dave D'Abate's inspiring career journey from retail sales consultant at AT&T to Account Executive. Learn how relationships, continuous learning, and adaptability helped him succeed. Discover practical tips for students on building experience, embracing challenges, and navigating their career paths effectively."
+excerpt: "Dave D'Abate relied on relationships, continuous learning, and adaptability to go from retail sales consultant at AT&T to Account Executive. Discover practical tips for students on building experience, embracing challenges, and navigating their career paths effectively."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
