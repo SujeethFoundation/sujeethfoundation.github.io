@@ -1,4 +1,4 @@
-# sujeeth.org
+# [sujeeth.org](https://www.sujeeth.org)
 
 > Together we can make a lasting impact on a student's life and help them achieve their dreams.
 
