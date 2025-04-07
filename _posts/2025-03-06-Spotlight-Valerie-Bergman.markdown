@@ -3,7 +3,7 @@ layout: post
 title:  "Find Your Why: Valerie Bergman"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "Discover valuable career tips for students through Valerie Bergman's inspiring journey from software engineer to Microsoft Field Sales Specialist. Learn how aligning passion with profession, strategic networking, and continuous learning can help you navigate your career path. Get practical advice on building experience, embracing challenges, and staying authentic."
+excerpt: "Learn how aligning passion with profession, strategic networking, and continuous learning helped Valerie Bergman's inspiring journey from software engineer to Microsoft Field Sales Specialist. Get practical advice on building experience, embracing challenges, and staying authentic."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
