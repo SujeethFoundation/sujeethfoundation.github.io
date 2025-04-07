@@ -8,7 +8,10 @@ College is a place where experimentation thrives and opportunities to grow are a
 
 Together we make a lasting impact. 
 
-[Wiki](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki) [Discussions](https://github.com/SujeethFoundation/sujeethfoundation.github.io/discussions)
+[Wiki](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki) 
+[Discussions](https://github.com/SujeethFoundation/sujeethfoundation.github.io/discussions)
+
+---
 
 ## Our Sauce 
 We partner students with a mentor for a six-week program that encourages students to exercise agency in their career.
