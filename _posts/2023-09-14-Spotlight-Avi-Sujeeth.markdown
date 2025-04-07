@@ -3,7 +3,7 @@ layout: post
 title:  "Craft Your Narrative: Avi Sujeeth"
 date:   2023-09-14 00:00:00 -0600
 categories: [spotlight]
-excerpt: "Explore Avi Sujeeth's inspiring career journey from academia to industry. Learn how perseverance, strategic storytelling, and adaptability helped him succeed. Discover practical tips for students on building a compelling narrative, embracing career pivots, and aligning career decisions with core values."
+excerpt: "Avi Sujeeth's relied on perseverance, strategic storytelling, and adaptability to launch and grow his career. Discover practical tips for students on building a compelling narrative, embracing career pivots, and aligning career decisions with core values."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
