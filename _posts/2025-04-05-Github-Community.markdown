@@ -46,13 +46,12 @@ Your involvement in our GitHub community is vital. By participating, you’re no
 - Empower students to take ownership of their career journey through mentorship and practical guidance.
 
 #### Structure
-- **Six-week initiative** focusing on different aspects of career development:
-  - **Week 1:** Self-Assessment
-  - **Week 2:** Research & Exploration
-  - **Week 3:** Resume & Preparation
-  - **Week 4:** Networking
-  - **Week 5:** Applications & Interviews
-  - **Week 6:** Follow-up & Negotiation
+- **Week 1:** Self-Assessment
+- **Week 2:** Research & Exploration
+- **Week 3:** Resume & Preparation
+- **Week 4:** Networking
+- **Week 5:** Applications & Interviews
+- **Week 6:** Follow-up & Negotiation
 
 #### Key Concepts
 - **Vulnerability and Trust**
