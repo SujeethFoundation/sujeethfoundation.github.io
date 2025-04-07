@@ -3,7 +3,7 @@ layout: post
 title:  "Start Small: Laurel Dzneladze"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "Explore Laurel Dzneladze's inspiring career journey from an unpaid marketing role to a full-time position at Johnson Controls. Learn how adaptability, networking, and continuous learning helped her succeed. Discover practical tips for students on building experience, embracing challenges, and navigating their career paths effectively."
+excerpt: "Laurel Dzneladze leveraged adaptability, networking, and continuous learning to go from an unpaid marketing role to a full-time position at Johnson Controls. Discover practical tips for students on building experience, embracing challenges, and navigating their career paths effectively."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
