@@ -3,7 +3,7 @@ layout: post
 title:  "Adaptability: Michelle Leaverton"
 date:   2025-03-06 00:00:00 -0600
 categories: [spotlight]
-excerpt: "Explore Michelle Leaverton's inspiring career journey from academia to industry, showcasing her resilience and adaptability. Learn how she transitioned from corporate project management at Dell Technologies to nonprofit leadership and ministry, and eventually launched her own business, Collateral Designs. Discover practical tips for students on building experience, embracing challenges, and making a positive impact in their professional lives."
+excerpt: "Michelle Leaverton's showcased her resilience and adaptability as she transitioned from corporate project management at Dell Technologies to nonprofit leadership and ministry, and eventually launched her own business, Collateral Designs. Discover practical tips for students on building experience, embracing challenges, and making a positive impact in their professional lives."
 ---
 The Sujeeth Foundation Spotlight highlights the stories of individuals who made the jump from academia to industry.  We share stories to inspire and educate.  We hope students can leverage this experience in their own journey.
 
