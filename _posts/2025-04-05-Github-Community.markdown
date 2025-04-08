@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Announcing the Creation of Our GitHub Community"
+title:  "Our GitHub Community"
 date:   2025-04-05 00:00:00 -0600
 categories: [announcements]
 excerpt: "The Sujeeth Foundation Github Community brings together career mentors to share knowledge.  Key Sections include Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content."
