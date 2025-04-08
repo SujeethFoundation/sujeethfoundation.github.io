@@ -9,12 +9,14 @@ The Sujeeth Foundation Spotlight highlights the stories of individuals who made 
 
 Navigating a career path can be daunting for college juniors looking ahead to life after graduation. With uncertainty, competition, and the challenge of finding the right fit, it's easy to feel overwhelmed. But stories of success can inspire and guide us—and Will Kyle’s journey from an entry-level sales job to leading a team at Amazon Web Services (AWS) is one of perseverance, adaptability, and growth.
 
-#Starting Out: The First Job That Built a Foundation
+# Starting Out: The First Job That Built a Foundation
 Will Kyle’s first job out of college was far from glamorous—selling steel buildings. It wasn’t his dream job, nor was it in an industry he was particularly passionate about, but it was an opportunity to gain experience, develop his skills, and prove himself in the professional world.
 
 At the time, the economy was in a recession, making job opportunities scarce. Will applied to any and every sales role he could find. After spotting an ad online for a steel building company, he took the leap. His role involved managing a network of steel building dealers, prospecting new customers, and running advertising campaigns. The company was resistant to technology, forcing him to work without the efficiencies of modern tools. Yet, instead of seeing this as a setback, he saw it as a learning experience.
 
 With no structured training in sales, Will took ownership of his own professional development. He read books, sought mentorship, and pushed himself out of his comfort zone. The key lesson? Success is rarely handed to you—it’s something you must actively pursue.
+
+{% include note.html content="Lesson - Start Somewhere, Grow Everywhere: Your first job doesn't have to be your dream job—it's a stepping stone to build skills, gain experience, and prove yourself in the professional world." %}
 
 ## Climbing the Ladder: Will’s Career at Amazon and AWS
 Will’s persistence and commitment to learning paved the way for his entry into major corporate roles. He spent have spent 12 years at Amazon, 8 years in ecommerce and 4 years at AWS.
@@ -25,6 +27,8 @@ His career at AWS has given him the opportunity to lead a team of professionals,
 
 ## Lessons from the Journey: Building a Network and Asking for Help
 Reflecting on his career, Will emphasizes the importance of networking and mentorship. “Every single person you meet is an opportunity to expand your network. Never burn a bridge,” he advises. Throughout his career, he has found that there are always people willing to help—but it’s up to you to ask for guidance. Taking initiative in building relationships and seeking mentorship can be game-changing.
+
+{% include note.html content="Lesson - Invest in Relationships: Never burn bridges—connections can help you advance, and relationships play a key role in professional growth." %}
 
 ## Advice for College Juniors: The First Job is Just a Stepping Stone
 For college juniors about to embark on their professional journeys, Will offers one crucial piece of advice: Be patient and focus on building experience.

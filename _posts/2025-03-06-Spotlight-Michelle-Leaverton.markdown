@@ -14,6 +14,7 @@ Michelle’s professional story is one of transformation and versatility. She re
 
 Before Dell, Michelle dedicated much of her career to nonprofit and ministry work, reflecting her passion for community engagement and social impact. She served as the Youth and Social Impact Director at Westminster Presbyterian Church, where she designed and managed youth programs, mission trips, and outreach initiatives addressing food insecurity, homelessness, and immigrant support. Her leadership in coordinating volunteers for Meals on Wheels during the pandemic further demonstrated her ability to mobilize communities in times of need.
 
+{% include note.html content="Lesson - Adaptability Across Sectors: Michelle's career spans corporate, nonprofit, and religious sectors. Her success showcases the power of transferable skills and adaptability in navigating different industries." %}
 ## A New Chapter: Entrepreneurship and Communication Expertise
 In August 2024, Michelle launched Collateral Designs, a business specializing in polished presentations and impactful communications. Her firm offers services that enhance clarity, creativity, and professionalism in business materials—helping clients craft compelling messages and visuals that stand out.
 
@@ -24,6 +25,8 @@ Beyond her professional achievements, Michelle’s personal journey is marked by
 
 ## Bringing Fresh Perspectives to Every Opportunity
 Whether managing global programs, leading nonprofit initiatives, or helping businesses refine their messaging, Michelle Leaverton approaches every challenge with a problem-solving mindset. Her ability to adapt, learn, and lead across sectors is a testament to the power of a diverse career path.
+
+{% include note.html content="Lesson - Diverse Perspectives: Her academic and professional diversity underpins her ability to think creatively and strategically." %}
 
 If you’re looking for someone who can blend corporate strategy with a heart for mission-driven work, Michelle is a name to remember.
 

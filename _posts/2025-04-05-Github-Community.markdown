@@ -31,6 +31,7 @@ We encourage everyone to get involved in our GitHub community. Here are a few wa
 Your involvement in our GitHub community is vital. By participating, you’re not only helping us achieve our mission but also contributing to a larger movement of collaboration and innovation. Together, we can create something truly remarkable.
 
 ## Key Sections
+{% include note.html content="Below are the key sections of the GitHub Community and an abstract of the content housed there.  Visit the community for comprehensive details about the Career Circle Program." %}
 
 - [Program Overview](#program-overview): Goals and structure of the Career Circle Program.
 - [Best Practices](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki/Best-Practices%3A): Guidelines for mentors and strategies for student engagement.
