@@ -3,7 +3,7 @@ layout: post
 title:  "Announcing the Creation of Our GitHub Community"
 date:   2025-04-05 00:00:00 -0600
 categories: [announcements]
-excerpt: "Announcing the launch of our GitHub community! Join us to share best practices, discuss challenges, and exchange resources. Support our mission to bridge the gap between higher education and meaningful employment for college students. Get involved and make a difference!"
+excerpt: "The Sujeeth Foundation Github Community brings together career mentors to share knowledge.  Key Sections include Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content."
 ---
 We are thrilled to announce the launch of our new [GitHub community](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki)! This platform is designed to bring together passionate individuals who are eager to collaborate, share knowledge, and contribute to our mission help unlock the opportunity of education for every college student.
 
@@ -159,12 +159,10 @@ The ability to connect with hiring managers is a valuable skill in a competitive
 ##### Principle: Networking is about building relationships, not just seeking opportunities.
 Building authentic connections with hiring managers can open doors and help students stand out in the job market.
 
-
 #### Video: The Origin of Why
 This video helps students identify their core purpose, which is crucial for personal and professional alignment. It also serves as a foundation for crafting meaningful resumes and LinkedIn profiles.
 ##### Principle: Clarity of purpose guides actions.
 When students understand their "why," they can make decisions that align with their core values and goals, leading to more authentic career paths.
-
 
 #### Video: Build a Strong Base Resume
 A resume is the cornerstone of a job application. This content helps students present themselves professionally and ensures their resume is aligned with industry expectations.
@@ -175,7 +173,6 @@ A strong, well-crafted resume is the first step in catching a recruiter’s atte
 As a vital component of any job search, a strong LinkedIn profile helps students network, connect with recruiters, and showcase their experience in an easily accessible way.
 ##### Principle: Your online presence matters.
 An optimized LinkedIn profile is a powerful tool for job seekers to connect with professionals, showcase their skills, and build credibility.
-
 
 #### Video: Working Out Loud with John Stepper
 “Working Out Loud” encourages students to engage with their professional community by contributing and sharing, fostering strong relationships that can aid in career growth.
