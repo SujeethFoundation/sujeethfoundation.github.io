@@ -14,6 +14,8 @@ Dave’s career began at AT&T as a retail sales consultant. Like many fresh grad
 
 He quickly learned that success isn’t just about showing up; it’s about being proactive. “I had to put in the effort beyond what I witnessed from my colleagues,” he says. This willingness to go the extra mile became a defining trait in his career.
 
+{% include note.html content="Lesson - Starting Strong: Success in a first job requires a proactive mindset and a willingness to exceed expectations. Dave excelled by doubling his sales targets and establishing himself as a subject matter expert." %}
+
 ## Breaking into the Workforce: The Power of First Impressions
 Landing that first job can be daunting, but Dave emphasizes the importance of energy, enthusiasm, and preparation. One piece of advice he received early on has stuck with him: “Every conversation you have is an interview.” From the very first screening call to the final handshake, the way you present yourself matters. Being able to articulate your work ethic and passion can make all the difference in standing out to hiring managers.
 
@@ -23,6 +25,8 @@ Over the years, Dave has picked up several insights that have fueled his success
 - **Manage your business.** If something needs to get done, schedule time for it—otherwise, it won’t happen.
 - **Adaptability is key.** You won’t always succeed on the first try, but the ability to adjust and improve will make you stronger.
 - **Incorporate feedback immediately.** When someone offers guidance, show them that their investment in you is worth it by implementing changes right away.
+
+{% include note.html content="Lesson - Investing in Success: Actively seek mentors, apply their knowledge, and maintain a commitment to lifelong learning. If you're the smartest in the room, challenge yourself to grow by seeking new opportunities." %}
 
 ## From College to Career: The Importance of Preparation
 Dave admits that he wasn’t the best student in college—he spent more time hiking than studying. But he quickly realized that preparation is everything. “Studying in college is very similar to how one should prepare before any meeting,” he explains. Whether it’s a class or a client presentation, showing up unprepared is never an option. Observing how others operate and borrowing their best practices can help you refine your own approach over time.

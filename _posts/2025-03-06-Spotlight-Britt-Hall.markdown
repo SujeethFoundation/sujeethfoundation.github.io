@@ -25,10 +25,14 @@ Britt’s first job after college wasn’t handed to them—it was built through
 
 Three months after graduation, Britt secured their first full-time role in marketing and communications for the Corpus Christi Symphony Orchestra—an opportunity that came from an earlier internship. The key lesson? Keep doors open, maintain good relationships, and recognize that every experience (even in retail and food service) builds skills that matter.
 
+{% include note.html content="Lesson - Strengthen relationships: Networking and maintaining connections are crucial for career growth, as Britt's first full-time job stemmed from an internship." %}
+
 ## A Career Built on Passion and Adaptability
 Fast forward to today, Britt leads a global team at Cisco, managing employee experience and enablement for hiring and internal talent movement programs. It’s a role that aligns almost perfectly with their Ikigai—the Japanese concept of purpose—combining passion, mission, vocation, and profession.
 
 Britt’s journey from journalism to corporate leadership wasn’t accidental. It was guided by a mindset of embracing change, being willing to “figure it out,” and leveraging past experiences to build a unique and valuable career path.
+
+{% include note.html content="Lesson - Identify your values early: Britt's principles—authenticity, accountability, and creative problem-solving—shaped their career decisions and work-life balance." %}
 
 ## Advice for College Juniors: Be a Bricoleur
 So, what advice does Britt have for students entering the workforce?

@@ -14,6 +14,8 @@ Laurel currently supports the Microsoft Viva Community and communication product
 
 Her career trajectory wasn’t a straight line, but each experience helped shape her professional path. Laurel's story is proof that discovering your Ikigai—the intersection of passion, mission, vocation, and profession—takes time, experimentation, and a willingness to explore different opportunities.
 
+{% include note.html content="Lesson - Adaptability and Nonlinear Paths: Laurel's career path and academic journey were unconventional, showing that flexibility and persistence can lead to success. Careers don't have to follow a straight line, and varied experiences can become valuable assets." %}
+
 ## From Internship to Full-Time Success
 Laurel’s first job came as an extension of an internship at Johnson Controls, which transitioned into a full-time role after graduation. In this position, she was responsible for communicating large organizational changes and managing digital spaces like the company’s website and intranet.
 Some of her most valuable lessons from this early experience included: 
@@ -37,7 +39,9 @@ Throughout her career, Laurel has embraced a mindset of continuous learning and 
 Laurel’s college experience was anything but conventional. She started as a dance major in Kansas City, studied abroad for a year, then took time off before resuming college at 25 years old. She compressed 2.5 years of coursework into just 1.5 years, proving that determination and flexibility can reshape one's academic and career path.
  
 This unconventional journey reinforced an important lesson: careers are not always linear. The skills and experiences you gain from varied paths can become assets in unexpected ways.
- 
+
+{% include note.html content="Lesson - Clarifying Career Goals Through Experience: It's okay to change your career direction multiple times. What matters is gaining clarity about what excites you and where you want to grow after exploring different roles." %}
+
 ## Advice for College Students
 If Laurel could give one piece of advice to students entering the workforce, it would be:
  
