@@ -221,3 +221,5 @@ This video helps students reflect on their past decisions and use those insights
 ##### Principle: Regret provides valuable lessons for decision-making.
 By acknowledging and understanding regret, students can make more informed, aligned decisions in their careers.
 
+[Crawlable Wiki](https://github-wiki-see.page/m/SujeethFoundation/sujeethfoundation.github.io/wiki) 
+
