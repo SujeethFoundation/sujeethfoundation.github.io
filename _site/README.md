@@ -1,4 +1,4 @@
-# sujeeth.org
+# [sujeeth.org](https://www.sujeeth.org)
 
 > Together we can make a lasting impact on a student's life and help them achieve their dreams.
 
@@ -7,6 +7,11 @@ At the Sujeeth Foundation, we help students network into their first job. Nearly
 College is a place where experimentation thrives and opportunities to grow are abundant. We help students unlock the opportunity of education.
 
 Together we make a lasting impact. 
+
+- [Wiki](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki) 
+- [Discussions](https://github.com/SujeethFoundation/sujeethfoundation.github.io/discussions)
+
+
 
 ## Our Sauce 
 We partner students with a mentor for a six-week program that encourages students to exercise agency in their career.
