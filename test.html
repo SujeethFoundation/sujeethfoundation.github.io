@@ -1,73 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copilot Studio Chatbot</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-      #copilot-chat-container {
-    width: 400px;
-    height: 600px;
-    margin: 0 auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    transition: all 0.3s ease;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    :root {
+      --webchat__color--accent: #0063B1;
+      --webchat__color--timestamp: #767676;
+      --webchat__font--primary: 'Calibri', 'Helvetica Neue', 'Arial', 'sans-serif';
+      --webchat__font-size--small: 80%;
+      --webchat__icon-url--external-link: url(data:image/svg+xml;base64,...); /* use full SVG string here */
+      --webchat__max-width--bubble: 480px;
+      --webchat__min-height--bubble: 40px;
+      --webchat__padding--regular: 10px;
+    }
 
-.minimized {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-}
+    body {
+      margin: 0;
+      font-family: var(--webchat__font--primary);
+    }
 
-.copilot-chat-body {
-    flex: 1;
-    overflow-y: auto;
-    background-color: #f9f9f9;
-}
+    #chat-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: none;
+      flex-direction: column;
+      width: 400px;
+      height: 600px;
+      max-width: 90vw;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      overflow: hidden;
+    }
 
-    </style>
+    #chat-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--webchat__color--accent);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 1001;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
 </head>
 <body>
-    <div id="copilot-chat-container" class="minimized">
-        <div class="copilot-chat-header d-flex justify-content-between align-items-center p-2 bg-primary text-white">
-            <h2 class="mb-0">Chat with Copilot</h2>
-            <button id="toggle-button" class="btn btn-light btn-sm">+</button>
-        </div>
-        <div class="copilot-chat-body p-2">
-          <iframe src="https://web.powerva.microsoft.com/environments/d18354c7-d020-ecef-8ac6-3358211c110e/bots/crd33_tsfBot/webchat?__version__=2" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-        </div>
-        <div class="copilot-chat-footer d-flex p-2 bg-light">
-            <input type="text" id="user-input" class="form-control mr-2" placeholder="Type your message...">
-            <button id="send-button" class="btn btn-primary">Send</button>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script>
-    document.getElementById('toggle-button').addEventListener('click', function() {
-    const chatContainer = document.getElementById('copilot-chat-container');
-    if (chatContainer.classList.contains('minimized')) {
-        chatContainer.classList.remove('minimized');
-        this.textContent = '-';
-    } else {
-        chatContainer.classList.add('minimized');
-        this.textContent = '+';
-    }
-});
 
-document.getElementById('send-button').addEventListener('click', function() {
-    const userInput = document.getElementById('user-input').value;
-    // Code to send userInput to Copilot chatbot
-    console.log('User input:', userInput);
-});
+  <!-- Minimized Button -->
+  <button id="chat-toggle">💬</button>
 
+  <!-- Expandable Chat Container -->
+  <div id="chat-container">
+    <!-- Replace this with your actual Copilot embed code -->
+    <iframe src="https://your-copilot-embed-url.com"></iframe>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById("chat-toggle");
+    const chatContainer = document.getElementById("chat-container");
+    let isOpen = false;
+
+    toggleBtn.addEventListener("click", () => {
+      isOpen = !isOpen;
+      chatContainer.style.display = isOpen ? "flex" : "none";
+    });
   </script>
+
 </body>
 </html>
