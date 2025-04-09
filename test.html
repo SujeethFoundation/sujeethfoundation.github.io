@@ -32,25 +32,6 @@
 }
 
     </style>
-  <script>
-    document.getElementById('toggle-button').addEventListener('click', function() {
-    const chatContainer = document.getElementById('copilot-chat-container');
-    if (chatContainer.classList.contains('minimized')) {
-        chatContainer.classList.remove('minimized');
-        this.textContent = '-';
-    } else {
-        chatContainer.classList.add('minimized');
-        this.textContent = '+';
-    }
-});
-
-document.getElementById('send-button').addEventListener('click', function() {
-    const userInput = document.getElementById('user-input').value;
-    // Code to send userInput to Copilot chatbot
-    console.log('User input:', userInput);
-});
-
-  </script>
 </head>
 <body>
     <div id="copilot-chat-container" class="minimized">
@@ -69,5 +50,24 @@ document.getElementById('send-button').addEventListener('click', function() {
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script>
+    document.getElementById('toggle-button').addEventListener('click', function() {
+    const chatContainer = document.getElementById('copilot-chat-container');
+    if (chatContainer.classList.contains('minimized')) {
+        chatContainer.classList.remove('minimized');
+        this.textContent = '-';
+    } else {
+        chatContainer.classList.add('minimized');
+        this.textContent = '+';
+    }
+});
+
+document.getElementById('send-button').addEventListener('click', function() {
+    const userInput = document.getElementById('user-input').value;
+    // Code to send userInput to Copilot chatbot
+    console.log('User input:', userInput);
+});
+
+  </script>
 </body>
 </html>
