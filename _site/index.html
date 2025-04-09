@@ -305,32 +305,32 @@
                           <div id="owl-testimonial" class="owl-carousel"><div class="item">
                                   <blockquote>
                                       <cite title="Source Title">
-                                        <a class="post-link" href="/announcements/Github-Community/">
-                                          Announcing the Creation of Our GitHub Community
+                                        <a class="post-link" href="/career/network-with-chatgpt/">
+                                          Network with ChatGPT
                                         </a>
                                       </cite>
                                       <br/>
-                                      <p>The Sujeeth Foundation Github Community brings together career mentors to share knowledge.  Key Sections include Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content.</p>
+                                      <p>Learn how students can build a professional brand on LinkedIn by following and engaging with thought leaders using John Stepper’s Working Out Loud principles and ChatGPT.</p>
                                   </blockquote>
                               </div><div class="item">
                                   <blockquote>
                                       <cite title="Source Title">
-                                        <a class="post-link" href="/spotlight/Spotlight-Will-Kyle/">
-                                          Stepping Stones: Will Kyle
+                                        <a class="post-link" href="/career/explore-career-paths-with-chatgpt/">
+                                          Explore Career Paths with ChatGPT
                                         </a>
                                       </cite>
                                       <br/>
-                                      <p>Will Kyle shares how perseverance, mentorship, and strategic networking helped him navigate challenges and achieve success in his journey from selling steel buildings to becoming an Enterprise Sales Leader at AWS. Learn practical tips for students on building experience, embracing opportunities, and making the most of their first job.</p>
+                                      <p>A hands-on, growth-oriented exercise. Foster exploration, curiosity, and strategic career planning.</p>
                                   </blockquote>
                               </div><div class="item">
                                   <blockquote>
                                       <cite title="Source Title">
-                                        <a class="post-link" href="/spotlight/Spotlight-Valerie-Bergman/">
-                                          Find Your Why: Valerie Bergman
+                                        <a class="post-link" href="/career/coat-of-arms/">
+                                          Coat of Arms
                                         </a>
                                       </cite>
                                       <br/>
-                                      <p>Valerie Bergman aligned passion with profession, strategic networking, and continuous learning on her inspiring journey from software engineer to Microsoft Field Sales Specialist. Get practical advice on building experience, embracing challenges, and staying authentic.</p>
+                                      <p>Discover how college students can reflect on their past, present, and future to uncover purpose and direction using the 'Build Your Coat of Arms' exercise.</p>
                                   </blockquote>
                               </div></div>
                       </div>
@@ -475,7 +475,29 @@
 
   <!-- Begin footer -->
   <footer class="text-off-white">
-            
+
+<!-- Start Bot -->    
+
+  <!-- Minimized Button -->
+  <button id="chat-toggle">💬</button>
+
+  <!-- Expandable Chat Container -->
+  <div id="chat-container">
+    <iframe src="https://web.powerva.microsoft.com/environments/d18354c7-d020-ecef-8ac6-3358211c110e/bots/crd33_tsfBot/webchat?__version__=2" frameborder="0" style="width: 100%; height: 100%; border: none;"></iframe>
+  </div>
+
+  <script>
+    const chatBtn = document.getElementById("chat-toggle");
+    const chatContainer = document.getElementById("chat-container");
+    let isOpen = false;
+
+    chatBtn.addEventListener("click", () => {
+      isOpen = !isOpen;
+      chatContainer.style.display = isOpen ? "flex" : "none";
+    });
+  </script>
+<!-- End Bot -->    
+
     <div class="footer-top">
       <div class="container">
           <div>
@@ -502,7 +524,7 @@
                     </ul>
                 </div>               
                 
-                <div class="col-sm-3 social"><ul class="social-media-list"><li><a href="https://github.com/SujeethFoundation"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">SujeethFoundation</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>RSS</span></a></li></ul>
+                <div class="col-sm-3 social"><ul class="social-media-list"><li><a href="https://github.com/SujeethFoundation"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">SujeethFoundation</span></a></li><li><a href="https://www.linkedin.com/company/sujeeth-org"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg> <span class="username">sujeeth-org</span></a></li><li><a href="/feed.xml"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#rss"></use></svg> <span>RSS</span></a></li></ul>
 </div>   
             </div> <!-- /.row -->
         </div> <!-- /.container -->
