@@ -3,7 +3,7 @@ layout: post
 title: "Coat of Arms"
 date: 2025-04-09
 categories: career
-description: "Discover how college students can reflect on their past, present, and future to uncover purpose and direction using the 'Build Your Coat of Arms' exercise."
+excerpt: "Discover how college students can reflect on their past, present, and future to uncover purpose and direction using the 'Build Your Coat of Arms' exercise."
 ---
 
 ### Finding Your Purpose: A Journey Through Your Past, Present, and Future
