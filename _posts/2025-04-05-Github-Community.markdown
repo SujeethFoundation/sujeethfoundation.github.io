@@ -57,7 +57,7 @@ A: Each session lasts one hour and includes group discussions, reflection exerci
 A: Volunteers are professional with 10 years of work experience, have a validated LinkedIn profile, and a commitment to mentorship.  You can apply to volunteer at: https://portal.sujeeth.org/volunteer. 
 
 ### Q: How can I donate to the Sujeeth Foundation?
-A: Anyone can donate to the Sujeeth Foundation at the foundations GoFundMe page: https://www.gofundme.com/f/sujeethorg2025
+A: Anyone can donate to the Sujeeth Foundation at the foundations GoFundMe page: https://go.sujeeth.org/give
 
 ### Q: Who are Sujeeth Foundation Partners?
 A: The Sujeeth Foundation partners with accredited non-profit institutions, colleges, and universities.  You can find out more about partnering with the Sujeeth Foundation at https://www.sujeeth.org/partner.
