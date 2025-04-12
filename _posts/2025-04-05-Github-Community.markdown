@@ -3,7 +3,7 @@ layout: post
 title:  "Our GitHub Community"
 date:   2025-04-05 00:00:00 -0600
 categories: [announcements]
-excerpt: "The Sujeeth Foundation Github Community brings together career mentors to share knowledge.  Key Sections include Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content."
+excerpt: "The volunteer experience is browght together by the Github Community.  The wiki and discussion board powered community makes it easy to share knowledge.  Key Sections include a FAQ, the Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content."
 ---
 We are thrilled to announce the launch of our new [GitHub community](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki)! This platform is designed to bring together passionate individuals who are eager to collaborate, share knowledge, and contribute to our mission help unlock the opportunity of education for every college student.
 
@@ -34,7 +34,7 @@ Your involvement in our GitHub community is vital. By participating, you’re no
 {% include note.html content="Below are the key sections of the GitHub Community and an abstract of the content housed there.  Visit the community for comprehensive details about the Career Circle Program." %}
 
 - [Program Overview](#program-overview): Goals and structure of the Career Circle Program.
-- [Best Practices](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki/Best-Practices%3A): Guidelines for mentors and strategies for student engagement.
+- [Best Practices](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki/Best-Practices%3A): FAQ for studemts and mentors.
 - [Weekly Content](#weekly-content): Detailed breakdown of each week's objectives, agenda, and resources.
 - [Additional Resources](#additional-resources): Templates, videos, articles, and more.
 - [Discussion Board](https://github.com/SujeethFoundation/sujeethfoundation.github.io/discussions): Support and Best Practice Sharing.
