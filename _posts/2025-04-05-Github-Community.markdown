@@ -3,7 +3,7 @@ layout: post
 title:  "Our GitHub Community"
 date:   2025-04-05 00:00:00 -0600
 categories: [announcements]
-excerpt: "The volunteer experience is browght together by the Github Community.  The wiki and discussion board powered community makes it easy to share knowledge.  Key Sections include a FAQ, the Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content."
+excerpt: "The volunteer experience is brought together by the Github Community.  The wiki and discussion board powered community makes it easy to share knowledge.  Key Sections include a FAQ, the Career Circle Program Structure and Weekly Agenda's.  There's even an inventory of content that clearly explains the purpose behind the content."
 ---
 We are thrilled to announce the launch of our new [GitHub community](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki)! This platform is designed to bring together passionate individuals who are eager to collaborate, share knowledge, and contribute to our mission help unlock the opportunity of education for every college student.
 
