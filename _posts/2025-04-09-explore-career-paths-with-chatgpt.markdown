@@ -1,6 +1,6 @@
 ---
 title: "Explore Career Paths with ChatGPT"
-excerpt: "A hands-on, growth-oriented exercise. Foster exploration, curiosity, and strategic career planning."
+excerpt: "Use what the internet knows.  A hands-on, growth-oriented look at career planning. Foster exploration, curiosity, and strategic thinking."
 date: 2025-04-09
 layout: post
 categories: career
