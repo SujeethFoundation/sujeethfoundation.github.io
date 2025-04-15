@@ -2,7 +2,7 @@
 layout: post
 title:  "The Sujeeth Foundation starts today"
 date:   2023-05-16 00:00:00 -0600
-categories: [announcements]
+categories: [alerts]
 excerpt: "Origin story. Customers fix organizations. Students are the customer. Getting student outcomes solves engagement problems later.  Let's do this."
 ---
 <meta name="robots" content="noindex">

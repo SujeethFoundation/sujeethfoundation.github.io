@@ -1,7 +1,7 @@
 ---
 layout: blogsection
-permalink: /blog/announcements
-title: Announcements
+permalink: /blog/alerts
+title: Alerts
 excerpt: Updates on the Sujeeth Foundation's march to help students unlock the opportunity of education.
 skip: true
 ---
@@ -14,7 +14,7 @@ skip: true
   {%- endif -%}
 
   <ul class="post-list">
-    {%- for post in site.categories.announcements limit:10 -%}
+    {%- for post in site.categories.alerts limit:10 -%}
     <li>
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       <span class="post-meta">{{ post.date | date: date_format }} -- 
