@@ -1,6 +1,6 @@
 ---
 title: "Network with ChatGPT"
-excerpt: "Learn how students can build a professional brand on LinkedIn by following and engaging with thought leaders using John Stepper’s Working Out Loud principles and ChatGPT."
+excerpt: "Students can build a professional brand on LinkedIn by following and engaging with thought leaders using John Stepper’s Working Out Loud principles and ChatGPT."
 date: 2025-04-09
 layout: post
 categories: career
