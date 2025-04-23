@@ -2,4 +2,8 @@ User-agent: *
 Disallow: /subscribe
 Disallow: /legal
 Disallow: /wol
+Disallow: /blog/announcements
+Disallow: /joinvolunteer
+Disallow: /joinpartner
+Disallow: /stories
 Sitemap: https://sujeeth.org/sitemap.xml
