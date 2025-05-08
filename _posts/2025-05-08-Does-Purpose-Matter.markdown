@@ -66,7 +66,7 @@ Specificity isn't limiting; it’s liberating. It opens doors through intentiona
 
 ### You’re Not Behind—You’re Just Early
 
-At Career Circle, the goal isn't immediate answers. It's about fostering the space to ask better questions and discover meaningful insights. Exercises like the Coat of Arms, SMART goals, and career research aren't mere busywork—they're foundational tools that build your blueprint for success.
+In a Career Circle, the goal isn't immediate answers. It's about fostering the space to ask better questions and discover meaningful insights. Exercises like the Coat of Arms, SMART goals, and career research aren't mere busywork—they're foundational tools that build your blueprint for success.
 
 Because knowing yourself isn't a luxury—it's your greatest competitive advantage.
 
