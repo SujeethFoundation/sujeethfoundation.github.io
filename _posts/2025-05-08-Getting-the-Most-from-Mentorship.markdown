@@ -79,7 +79,7 @@ So here’s what mentoring research shows:
 
 ## **How to Make This Worth Your Time (Even If You’re Skeptical)**
 
-Here are nine small shifts that turn Career Circles from "meh" to *meaningful*. You don’t need to do all 50 tips. Just pick a few. Try them out. See what happens.
+Here are nine small shifts that turn Career Circles from "meh" to *meaningful*. You don’t need to do all 45 tips. Just pick a few. Try them out. See what happens.
 
 ---
 
