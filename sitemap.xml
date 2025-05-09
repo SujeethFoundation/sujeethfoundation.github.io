@@ -37,58 +37,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.sujeeth.org/career/Exploring-Careers-with-Generative-AI/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.sujeeth.org/blog/spotlight</loc>
     <lastmod>2025-04-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Laurel-Dzneladze/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Valerie-Bergman/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Michelle-Leaverton/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Avi-Sujeeth/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Marta-Texidor/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Britt-Hall/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/spotlight/Spotlight-Dave-Dabate/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.sujeeth.org/blog/alerts</loc>
@@ -96,29 +48,4 @@
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.sujeeth.org/alerts/Github-Community/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/career/network-with-chatgpt/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/career/explore-career-paths-with-chatgpt/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.sujeeth.org/career/coat-of-arms/</loc>
-    <lastmod>2025-04-09</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-
 </urlset>
