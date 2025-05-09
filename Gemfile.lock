@@ -282,6 +282,7 @@ GEM
     webrick (1.9.1)
 
 PLATFORMS
+  aarch64-mingw-ucrt
   x64-mingw-ucrt
   x64-mingw32
   x86_64-linux
