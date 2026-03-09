@@ -93,6 +93,8 @@ We believe that investing in students means investing in a better world. College
 - **Website:** [sujeeth.org](https://sujeeth.org)
 - **Resources:** [topics.sujeeth.org](https://topics.sujeeth.org)
 - **Email:** hello@sujeeth.org
+- [Wiki](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki)
+- [Discussions](https://github.com/SujeethFoundation/sujeethfoundation.github.io/discussions)
 
 ---
 
