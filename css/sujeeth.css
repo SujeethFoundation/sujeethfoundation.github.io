@@ -57,7 +57,10 @@
 	background-color: #0881C8;
   }
 
-.embedded-form-class .copilot-widget-container-class {
+/* Hide the duplicate Copilot Studio widget inside embedded Quick View Forms */
+.quickform .copilot-widget-container-class,
+.container.quickform [class*="copilot"], 
+.container.quickform [id*="copilot"] {
     display: none !important;
 }
 /* ==== end web chat ==== */
