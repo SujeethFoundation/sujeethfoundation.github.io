@@ -56,6 +56,10 @@
   .header-111{
 	background-color: #0881C8;
   }
+
+.embedded-form-class .copilot-widget-container-class {
+    display: none !important;
+}
 /* ==== end web chat ==== */
 
 /* ===== Begin Includes ===== */
