@@ -57,11 +57,21 @@
 	background-color: #0881C8;
   }
 
-/* Hide the duplicate Copilot Studio widget inside embedded Quick View Forms */
-.quickform .copilot-widget-container-class,
-.container.quickform [class*="copilot"], 
-.container.quickform [id*="copilot"] {
+/* 
+  Target the specific PVA webChat structure when it renders 
+  inside the quickform template iframe document path 
+*/
+iframe[src*="quickform-template-path"] html [name="webChat"],
+iframe[src*="quickform-template-path"] html .pva-embedded-web-chat,
+iframe[src*="quickform-template-path"] html .pva-embedded-web-chat-widget-container,
+iframe.quickform html [name="webChat"],
+iframe.quickform html .pva-embedded-web-chat {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
 }
 /* ==== end web chat ==== */
 
