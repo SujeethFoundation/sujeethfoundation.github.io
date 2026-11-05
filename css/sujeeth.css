@@ -201,6 +201,20 @@ a.btn {
 	margin: 10px;
 }
 
+/* .button1 (Donate Now, Learn More, blog nav buttons) set explicitly so no other theme CSS can bring back the old accent. */
+a.btn.button1,
+a.btn.btn-lg.button1,
+a.btn.button1:visited {
+	color: #fff;
+	background-color: #277493;
+}
+a.btn.button1:hover,
+a.btn.button1:focus,
+a.btn.button1:active {
+	color: #fff;
+	background-color: #1B5167;
+}
+
 .pyramid-centered {
 	padding-top: 25px;
   }
@@ -379,7 +393,7 @@ div.entitylist {
 table.cards.brand td:nth-child(1){
   font-weight: 100;
   color: #fff;
-  background: #7f0000;
+  background: #277493;
   font-size: 2rem;
 }
 
