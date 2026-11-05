@@ -8,7 +8,7 @@
 	--webchat__font--primary: 'Calibri', 'Helvetica Neue', 'Arial', 'sans-serif';
 	--chat-navy: #1A2744;
 	--chat-navy-hover: #24365F;
-	--chat-orange: #E04F00;
+	--chat-accent-color: #277493;
 	--chat-cream: #FDFAF5;
 	--chat-border: #E8E0D4;
 }
@@ -53,7 +53,7 @@ body {
 }
 
 #chat-toggle:focus-visible {
-	outline: 3px solid var(--chat-orange) !important;
+	outline: 3px solid var(--chat-accent-color) !important;
 	outline-offset: 3px;
 }
 
@@ -197,7 +197,7 @@ div.post-content ol > li {
 
 a.btn {
 	color: #fff;
-	background-color: #E04F00;
+	background-color: #277493;
 	margin: 10px;
 }
 

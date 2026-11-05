@@ -9,8 +9,8 @@
 	/* Brand */
 	--chat-navy: #1A2744;
 	--chat-navy-hover: #24365F;
-	--chat-orange: #E04F00;
-	--chat-orange-dark: #B33C00;
+	--chat-accent-color: #277493;
+	--chat-accent-dark: #1B5167;
 	--chat-cream: #FDFAF5;
 	--chat-stone: #6B6560;
 	--chat-border: #E8E0D4;
@@ -18,7 +18,7 @@
 
 	/* Page */
 	--chat-background: var(--chat-cream);
-	--chat-accent: var(--chat-orange);
+	--chat-accent: var(--chat-accent-color);
 	--chat-font: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
 	--chat-title: "Ask the Foundation";
 
@@ -34,7 +34,7 @@
 	--chat-bubble-radius: 10px;
 
 	/* Links in replies */
-	--chat-link: var(--chat-orange-dark);
+	--chat-link: var(--chat-accent-dark);
 
 	/* Logo beside the assistant's replies (avatar size is pixels; text values keep their quotes) */
 	--chat-avatar-image: "/img/chat-avatar.png";
@@ -51,8 +51,8 @@
 	/* Message box */
 	--chat-send-background: var(--chat-cream);
 	--chat-send-border: var(--chat-border);
-	--chat-send-button: var(--chat-orange);
-	--chat-send-button-hover: var(--chat-orange-dark);
+	--chat-send-button: var(--chat-accent-color);
+	--chat-send-button-hover: var(--chat-accent-dark);
 	--chat-send-placeholder: var(--chat-stone);
 	--chat-send-text: var(--chat-text);
 	--chat-timestamp: var(--chat-stone);
@@ -80,7 +80,7 @@ header img { flex: none; width: 32px; height: 32px; border-radius: 50%; }
 	background: transparent; color: var(--chat-cream); cursor: pointer;
 }
 .icon-button:hover { background: var(--chat-navy-hover); }
-.icon-button:focus-visible { outline: 3px solid var(--chat-orange); outline-offset: 1px; }
+.icon-button:focus-visible { outline: 3px solid var(--chat-accent-color); outline-offset: 1px; }
 
 #webchat { flex: 1; min-height: 0; }
 .notice { margin: 0; padding: 20px 16px; font-size: 15px; line-height: 1.5; color: var(--chat-stone); }
