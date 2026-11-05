@@ -107,6 +107,17 @@ body {
 	}
 }
 
+/* Phones turned sideways: use the full height under the navbar and sit beside the button, not above it. */
+@media (max-height: 520px) and (min-width: 481px) {
+	#chat-container {
+		top: 76px;
+		bottom: 8px;
+		right: 84px;
+		width: min(400px, calc(100vw - 100px));
+		height: auto;
+	}
+}
+
 .scrolltotop {
 	bottom: 100px;
 	right: 35px;
@@ -392,3 +403,25 @@ textarea#address1_composite {
 	height: 100px;
 }
 /* ==== End Power Portal Branding ==== */
+
+/* ==== Candid link ====
+   The link text is a long web address with few places to break, so on phones it ran past the right edge
+   of the screen and made the whole page scroll sideways. Let it wrap anywhere. */
+#financial-section a[href*="candid.org"] {
+	overflow-wrap: anywhere;
+	word-break: break-word;
+}
+/* ==== end Candid link ==== */
+
+/* On 320px phones two things were wider than the screen: the "Launch Portal" button (80px of padding on each
+   side) and the giving pyramid, which is at least 290px wide inside a section with 10% side padding. */
+@media (max-width: 380px) {
+	#services-section a.btn {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+	#give-section {
+		padding-left: 15px;    /* Bootstrap's row pulls 15px outside its section, so less than 15px overflows */
+		padding-right: 15px;
+	}
+}
