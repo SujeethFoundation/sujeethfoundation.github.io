@@ -1,9 +1,9 @@
 /* ==== web chat ====
-   The chat is Microsoft's hosted Copilot Studio page inside an iframe (see _includes/footer.html).
-   CSS here styles the button and the window around it. Colors, fonts and the header inside the
-   window are set in Copilot Studio, and CSS on this page cannot reach them.
+   The chat is its own page, /chat/, shown in an iframe (see _includes/footer.html).
+   CSS here styles the button and the window around it. What is inside the window (header, bubbles,
+   avatar, message box) is styled in /css/sujeeth-chat.css, which only the chat page loads.
    style.css forces border-radius: 0 and removes focus outlines on every element with !important,
-   so the rules below that set a radius or a focus ring need !important too. */
+   so rules here that set a radius or a focus ring need !important too. */
 :root {
 	--webchat__font--primary: 'Calibri', 'Helvetica Neue', 'Arial', 'sans-serif';
 	--chat-navy: #1A2744;
@@ -12,11 +12,11 @@
 	--chat-cream: #FDFAF5;
 	--chat-border: #E8E0D4;
 }
- 
+
 body {
 	font-family: var(--webchat__font--primary);
 }
- 
+
 #chat-toggle {
 	position: fixed;
 	bottom: 20px;
@@ -37,7 +37,7 @@ body {
 	box-shadow: 0 4px 14px rgba(26, 39, 68, 0.35);
 	transition: background-color 0.15s;
 }
- 
+
 #chat-toggle::before {
 	content: "";
 	display: block;
@@ -47,16 +47,16 @@ body {
 	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
 }
- 
+
 #chat-toggle:hover {
 	background-color: var(--chat-navy-hover);
 }
- 
+
 #chat-toggle:focus-visible {
 	outline: 3px solid var(--chat-orange) !important;
 	outline-offset: 3px;
 }
- 
+
 #chat-container {
 	position: fixed;
 	right: 20px;
@@ -72,15 +72,15 @@ body {
 	z-index: 1000;
 	overflow: hidden;
 }
- 
+
 #chat-container iframe {
-	display: block;
 	flex: 1;
 	width: 100%;
 	height: 100%;
 	border: 0;
+	display: block;
 }
- 
+
 @media (prefers-reduced-motion: no-preference) {
 	#chat-container {
 		animation: chat-open 0.15s ease-out;
@@ -90,15 +90,15 @@ body {
 		to { opacity: 1; transform: none; }
 	}
 }
- 
-/* Phones: the window fills the width and leaves the button visible. */
+
+/* Phones: the window fills the width, sits below the navbar, and leaves the button visible. */
 @media (max-width: 480px) {
 	#chat-toggle {
 		right: 12px;
 		bottom: 12px;
 	}
 	#chat-container {
-		top: 76px;        /* below the fixed navbar */
+		top: 76px;
 		left: 8px;
 		right: 8px;
 		bottom: 84px;
@@ -106,7 +106,7 @@ body {
 		height: auto;
 	}
 }
- 
+
 .scrolltotop {
 	bottom: 100px;
 	right: 35px;

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Ask the Foundation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/sujeeth-chat.css">
+
+  <!-- Web Chat is Microsoft's open-source chat component. The version is pinned on purpose: the bubble CSS in
+       /css/sujeeth-chat.css uses the class names of 4.18.0 (the ones Microsoft Learn documents), and newer releases
+       rename them. The integrity value is Microsoft's published hash for this exact file. -->
+  <script src="https://cdn.botframework.com/botframework-webchat/4.18.0/webchat.js"
+          integrity="sha384-YCF4860lf811lnrrIBL4pfZ+UqiNit+8lXEhSY3R+dSc+C1rg6UnEQR5avdOTbj0"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <img src="/img/chat-avatar.png" alt="" width="32" height="32">
+      <span class="title"></span>
+      <button type="button" class="icon-button" id="restart" aria-label="Start a new conversation" title="Start a new conversation">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+      </button>
+      <button type="button" class="icon-button" id="close" aria-label="Close chat" title="Close chat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </header>
+    <div id="webchat" role="main"></div>
+  </div>
+
+  <script>
+    // Paste your token endpoint between the quotes.
+    // Copilot Studio: Settings > Channels > Email > Token Endpoint > Copy
+    const TOKEN_ENDPOINT = "<YOUR TOKEN ENDPOINT>";
+
+    // Reads a --chat-* value from /css/sujeeth-chat.css. Text values lose their quotes; missing values are undefined.
+    const css = getComputedStyle(document.documentElement);
+    function token(name) {
+      const value = css.getPropertyValue(name).trim().replace(/^(["'])(.*)\1$/, '$2');
+      return value === '' ? undefined : value;
+    }
+    function buildStyleOptions() {
+      const options = { bubbleNubSize: 0, bubbleFromUserNubSize: 0, suggestedActionLayout: 'flow',
+                        suggestedActionBorderWidth: 1, suggestedActionBorderRadius: 16, avatarBorderRadius: '50%' };
+      const put = (key, value) => { if (value !== undefined) options[key] = value; };
+      put('accent', token('--chat-accent'));
+      put('primaryFont', token('--chat-font'));
+      put('backgroundColor', token('--chat-background'));
+      put('botAvatarImage', token('--chat-avatar-image'));
+      put('botAvatarInitials', token('--chat-avatar-initials'));
+      put('botAvatarBackgroundColor', token('--chat-avatar-background'));
+      put('avatarSize', token('--chat-avatar-size') === undefined ? undefined : Number(token('--chat-avatar-size')));
+      put('suggestedActionBackgroundColor', token('--chat-suggestion-background'));
+      put('suggestedActionBackgroundColorOnHover', token('--chat-suggestion-background-hover'));
+      put('suggestedActionBorderColor', token('--chat-suggestion-border'));
+      put('suggestedActionTextColor', token('--chat-suggestion-text'));
+      put('sendBoxBackground', token('--chat-send-background'));
+      put('sendBoxBorderTop', 'solid 1px ' + (token('--chat-send-border') || '#E8E0D4'));
+      put('sendBoxButtonColor', token('--chat-send-button'));
+      put('sendBoxButtonColorOnHover', token('--chat-send-button-hover'));
+      put('sendBoxPlaceholderColor', token('--chat-send-placeholder'));
+      put('sendBoxTextColor', token('--chat-send-text'));
+      put('timestampColor', token('--chat-timestamp'));
+      return options;
+    }
+
+    const chatEl = document.getElementById('webchat');
+    let directLineUrl = null;
+    let directLine = null;
+
+    function showNotice(text) {
+      chatEl.textContent = '';
+      const p = document.createElement('p');
+      p.className = 'notice';
+      p.textContent = text;
+      chatEl.appendChild(p);
+    }
+
+    // Starts the conversation as soon as it connects, so the agent's greeting appears (from Microsoft's sample).
+    function createStartStore() {
+      return window.WebChat.createStore({}, ({ dispatch }) => (next) => (action) => {
+        if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
+          dispatch({
+            type: 'DIRECT_LINE/POST_ACTIVITY',
+            meta: { method: 'keyboard' },
+            payload: { activity: { channelData: { postBack: true }, name: 'startConversation', type: 'event' } }
+          });
+        }
+        return next(action);
+      });
+    }
+
+    async function connect() {
+      if (TOKEN_ENDPOINT.startsWith('<')) {
+        showNotice('The chat is not set up yet.');
+        return;
+      }
+      try {
+        const origin = TOKEN_ENDPOINT.slice(0, TOKEN_ENDPOINT.indexOf('/powervirtualagents'));
+        const apiVersion = new URL(TOKEN_ENDPOINT).searchParams.get('api-version');
+        if (!directLineUrl) {
+          const settings = await (await fetch(origin + '/powervirtualagents/regionalchannelsettings?api-version=' + apiVersion)).json();
+          directLineUrl = settings.channelUrlsById.directline;
+          if (!directLineUrl) throw new Error('No Direct Line URL');
+        }
+        const conversation = await (await fetch(TOKEN_ENDPOINT)).json();
+        if (!conversation.token) throw new Error('No conversation token');
+
+        if (directLine && directLine.end) directLine.end();
+        directLine = window.WebChat.createDirectLine({ domain: directLineUrl + 'v3/directline', token: conversation.token });
+        // A fresh container each time, so a restart never draws into something Web Chat already owns.
+        chatEl.textContent = '';
+        const mount = document.createElement('div');
+        mount.style.height = '100%';
+        chatEl.appendChild(mount);
+        window.WebChat.renderWebChat({ directLine: directLine, styleOptions: buildStyleOptions(), store: createStartStore(), locale: 'en-US' }, mount);
+      } catch (err) {
+        console.error('Could not start the chat:', err);
+        showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.');
+      }
+    }
+
+    // The chat window on the main site listens for this and closes itself.
+    function closeChat() { window.parent.postMessage({ type: 'sujeeth-chat-close' }, location.origin); }
+
+    document.getElementById('restart').addEventListener('click', connect);
+    document.getElementById('close').addEventListener('click', closeChat);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeChat(); });
+    if (window.WebChat) { connect(); } else { showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.'); }
+  </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+/* ==== Sujeeth chat page (chat/index.html) ====
+   This stylesheet is used only by the chat page, which runs Microsoft's Web Chat 4.18.0.
+   Bubble rules use the selectors Microsoft Learn documents ("Customize your agent", Power Pages).
+   Avatar, accent color, font, message box and suggested replies cannot be reached with those selectors,
+   so chat/index.html reads the matching --chat-* values below and passes them to Web Chat as styleOptions.
+   Edit the colors in the :root block. If you change the pinned Web Chat version in chat/index.html,
+   the class names in the bubble rules may change with it. */
+:root {
+	/* Brand */
+	--chat-navy: #1A2744;
+	--chat-navy-hover: #24365F;
+	--chat-orange: #E04F00;
+	--chat-orange-dark: #B33C00;
+	--chat-cream: #FDFAF5;
+	--chat-stone: #6B6560;
+	--chat-border: #E8E0D4;
+	--chat-text: #2E2E2E;
+
+	/* Page */
+	--chat-background: var(--chat-cream);
+	--chat-accent: var(--chat-orange);
+	--chat-font: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+	--chat-title: "Ask the Foundation";
+
+	/* Replies from the chat assistant */
+	--chat-bot-bubble-background: #FFFFFF;
+	--chat-bot-bubble-border: var(--chat-border);
+	--chat-bot-bubble-text: var(--chat-text);
+
+	/* Messages from the visitor */
+	--chat-user-bubble-background: var(--chat-navy);
+	--chat-user-bubble-border: var(--chat-navy);
+	--chat-user-bubble-text: var(--chat-cream);
+	--chat-bubble-radius: 10px;
+
+	/* Links in replies */
+	--chat-link: var(--chat-orange-dark);
+
+	/* Logo beside the assistant's replies (avatar size is pixels; text values keep their quotes) */
+	--chat-avatar-image: "/img/chat-avatar.png";
+	--chat-avatar-background: var(--chat-navy);
+	--chat-avatar-initials: "SF";
+	--chat-avatar-size: 36;
+
+	/* Suggested replies */
+	--chat-suggestion-background: var(--chat-cream);
+	--chat-suggestion-background-hover: var(--chat-border);
+	--chat-suggestion-border: var(--chat-navy);
+	--chat-suggestion-text: var(--chat-navy);
+
+	/* Message box */
+	--chat-send-background: var(--chat-cream);
+	--chat-send-border: var(--chat-border);
+	--chat-send-button: var(--chat-orange);
+	--chat-send-button-hover: var(--chat-orange-dark);
+	--chat-send-placeholder: var(--chat-stone);
+	--chat-send-text: var(--chat-text);
+	--chat-timestamp: var(--chat-stone);
+}
+
+/* ---- Page layout ---- */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { font-family: var(--chat-font); background: var(--chat-background); color: var(--chat-text); }
+
+.app { display: flex; flex-direction: column; height: 100%; }
+
+header {
+	flex: none; height: 56px; padding: 0 8px 0 12px;
+	display: flex; align-items: center; gap: 10px;
+	background: var(--chat-navy); color: var(--chat-cream);
+}
+header img { flex: none; width: 32px; height: 32px; border-radius: 50%; }
+.title { flex: 1; font-family: 'DM Serif Display', Georgia, serif; font-size: 20px; line-height: 1.2; }
+.title::before { content: var(--chat-title); }
+
+.icon-button {
+	display: flex; align-items: center; justify-content: center;
+	width: 40px; height: 40px; padding: 0; border: 0; border-radius: 8px;
+	background: transparent; color: var(--chat-cream); cursor: pointer;
+}
+.icon-button:hover { background: var(--chat-navy-hover); }
+.icon-button:focus-visible { outline: 3px solid var(--chat-orange); outline-offset: 1px; }
+
+#webchat { flex: 1; min-height: 0; }
+.notice { margin: 0; padding: 20px 16px; font-size: 15px; line-height: 1.5; color: var(--chat-stone); }
+
+/* ---- Bubbles (selectors from Microsoft Learn) ---- */
+.webchat__bubble:not(.webchat__bubble--from-user) .webchat__bubble__content {
+	background-color: var(--chat-bot-bubble-background) !important;
+	border: 1px solid var(--chat-bot-bubble-border) !important;
+	border-radius: var(--chat-bubble-radius) !important;
+}
+.webchat__bubble:not(.webchat__bubble--from-user) p,
+.webchat__bubble:not(.webchat__bubble--from-user) li {
+	color: var(--chat-bot-bubble-text);
+}
+
+.webchat__bubble.webchat__bubble--from-user .webchat__bubble__content {
+	background-color: var(--chat-user-bubble-background) !important;
+	border: 1px solid var(--chat-user-bubble-border) !important;
+	border-radius: var(--chat-bubble-radius) !important;
+}
+.webchat__bubble.webchat__bubble--from-user p,
+.webchat__bubble.webchat__bubble--from-user li {
+	color: var(--chat-user-bubble-text);
+}
+
+/* Links in replies, and the reference links under an answer */
+.webchat__bubble:not(.webchat__bubble--from-user) a,
+.webchat__link-definitions__badge,
+.webchat__link-definitions__list-item-text,
+.webchat__render-markdown__pure-identifier {
+	color: var(--chat-link) !important;
+}
+/* ==== end Sujeeth chat page ==== */
