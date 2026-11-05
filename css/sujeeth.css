@@ -1,62 +1,117 @@
-/* ==== web chat ==== */
+/* ==== web chat ====
+   The chat is Microsoft's hosted Copilot Studio page inside an iframe (see _includes/footer.html).
+   CSS here styles the button and the window around it. Colors, fonts and the header inside the
+   window are set in Copilot Studio, and CSS on this page cannot reach them.
+   style.css forces border-radius: 0 and removes focus outlines on every element with !important,
+   so the rules below that set a radius or a focus ring need !important too. */
 :root {
-	--webchat__color--accent: ;
-	--webchat__color--timestamp: #767676;
 	--webchat__font--primary: 'Calibri', 'Helvetica Neue', 'Arial', 'sans-serif';
-	--webchat__font-size--small: 80%;
-	--webchat__icon-url--external-link: url(data:image/svg+xml;base64,...); /* use full SVG string here */
-	--webchat__max-width--bubble: 480px;
-	--webchat__min-height--bubble: 40px;
-	--webchat__padding--regular: 10px;
-  }
-
-  body {
+	--chat-navy: #1A2744;
+	--chat-navy-hover: #24365F;
+	--chat-orange: #E04F00;
+	--chat-cream: #FDFAF5;
+	--chat-border: #E8E0D4;
+}
+ 
+body {
 	font-family: var(--webchat__font--primary);
-  }
-
-  #chat-container {
-	position: fixed;
-	bottom: 90px;
-	right: 20px;
-	display: none;
-	flex-direction: column;
-	width: 400px;
-	height: 450px;
-	max-width: 90vw;
-	background: white;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-	z-index: 1000;
-	overflow: hidden;
-  }
-
-  #chat-toggle {
+}
+ 
+#chat-toggle {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-	background-color: var(--webchat__color--accent);
-	color: white;
-	border: none;
-	border-radius: 50%;
 	width: 60px;
 	height: 60px;
-	font-size: 30px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 0;
+	border-radius: 50% !important;
+	background-color: var(--chat-navy);
+	font-size: 0;      /* hides the emoji; the icon below replaces it */
+	line-height: 0;
 	cursor: pointer;
 	z-index: 1001;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  .scrolltotop {
+	box-shadow: 0 4px 14px rgba(26, 39, 68, 0.35);
+	transition: background-color 0.15s;
+}
+ 
+#chat-toggle::before {
+	content: "";
+	display: block;
+	width: 28px;
+	height: 28px;
+	background-color: var(--chat-cream);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+ 
+#chat-toggle:hover {
+	background-color: var(--chat-navy-hover);
+}
+ 
+#chat-toggle:focus-visible {
+	outline: 3px solid var(--chat-orange) !important;
+	outline-offset: 3px;
+}
+ 
+#chat-container {
+	position: fixed;
+	right: 20px;
+	bottom: 92px;
+	display: none;     /* footer.html switches this to flex */
+	flex-direction: column;
+	width: min(400px, calc(100vw - 32px));
+	height: min(600px, calc(100vh - 168px));   /* stays below the 68px fixed navbar */
+	background: var(--chat-cream);
+	border: 1px solid var(--chat-border);
+	border-radius: 12px !important;
+	box-shadow: 0 10px 30px rgba(26, 39, 68, 0.28);
+	z-index: 1000;
+	overflow: hidden;
+}
+ 
+#chat-container iframe {
+	display: block;
+	flex: 1;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+ 
+@media (prefers-reduced-motion: no-preference) {
+	#chat-container {
+		animation: chat-open 0.15s ease-out;
+	}
+	@keyframes chat-open {
+		from { opacity: 0; transform: translateY(8px); }
+		to { opacity: 1; transform: none; }
+	}
+}
+ 
+/* Phones: the window fills the width and leaves the button visible. */
+@media (max-width: 480px) {
+	#chat-toggle {
+		right: 12px;
+		bottom: 12px;
+	}
+	#chat-container {
+		top: 76px;        /* below the fixed navbar */
+		left: 8px;
+		right: 8px;
+		bottom: 84px;
+		width: auto;
+		height: auto;
+	}
+}
+ 
+.scrolltotop {
 	bottom: 100px;
-	right: 35px; 
+	right: 35px;
 	z-index: 1;
-  }
-
-  .header-111{
-	background-color: #0881C8;
-  }
-
+}
 /* ==== end web chat ==== */
 
 /* ===== Begin Includes ===== */
