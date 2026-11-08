@@ -16,6 +16,7 @@
   <script src="https://cdn.botframework.com/botframework-webchat/4.18.0/webchat.js"
           integrity="sha384-YCF4860lf811lnrrIBL4pfZ+UqiNit+8lXEhSY3R+dSc+C1rg6UnEQR5avdOTbj0"
           crossorigin="anonymous"></script>
+  <script src="/js/foundry-chat-connection.js"></script>
 </head>
 <body>
   <div class="app">
@@ -33,9 +34,15 @@
   </div>
 
   <script>
-    // Paste your token endpoint between the quotes.
-    // Copilot Studio: Settings > Channels > Email > Token Endpoint > Copy
-    const TOKEN_ENDPOINT = "https://d18354c7d020ecef8ac63358211c11.0e.environment.api.powerplatform.com/powervirtualagents/botsbyschema/crd33_Sujeeth/directline/token?api-version=2022-03-01-preview";
+    // The address of the chat API: the Azure Function that calls the Foundry agent.
+    // Example: https://<function-app-name>.azurewebsites.net/api/chat
+    const CHAT_ENDPOINT = "https://ontology-ghgedphdh6eefych.eastus-01.azurewebsites.net/api/chat";
+
+    // The first message, and the buttons under it.
+    const GREETING = "Hi, I'm the Sujeeth Foundation assistant. I can answer questions about Career Circles and " +
+      "volunteering as a mentor, and help with career questions such as resumes, networking and interviews. " +
+      "Please don't share personal contact details.";
+    const SUGGESTIONS = ["What is a Career Circle?", "How do I become a mentor?", "Give me feedback on my resume"];
 
     // Reads a --chat-* value from /css/sujeeth-chat.css. Text values lose their quotes; missing values are undefined.
     const css = getComputedStyle(document.documentElement);
@@ -45,7 +52,8 @@
     }
     function buildStyleOptions() {
       const options = { bubbleNubSize: 0, bubbleFromUserNubSize: 0, suggestedActionLayout: 'flow',
-                        suggestedActionBorderWidth: 1, suggestedActionBorderRadius: 16, avatarBorderRadius: '50%' };
+                        suggestedActionBorderWidth: 1, suggestedActionBorderRadius: 16, avatarBorderRadius: '50%',
+                        hideUploadButton: true };
       const put = (key, value) => { if (value !== undefined) options[key] = value; };
       put('accent', token('--chat-accent'));
       put('primaryFont', token('--chat-font'));
@@ -69,8 +77,8 @@
     }
 
     const chatEl = document.getElementById('webchat');
-    let directLineUrl = null;
-    let directLine = null;
+    const userID = 'u_' + Math.random().toString(36).slice(2, 10);
+    let connection = null;
 
     function showNotice(text) {
       chatEl.textContent = '';
@@ -80,44 +88,22 @@
       chatEl.appendChild(p);
     }
 
-    // Starts the conversation as soon as it connects, so the agent's greeting appears (from Microsoft's sample).
-    function createStartStore() {
-      return window.WebChat.createStore({}, ({ dispatch }) => (next) => (action) => {
-        if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
-          dispatch({
-            type: 'DIRECT_LINE/POST_ACTIVITY',
-            meta: { method: 'keyboard' },
-            payload: { activity: { channelData: { postBack: true }, name: 'startConversation', type: 'event' } }
-          });
-        }
-        return next(action);
-      });
-    }
-
-    async function connect() {
-      if (TOKEN_ENDPOINT.startsWith('<')) {
+    function connect() {
+      if (CHAT_ENDPOINT.startsWith('<')) {
         showNotice('The chat is not set up yet.');
         return;
       }
       try {
-        const origin = TOKEN_ENDPOINT.slice(0, TOKEN_ENDPOINT.indexOf('/powervirtualagents'));
-        const apiVersion = new URL(TOKEN_ENDPOINT).searchParams.get('api-version');
-        if (!directLineUrl) {
-          const settings = await (await fetch(origin + '/powervirtualagents/regionalchannelsettings?api-version=' + apiVersion)).json();
-          directLineUrl = settings.channelUrlsById.directline;
-          if (!directLineUrl) throw new Error('No Direct Line URL');
-        }
-        const conversation = await (await fetch(TOKEN_ENDPOINT)).json();
-        if (!conversation.token) throw new Error('No conversation token');
-
-        if (directLine && directLine.end) directLine.end();
-        directLine = window.WebChat.createDirectLine({ domain: directLineUrl + 'v3/directline', token: conversation.token });
+        if (connection && connection.end) connection.end();
+        connection = window.SujeethChat.createConnection({
+          endpoint: CHAT_ENDPOINT, userID: userID, greeting: GREETING, suggestions: SUGGESTIONS
+        });
         // A fresh container each time, so a restart never draws into something Web Chat already owns.
         chatEl.textContent = '';
         const mount = document.createElement('div');
         mount.style.height = '100%';
         chatEl.appendChild(mount);
-        window.WebChat.renderWebChat({ directLine: directLine, styleOptions: buildStyleOptions(), store: createStartStore(), locale: 'en-US' }, mount);
+        window.WebChat.renderWebChat({ directLine: connection, userID: userID, styleOptions: buildStyleOptions(), locale: 'en-US' }, mount);
       } catch (err) {
         console.error('Could not start the chat:', err);
         showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.');
@@ -135,7 +121,7 @@
     document.getElementById('restart').addEventListener('click', connect);
     document.getElementById('close').addEventListener('click', closeChat);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeChat(); });
-    if (window.WebChat) { connect(); } else { showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.'); }
+    if (window.WebChat && window.SujeethChat) { connect(); } else { showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.'); }
   </script>
 </body>
 </html>
