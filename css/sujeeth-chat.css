@@ -50,6 +50,11 @@ header img { flex: none; width: 32px; height: 32px; border-radius: 50%; }
 .send-button:hover { background: var(--chat-accent-dark); }
 .send-button:disabled, .attach-button:disabled { opacity: .45; cursor: not-allowed; }
 .composer-note { margin: 6px 3px 0; color: var(--chat-stone); font-size: 11px; line-height: 1.35; }
+.bubble-text p { margin: 0 0 0.6em; }
+.bubble-text p:last-child { margin-bottom: 0; }
+.bubble-text ul, .bubble-text ol { margin: 0 0 0.6em; padding-left: 1.25em; }
+.bubble-text a { color: inherit; text-decoration: underline; }
+.bubble-text code { font-size: 0.9em; }
 @media (max-width: 480px) {
   #transcript { padding: 14px 11px 18px; }
   .bubble { max-width: 94%; }

@@ -1,6 +1,11 @@
 /* Sujeeth Foundation standalone chat client.
  * The matching markup is in /chat.html and styles are in /css/sujeeth-chat.css.
  * Attachments remain in this tab's memory; they are never written to local storage.
+ *
+ * Assistant replies are rendered from a small markdown subset (links, bold,
+ * italics, inline code, bullet and numbered lists, headings, paragraphs).
+ * Rendering builds DOM nodes with textContent, never innerHTML, and only
+ * https: and mailto: link targets are allowed.
  */
 (function () {
   "use strict";
@@ -21,6 +26,108 @@
   const ALLOWED_EXTENSIONS = new Set([
     "pdf", "png", "jpg", "jpeg", "webp", "txt", "md", "csv", "docx", "pptx", "xlsx"
   ]);
+
+  // Groups: 1 link label, 2 link url, 3 bold, 4 code, 5 italic, 6 bare url.
+  const INLINE = /\[([^\]]+)\]\((https?:\/\/[^\s)]+|mailto:[^\s)]+)\)|\*\*([^*]+)\*\*|`([^`]+)`|\*([^*\s][^*\n]*)\*|(https?:\/\/[^\s<]*[^\s<.,;:!?)\]])/g;
+
+  function makeLink(url, label) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.textContent = label;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    return a;
+  }
+
+  function appendInline(parent, text) {
+    let last = 0;
+    let match;
+    INLINE.lastIndex = 0;
+    while ((match = INLINE.exec(text)) !== null) {
+      if (match.index > last) {
+        parent.appendChild(document.createTextNode(text.slice(last, match.index)));
+      }
+      if (match[1]) {
+        parent.appendChild(makeLink(match[2], match[1]));
+      } else if (match[3]) {
+        const strong = document.createElement("strong");
+        strong.textContent = match[3];
+        parent.appendChild(strong);
+      } else if (match[4]) {
+        const code = document.createElement("code");
+        code.textContent = match[4];
+        parent.appendChild(code);
+      } else if (match[5]) {
+        const em = document.createElement("em");
+        em.textContent = match[5];
+        parent.appendChild(em);
+      } else if (match[6]) {
+        parent.appendChild(makeLink(match[6], match[6]));
+      }
+      last = INLINE.lastIndex;
+    }
+    if (last < text.length) {
+      parent.appendChild(document.createTextNode(text.slice(last)));
+    }
+  }
+
+  function renderMarkdown(text, container) {
+    container.textContent = "";
+    // Strip Foundry citation markers such as 【4:0†source】 if the agent emits them.
+    const lines = String(text)
+      .replace(/【[^】]*】/g, "")
+      .replace(/\r\n?/g, "\n")
+      .split("\n");
+    let paragraph = [];
+    let list = null;
+
+    function flushParagraph() {
+      if (!paragraph.length) return;
+      const p = document.createElement("p");
+      appendInline(p, paragraph.join(" "));
+      container.appendChild(p);
+      paragraph = [];
+    }
+
+    lines.forEach(raw => {
+      const line = raw.trim();
+      const bullet = line.match(/^[-*\u2022]\s+(.*)/);
+      const number = line.match(/^\d+[.)]\s+(.*)/);
+      const heading = line.match(/^#{1,6}\s+(.*)/);
+
+      if (!line) {
+        flushParagraph();
+        list = null;
+        return;
+      }
+
+      if (bullet || number) {
+        flushParagraph();
+        const tag = bullet ? "ul" : "ol";
+        if (!list || list.tagName.toLowerCase() !== tag) {
+          list = document.createElement(tag);
+          container.appendChild(list);
+        }
+        const li = document.createElement("li");
+        appendInline(li, (bullet || number)[1]);
+        list.appendChild(li);
+        return;
+      }
+
+      list = null;
+      if (heading) {
+        flushParagraph();
+        const p = document.createElement("p");
+        const strong = document.createElement("strong");
+        appendInline(strong, heading[1]);
+        p.appendChild(strong);
+        container.appendChild(p);
+        return;
+      }
+      paragraph.push(line);
+    });
+    flushParagraph();
+  }
 
   function initialize() {
     const transcript = document.getElementById("transcript");
@@ -48,14 +155,21 @@
     let busy = false;
     let suggestionsElement = null;
 
-    function addMessage(role, text, files) {
+    // options.markdown: render the text as markdown (assistant replies only).
+    function addMessage(role, text, files, options) {
+      const settings = options || {};
       const wrapper = document.createElement("article");
       wrapper.className = "message " + role;
 
       const bubble = document.createElement("div");
       bubble.className = "bubble";
-      const content = document.createElement("p");
-      content.textContent = text;
+      const content = document.createElement("div");
+      content.className = "bubble-text";
+      if (role === "assistant" && settings.markdown) {
+        renderMarkdown(text, content);
+      } else {
+        content.textContent = text;
+      }
       bubble.appendChild(content);
 
       if (files && files.length) {
@@ -119,11 +233,11 @@
         chip.className = "pending-file";
 
         const label = document.createElement("span");
-        label.textContent = file.name + " · " + formatBytes(file.size);
+        label.textContent = file.name + " \u00b7 " + formatBytes(file.size);
 
         const remove = document.createElement("button");
         remove.type = "button";
-        remove.textContent = "×";
+        remove.textContent = "\u00d7";
         remove.setAttribute("aria-label", "Remove " + file.name);
         remove.addEventListener("click", () => {
           selectedFiles.splice(index, 1);
@@ -195,7 +309,7 @@
           suggestionsElement.remove();
           suggestionsElement = null;
         }
-        typing = addMessage("assistant", "Thinking…");
+        typing = addMessage("assistant", "Thinking\u2026");
 
         const response = await fetch(CHAT_ENDPOINT, {
           method: "POST",
@@ -214,7 +328,7 @@
         }
 
         history.push({ role: "assistant", content: data.reply, attachments: [] });
-        typing.querySelector("p").textContent = data.reply;
+        renderMarkdown(data.reply, typing.querySelector(".bubble-text"));
         transcript.scrollTop = transcript.scrollHeight;
       } catch (error) {
         if (userMessage && history[history.length - 1] === userMessage) history.pop();
