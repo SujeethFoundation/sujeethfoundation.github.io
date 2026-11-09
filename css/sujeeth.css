@@ -1,11 +1,11 @@
-/* ==== web chat ====
-   The chat is its own page, /chat/, shown in an iframe (see _includes/footer.html).
-   CSS here styles the button and the window around it. What is inside the window (header, bubbles,
-   avatar, message box) is styled in /css/sujeeth-chat.css, which only the chat page loads.
-   style.css forces border-radius: 0 and removes focus outlines on every element with !important,
-   so rules here that set a radius or a focus ring need !important too. */
+
+/* =========================================================
+   Chat launcher and iframe shell
+   The chat itself is a separate page loaded inside this iframe.
+   Its internal styles are in /css/sujeeth-chat.css.
+   ========================================================= */
+
 :root {
-	--webchat__font--primary: 'Calibri', 'Helvetica Neue', 'Arial', 'sans-serif';
 	--chat-navy: #1A2744;
 	--chat-navy-hover: #24365F;
 	--chat-accent-color: #277493;
@@ -13,10 +13,7 @@
 	--chat-border: #E8E0D4;
 }
 
-body {
-	font-family: var(--webchat__font--primary);
-}
-
+/* Floating chat button */
 #chat-toggle {
 	position: fixed;
 	bottom: 20px;
@@ -30,7 +27,7 @@ body {
 	border: 0;
 	border-radius: 50% !important;
 	background-color: var(--chat-navy);
-	font-size: 0;      /* hides the emoji; the icon below replaces it */
+	font-size: 0;
 	line-height: 0;
 	cursor: pointer;
 	z-index: 1001;
@@ -38,6 +35,7 @@ body {
 	transition: background-color 0.15s;
 }
 
+/* Chat icon */
 #chat-toggle::before {
 	content: "";
 	display: block;
@@ -57,14 +55,15 @@ body {
 	outline-offset: 3px;
 }
 
+/* Chat popup */
 #chat-container {
 	position: fixed;
 	right: 20px;
 	bottom: 92px;
-	display: none;     /* footer.html switches this to flex */
+	display: none;
 	flex-direction: column;
 	width: min(400px, calc(100vw - 32px));
-	height: min(600px, calc(100vh - 168px));   /* stays below the 68px fixed navbar */
+	height: min(600px, calc(100vh - 168px));
 	background: var(--chat-cream);
 	border: 1px solid var(--chat-border);
 	border-radius: 12px !important;
@@ -81,22 +80,31 @@ body {
 	display: block;
 }
 
+/* Popup animation */
 @media (prefers-reduced-motion: no-preference) {
 	#chat-container {
 		animation: chat-open 0.15s ease-out;
 	}
+
 	@keyframes chat-open {
-		from { opacity: 0; transform: translateY(8px); }
-		to { opacity: 1; transform: none; }
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		to {
+			opacity: 1;
+			transform: none;
+		}
 	}
 }
 
-/* Phones: the window fills the width, sits below the navbar, and leaves the button visible. */
+/* Phone layout */
 @media (max-width: 480px) {
 	#chat-toggle {
 		right: 12px;
 		bottom: 12px;
 	}
+
 	#chat-container {
 		top: 76px;
 		left: 8px;
@@ -107,7 +115,7 @@ body {
 	}
 }
 
-/* Phones turned sideways: use the full height under the navbar and sit beside the button, not above it. */
+/* Landscape phone layout */
 @media (max-height: 520px) and (min-width: 481px) {
 	#chat-container {
 		top: 76px;
@@ -118,79 +126,87 @@ body {
 	}
 }
 
+/* =========================================================
+   Site-wide styles
+   ========================================================= */
+
+/* Back-to-top button positioning.
+   Keep it above the bottom edge but below the chat launcher. */
 .scrolltotop {
 	bottom: 100px;
 	right: 35px;
 	z-index: 1;
 }
-/* ==== end web chat ==== */
 
 /* ===== Begin Includes ===== */
-/* Begin Alerts */
+
+/* Alerts */
 div.alert {
 	margin-bottom: 0px;
 }
-/* End Alerts */
 
-/* Begin Social Footer */
+/* Social Footer */
 a.btn:visited {
-	color: #fff		
+	color: #fff;
 }
 
 div.social a {
-    color: #fff;
+	color: #fff;
 }
 
 div.social svg-icon {
-    fill: #fff
+	fill: #fff;
 }
-/* Begin intro */
+
+/* Intro */
 #default-intro-section {
 	height: 110px;
 	margin-bottom: 30px;
 }
+
 #default-intro-section .container {
 	height: 100%;
 }
+
 #page-intro-section {
 	height: 110px;
 	margin-bottom: 30px;
 }
+
 #page-intro-section .container {
 	height: 100%;
 }
-/* End intro */
-/* End Social Footer */
+
 /* ===== End Includes ===== */
 
 /* Hide on Mobile */
 @media only screen and (max-width: 600px) {
-	.hide-mobile 
-	{display:none;}   
-   .sujflex 
-   {
-	flex-direction: column;
-   }
+	.hide-mobile {
+		display: none;
+	}
+
+	.sujflex {
+		flex-direction: column;
+	}
 }
-/* End Hide On Mobile */
 
 /* ===== Posts ===== */
-h1.page-heading{
+
+h1.page-heading {
 	font-size: 42px;
-    letter-spacing: -1px;
-    line-height: 1;
+	letter-spacing: -1px;
+	line-height: 1;
 }
 
-/** Post Lists */
-div.post-content ul > li { 
-    list-style: disc;
-    font-size: 18px;
+div.post-content ul > li {
+	list-style: disc;
+	font-size: 18px;
 }
 
 div.post-content ol > li {
-    list-style:decimal;
+	list-style: decimal;
 }
-/* End Post Lists */
+
 /* ===== End Posts ===== */
 
 /* ===== Home ===== */
@@ -201,13 +217,14 @@ a.btn {
 	margin: 10px;
 }
 
-/* .button1 (Donate Now, Learn More, blog nav buttons) set explicitly so no other theme CSS can bring back the old accent. */
+/* Branded buttons */
 a.btn.button1,
 a.btn.btn-lg.button1,
 a.btn.button1:visited {
 	color: #fff;
 	background-color: #277493;
 }
+
 a.btn.button1:hover,
 a.btn.button1:focus,
 a.btn.button1:active {
@@ -217,7 +234,7 @@ a.btn.button1:active {
 
 .pyramid-centered {
 	padding-top: 25px;
-  }
+}
 
 .pyramid-top {
 	background-image: url(/img/pyramid-top.png);
@@ -228,10 +245,11 @@ a.btn.button1:active {
 	text-align: center;
 	vertical-align: middle;
 }
+
 .pyramid-middle {
 	background-image: url(/img/pyramid-middle.png);
 	background-size: 200px;
-	background-position: 50px ;
+	background-position: 50px;
 	min-width: 290px;
 	background-repeat: no-repeat;
 	height: 60px;
@@ -255,10 +273,11 @@ h2 {
 	font-size: 38px;
 }
 
-/* intro section */
+/* Intro section */
 #intro-section {
 	padding: 100px 10% 100px 10%;
 }
+
 #intro-trigger p {
 	letter-spacing: 2px;
 	padding-bottom: 20px;
@@ -270,101 +289,93 @@ h2 {
 	color: #fff;
 }
 
-/* End Intro Section */
-
-/* about section */
+/* About section */
 #about-section {
 	padding: 100px 10% 100px 10%;
 }
-/* end about section */
 
-/* circle section */
+/* Circle section */
 #circle-section {
 	padding: 100px 10% 100px 10%;
 }
-/* end circle section */
 
-/* Begin financial section */
+/* Financial section */
 #financial-section {
 	padding: 100px 10% 100px 10%;
 }
+
 .financial-btn {
 	margin-top: 30px;
 }
-/* End financial section */
 
-/* Begin give section */
+/* Give section */
 #give-section {
 	padding: 100px 10% 100px 10%;
 }
+
 .give-btn {
 	margin-top: 30px;
 }
-/* End give section */
 
-/* Begin testimonial section */
+/* Testimonial section */
 #testimonial-section a {
 	color: #fff;
 }
-/* End testimonial section */
 
-/* week sections */
-#week1-section, 
+/* Week sections */
+#week1-section,
 #week2-section,
 #week3-section,
 #week4-section,
 #week5-section,
-#week6-section
-{
+#week6-section {
 	padding: 100px 10% 100px 10%;
 }
-/* end week section */
 
-/* volunteer sections */
-#volunteer-section, 
+/* Volunteer sections */
+#volunteer-section,
 #onboarding-section,
-#additional-section
-{
+#additional-section {
 	padding: 100px 10% 100px 10%;
 }
-/* end volunteer section */
 
-/* partner sections */
+/* Partner sections */
 #problem-section,
 #impact-section,
-#mission-section
-{
+#mission-section {
 	padding: 100px 10% 100px 10%;
 }
-/* end partner section */
 
 /* ===== End sujeeth.org ===== */
 
-/* ==== Power Portal Branding ==== */
-/* Converting Data Table to Cards */
-table.cards thead{
+/* =========================================================
+   Power Portal Branding
+   ========================================================= */
+
+/* Convert data tables to cards */
+table.cards thead {
 	display: none;
 }
 
 table.cards {
 	display: grid;
-	border:0;
+	border: 0;
 }
 
 table.cards tbody {
 	display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 350px));
-    grid-gap:20px;	
+	grid-template-columns: repeat(auto-fit, minmax(100px, 350px));
+	grid-gap: 20px;
 }
 
 table.table.cards tr {
 	padding: 10px;
-	display:grid; 
+	display: grid;
 	background-color: #fff;
-	border:1px solid #ccc;
+	border: 1px solid #ccc;
 	margin: 0.5rem;
 	border-radius: .25rem;
-	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0,0,0,0.25);
+	box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
 	overflow: hidden;
 }
 
@@ -378,64 +389,54 @@ div.entitylist {
 }
 
 @media screen and (max-width: 767px) {
-    .table-responsive>.table>tbody>tr>td{
-		white-space: inherit !important;		
-    }
+	.table-responsive > .table > tbody > tr > td {
+		white-space: inherit !important;
+	}
 }
 
-/* End Data Table to Card */
-
-/* Branded Cards */
-/* Styling Individual Columns 
-  nth-child(1) = Title
-  nth-child(n) = Footer
-*/
-table.cards.brand td:nth-child(1){
-  font-weight: 100;
-  color: #fff;
-  background: #277493;
-  font-size: 2rem;
+/* Branded cards */
+table.cards.brand td:nth-child(1) {
+	font-weight: 100;
+	color: #fff;
+	background: #277493;
+	font-size: 2rem;
 }
 
-table.cards.brand.col3 td:nth-child(3)
-{
-  background: #efefef;
-  color: #8d8d8d;
-  font-weight: 500;
+table.cards.brand.col3 td:nth-child(3) {
+	background: #efefef;
+	color: #8d8d8d;
+	font-weight: 500;
 }
 
-table.cards.brand.col4 td:nth-child(4)
-{
-  background: #efefef;
-  color: #8d8d8d;
-  font-weight: 500;
+table.cards.brand.col4 td:nth-child(4) {
+	background: #efefef;
+	color: #8d8d8d;
+	font-weight: 500;
 }
-/* End Branded Cards*/
 
-/* Fix Address Control */
+/* Address control */
 textarea#address1_composite {
 	height: 100px;
 }
-/* ==== End Power Portal Branding ==== */
 
-/* ==== Candid link ====
-   The link text is a long web address with few places to break, so on phones it ran past the right edge
-   of the screen and made the whole page scroll sideways. Let it wrap anywhere. */
+/* =========================================================
+   Candid link
+   ========================================================= */
+
 #financial-section a[href*="candid.org"] {
 	overflow-wrap: anywhere;
 	word-break: break-word;
 }
-/* ==== end Candid link ==== */
 
-/* On 320px phones two things were wider than the screen: the "Launch Portal" button (80px of padding on each
-   side) and the giving pyramid, which is at least 290px wide inside a section with 10% side padding. */
+/* Small-phone layout fixes */
 @media (max-width: 380px) {
 	#services-section a.btn {
 		padding-left: 40px;
 		padding-right: 40px;
 	}
+
 	#give-section {
-		padding-left: 15px;    /* Bootstrap's row pulls 15px outside its section, so less than 15px overflows */
+		padding-left: 15px;
 		padding-right: 15px;
 	}
 }

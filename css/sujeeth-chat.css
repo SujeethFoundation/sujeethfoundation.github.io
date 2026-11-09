@@ -1,116 +1,57 @@
-/* ==== Sujeeth chat page (chat/index.html) ====
-   This stylesheet is used only by the chat page, which runs Microsoft's Web Chat 4.18.0.
-   Bubble rules use the selectors Microsoft Learn documents ("Customize your agent", Power Pages).
-   Avatar, accent color, font, message box and suggested replies cannot be reached with those selectors,
-   so chat/index.html reads the matching --chat-* values below and passes them to Web Chat as styleOptions.
-   Edit the colors in the :root block. If you change the pinned Web Chat version in chat/index.html,
-   the class names in the bubble rules may change with it. */
+/* Sujeeth Foundation standalone chat UI with file attachment support. */
 :root {
-	/* Brand */
-	--chat-navy: #1A2744;
-	--chat-navy-hover: #24365F;
-	--chat-accent-color: #277493;
-	--chat-accent-dark: #1B5167;
-	--chat-cream: #FDFAF5;
-	--chat-stone: #6B6560;
-	--chat-border: #E8E0D4;
-	--chat-text: #2E2E2E;
-
-	/* Page */
-	--chat-background: var(--chat-cream);
-	--chat-accent: var(--chat-accent-color);
-	--chat-font: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-	--chat-title: "Ask the Foundation";
-
-	/* Replies from the chat assistant */
-	--chat-bot-bubble-background: #FFFFFF;
-	--chat-bot-bubble-border: var(--chat-border);
-	--chat-bot-bubble-text: var(--chat-text);
-
-	/* Messages from the visitor */
-	--chat-user-bubble-background: var(--chat-navy);
-	--chat-user-bubble-border: var(--chat-navy);
-	--chat-user-bubble-text: var(--chat-cream);
-	--chat-bubble-radius: 10px;
-
-	/* Links in replies */
-	--chat-link: var(--chat-accent-dark);
-
-	/* Logo beside the assistant's replies (avatar size is pixels; text values keep their quotes) */
-	--chat-avatar-image: "/img/chat-avatar.png";
-	--chat-avatar-background: var(--chat-navy);
-	--chat-avatar-initials: "SF";
-	--chat-avatar-size: 36;
-
-	/* Suggested replies */
-	--chat-suggestion-background: var(--chat-cream);
-	--chat-suggestion-background-hover: var(--chat-border);
-	--chat-suggestion-border: var(--chat-navy);
-	--chat-suggestion-text: var(--chat-navy);
-
-	/* Message box */
-	--chat-send-background: var(--chat-cream);
-	--chat-send-border: var(--chat-border);
-	--chat-send-button: var(--chat-accent-color);
-	--chat-send-button-hover: var(--chat-accent-dark);
-	--chat-send-placeholder: var(--chat-stone);
-	--chat-send-text: var(--chat-text);
-	--chat-timestamp: var(--chat-stone);
+  --chat-navy: #1A2744;
+  --chat-navy-hover: #24365F;
+  --chat-accent-color: #277493;
+  --chat-accent-dark: #1B5167;
+  --chat-cream: #FDFAF5;
+  --chat-stone: #6B6560;
+  --chat-border: #E8E0D4;
+  --chat-text: #2E2E2E;
+  --chat-bot-bubble-background: #FFFFFF;
+  --chat-user-bubble-background: var(--chat-navy);
+  --chat-bubble-radius: 10px;
 }
-
-/* ---- Page layout ---- */
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
-body { font-family: var(--chat-font); background: var(--chat-background); color: var(--chat-text); }
-
-.app { display: flex; flex-direction: column; height: 100%; }
-
-header {
-	flex: none; height: 56px; padding: 0 8px 0 12px;
-	display: flex; align-items: center; gap: 10px;
-	background: var(--chat-navy); color: var(--chat-cream);
-}
+body { font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif; background: var(--chat-cream); color: var(--chat-text); }
+button, textarea { font: inherit; }
+.app { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+header { flex: none; height: 56px; padding: 0 8px 0 12px; display: flex; align-items: center; gap: 10px; background: var(--chat-navy); color: var(--chat-cream); }
 header img { flex: none; width: 32px; height: 32px; border-radius: 50%; }
 .title { flex: 1; font-family: 'DM Serif Display', Georgia, serif; font-size: 20px; line-height: 1.2; }
-.title::before { content: var(--chat-title); }
-
-.icon-button {
-	display: flex; align-items: center; justify-content: center;
-	width: 40px; height: 40px; padding: 0; border: 0; border-radius: 8px;
-	background: transparent; color: var(--chat-cream); cursor: pointer;
-}
+.icon-button { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--chat-cream); cursor: pointer; }
 .icon-button:hover { background: var(--chat-navy-hover); }
-.icon-button:focus-visible { outline: 3px solid var(--chat-accent-color); outline-offset: 1px; }
-
-#webchat { flex: 1; min-height: 0; }
-.notice { margin: 0; padding: 20px 16px; font-size: 15px; line-height: 1.5; color: var(--chat-stone); }
-
-/* ---- Bubbles (selectors from Microsoft Learn) ---- */
-.webchat__bubble:not(.webchat__bubble--from-user) .webchat__bubble__content {
-	background-color: var(--chat-bot-bubble-background) !important;
-	border: 1px solid var(--chat-bot-bubble-border) !important;
-	border-radius: var(--chat-bubble-radius) !important;
+.icon-button:focus-visible, button:focus-visible, textarea:focus-visible { outline: 3px solid var(--chat-accent-color); outline-offset: 1px; }
+#transcript { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 16px 24px; display: flex; flex-direction: column; gap: 14px; }
+.message { display: flex; width: 100%; }
+.message.user { justify-content: flex-end; }
+.bubble { max-width: min(88%, 680px); padding: 11px 14px; border: 1px solid var(--chat-border); border-radius: var(--chat-bubble-radius); background: var(--chat-bot-bubble-background); overflow-wrap: anywhere; }
+.message.user .bubble { background: var(--chat-user-bubble-background); border-color: var(--chat-navy); color: var(--chat-cream); }
+.bubble p { margin: 0; white-space: pre-wrap; line-height: 1.5; font-size: 14px; }
+.message-files { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.message-file { font-size: 12px; padding: 4px 7px; border-radius: 6px; background: rgba(39,116,147,.10); }
+.message.user .message-file { background: rgba(255,255,255,.14); }
+.suggestions { display: flex; flex-wrap: wrap; gap: 8px; }
+.suggestions button { border: 1px solid var(--chat-navy); border-radius: 16px; padding: 7px 11px; color: var(--chat-navy); background: var(--chat-cream); cursor: pointer; font-size: 13px; }
+.suggestions button:hover { background: var(--chat-border); }
+.composer-wrap { flex: none; padding: 9px 12px 8px; border-top: 1px solid var(--chat-border); background: var(--chat-cream); }
+.pending-files { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 7px; }
+.pending-file { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; padding: 5px 8px; border: 1px solid var(--chat-border); border-radius: 7px; background: #fff; font-size: 12px; }
+.pending-file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pending-file button { border: 0; background: transparent; color: var(--chat-stone); cursor: pointer; font-size: 17px; line-height: 1; padding: 0 2px; }
+.composer { display: flex; align-items: flex-end; gap: 7px; padding: 7px; border: 1px solid var(--chat-border); border-radius: 12px; background: #fff; }
+.composer textarea { flex: 1; min-width: 0; max-height: 120px; resize: vertical; border: 0; outline: 0; padding: 8px 4px; background: transparent; color: var(--chat-text); font-size: 14px; line-height: 1.4; }
+.composer textarea:focus-visible { outline: 0; }
+.attach-button, .send-button { flex: none; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border: 0; border-radius: 8px; cursor: pointer; }
+.attach-button { background: transparent; color: var(--chat-accent-dark); }
+.attach-button:hover { background: #F2EEE8; }
+.send-button { background: var(--chat-accent-color); color: #fff; }
+.send-button:hover { background: var(--chat-accent-dark); }
+.send-button:disabled, .attach-button:disabled { opacity: .45; cursor: not-allowed; }
+.composer-note { margin: 6px 3px 0; color: var(--chat-stone); font-size: 11px; line-height: 1.35; }
+@media (max-width: 480px) {
+  #transcript { padding: 14px 11px 18px; }
+  .bubble { max-width: 94%; }
+  .composer-wrap { padding-left: 8px; padding-right: 8px; }
 }
-.webchat__bubble:not(.webchat__bubble--from-user) p,
-.webchat__bubble:not(.webchat__bubble--from-user) li {
-	color: var(--chat-bot-bubble-text);
-}
-
-.webchat__bubble.webchat__bubble--from-user .webchat__bubble__content {
-	background-color: var(--chat-user-bubble-background) !important;
-	border: 1px solid var(--chat-user-bubble-border) !important;
-	border-radius: var(--chat-bubble-radius) !important;
-}
-.webchat__bubble.webchat__bubble--from-user p,
-.webchat__bubble.webchat__bubble--from-user li {
-	color: var(--chat-user-bubble-text);
-}
-
-/* Links in replies, and the reference links under an answer */
-.webchat__bubble:not(.webchat__bubble--from-user) a,
-.webchat__link-definitions__badge,
-.webchat__link-definitions__list-item-text,
-.webchat__render-markdown__pure-identifier {
-	color: var(--chat-link) !important;
-}
-/* ==== end Sujeeth chat page ==== */
