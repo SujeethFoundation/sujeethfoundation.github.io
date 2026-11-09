@@ -9,20 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/sujeeth-chat.css">
-
-  <!-- Web Chat is Microsoft's open-source chat component. The version is pinned on purpose: the bubble CSS in
-       /css/sujeeth-chat.css uses the class names of 4.18.0 (the ones Microsoft Learn documents), and newer releases
-       rename them. The integrity value is Microsoft's published hash for this exact file. -->
-  <script src="https://cdn.botframework.com/botframework-webchat/4.18.0/webchat.js"
-          integrity="sha384-YCF4860lf811lnrrIBL4pfZ+UqiNit+8lXEhSY3R+dSc+C1rg6UnEQR5avdOTbj0"
-          crossorigin="anonymous"></script>
-  <script src="/js/foundry-chat-connection.js"></script>
+  <script defer src="/js/foundry-chat-connection.js"></script>
 </head>
 <body>
   <div class="app">
     <header>
       <img src="/img/chat-avatar.png" alt="" width="32" height="32">
-      <span class="title"></span>
+      <span class="title">Ask the Foundation</span>
       <button type="button" class="icon-button" id="restart" aria-label="Start a new conversation" title="Start a new conversation">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
       </button>
@@ -30,98 +23,24 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
     </header>
-    <div id="webchat" role="main"></div>
+
+    <main id="transcript" role="log" aria-live="polite" aria-relevant="additions text"></main>
+
+    <div class="composer-wrap">
+      <div id="pending-files" class="pending-files" aria-live="polite"></div>
+      <form id="composer" class="composer">
+        <input id="file-input" type="file" multiple hidden
+          accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.md,.csv,.docx,.pptx,.xlsx">
+        <button type="button" id="attach" class="attach-button" aria-label="Attach files" title="Attach files">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.4 11.1-8.5 8.5a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"></path></svg>
+        </button>
+        <textarea id="message" rows="1" maxlength="2000" placeholder="Ask a question..." aria-label="Your message"></textarea>
+        <button type="submit" id="send" class="send-button" aria-label="Send message" title="Send message">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+        </button>
+      </form>
+      <p class="composer-note">You can attach PDF, Word, PowerPoint, Excel, text, CSV, and image files. Do not share sensitive personal information.</p>
+    </div>
   </div>
-
-  <script>
-    // The address of the chat API: the Azure Function that calls the Foundry agent.
-    // Example: https://<function-app-name>.azurewebsites.net/api/chat
-    const CHAT_ENDPOINT = "https://ontology-ghgedphdh6eefych.eastus-01.azurewebsites.net/api/chat";
-
-    // The first message, and the buttons under it.
-    const GREETING = "Hi, I'm the Sujeeth Foundation assistant. I can answer questions about Career Circles and " +
-      "volunteering as a mentor, and help with career questions such as resumes, networking and interviews. " +
-      "Please don't share personal contact details.";
-    const SUGGESTIONS = ["What is a Career Circle?", "How do I become a mentor?", "Give me feedback on my resume"];
-
-    // Reads a --chat-* value from /css/sujeeth-chat.css. Text values lose their quotes; missing values are undefined.
-    const css = getComputedStyle(document.documentElement);
-    function token(name) {
-      const value = css.getPropertyValue(name).trim().replace(/^(["'])(.*)\1$/, '$2');
-      return value === '' ? undefined : value;
-    }
-    function buildStyleOptions() {
-      const options = { bubbleNubSize: 0, bubbleFromUserNubSize: 0, suggestedActionLayout: 'flow',
-                        suggestedActionBorderWidth: 1, suggestedActionBorderRadius: 16, avatarBorderRadius: '50%',
-                        hideUploadButton: true };
-      const put = (key, value) => { if (value !== undefined) options[key] = value; };
-      put('accent', token('--chat-accent'));
-      put('primaryFont', token('--chat-font'));
-      put('backgroundColor', token('--chat-background'));
-      put('botAvatarImage', token('--chat-avatar-image'));
-      put('botAvatarInitials', token('--chat-avatar-initials'));
-      put('botAvatarBackgroundColor', token('--chat-avatar-background'));
-      put('avatarSize', token('--chat-avatar-size') === undefined ? undefined : Number(token('--chat-avatar-size')));
-      put('suggestedActionBackgroundColor', token('--chat-suggestion-background'));
-      put('suggestedActionBackgroundColorOnHover', token('--chat-suggestion-background-hover'));
-      put('suggestedActionBorderColor', token('--chat-suggestion-border'));
-      put('suggestedActionTextColor', token('--chat-suggestion-text'));
-      put('sendBoxBackground', token('--chat-send-background'));
-      put('sendBoxBorderTop', 'solid 1px ' + (token('--chat-send-border') || '#E8E0D4'));
-      put('sendBoxButtonColor', token('--chat-send-button'));
-      put('sendBoxButtonColorOnHover', token('--chat-send-button-hover'));
-      put('sendBoxPlaceholderColor', token('--chat-send-placeholder'));
-      put('sendBoxTextColor', token('--chat-send-text'));
-      put('timestampColor', token('--chat-timestamp'));
-      return options;
-    }
-
-    const chatEl = document.getElementById('webchat');
-    const userID = 'u_' + Math.random().toString(36).slice(2, 10);
-    let connection = null;
-
-    function showNotice(text) {
-      chatEl.textContent = '';
-      const p = document.createElement('p');
-      p.className = 'notice';
-      p.textContent = text;
-      chatEl.appendChild(p);
-    }
-
-    function connect() {
-      if (CHAT_ENDPOINT.startsWith('<')) {
-        showNotice('The chat is not set up yet.');
-        return;
-      }
-      try {
-        if (connection && connection.end) connection.end();
-        connection = window.SujeethChat.createConnection({
-          endpoint: CHAT_ENDPOINT, userID: userID, greeting: GREETING, suggestions: SUGGESTIONS
-        });
-        // A fresh container each time, so a restart never draws into something Web Chat already owns.
-        chatEl.textContent = '';
-        const mount = document.createElement('div');
-        mount.style.height = '100%';
-        chatEl.appendChild(mount);
-        window.WebChat.renderWebChat({ directLine: connection, userID: userID, styleOptions: buildStyleOptions(), locale: 'en-US' }, mount);
-      } catch (err) {
-        console.error('Could not start the chat:', err);
-        showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.');
-      }
-    }
-
-    // The chat window on the main site listens for this and closes itself. The message carries no data,
-    // so it is sent to any address (www and non-www, for example, count as different origins).
-    // If this page is opened on its own rather than in the window, the close button goes to the home page.
-    function closeChat() {
-      if (window.parent !== window) { window.parent.postMessage({ type: 'sujeeth-chat-close' }, '*'); }
-      else { window.location.href = '/'; }
-    }
-
-    document.getElementById('restart').addEventListener('click', connect);
-    document.getElementById('close').addEventListener('click', closeChat);
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeChat(); });
-    if (window.WebChat && window.SujeethChat) { connect(); } else { showNotice('The chat is unavailable right now. Try again in a minute, or browse sujeeth.org.'); }
-  </script>
 </body>
 </html>
