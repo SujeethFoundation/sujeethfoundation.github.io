@@ -79,7 +79,9 @@
       .replace(/\r\n?/g, "\n")
       .split("\n");
     let paragraph = [];
-    let list = null;
+    let list = null;     // the top-level list being built
+    let sublist = null;  // a nested list under the last item
+    let lastItem = null;
 
     function flushParagraph() {
       if (!paragraph.length) return;
@@ -89,32 +91,58 @@
       paragraph = [];
     }
 
+    function endList() {
+      list = null;
+      sublist = null;
+      lastItem = null;
+    }
+
+    function newList(tag, parent, start) {
+      const element = document.createElement(tag);
+      if (tag === "ol" && start > 1) element.start = start;  // keep "3." as 3 when the model splits a list
+      parent.appendChild(element);
+      return element;
+    }
+
     lines.forEach(raw => {
+      const indent = raw.match(/^\s*/)[0].replace(/\t/g, "    ").length;
       const line = raw.trim();
       const bullet = line.match(/^[-*\u2022]\s+(.*)/);
-      const number = line.match(/^\d+[.)]\s+(.*)/);
+      const number = line.match(/^(\d+)[.)]\s+(.*)/);
       const heading = line.match(/^#{1,6}\s+(.*)/);
 
-      if (!line) {
+      if (!line) {  // a blank line keeps a list open; the next line that is not a list item closes it
         flushParagraph();
-        list = null;
         return;
       }
 
       if (bullet || number) {
         flushParagraph();
         const tag = bullet ? "ul" : "ol";
-        if (!list || list.tagName.toLowerCase() !== tag) {
-          list = document.createElement(tag);
-          container.appendChild(list);
+        const body = bullet ? bullet[1] : number[2];
+        const start = bullet ? 1 : Number(number[1]);
+        const item = document.createElement("li");
+        appendInline(item, body);
+
+        if (list && lastItem && indent >= 2) {  // an indented item nests under the one above it
+          if (!sublist || sublist.tagName.toLowerCase() !== tag) sublist = newList(tag, lastItem, start);
+          sublist.appendChild(item);
+          return;
         }
-        const li = document.createElement("li");
-        appendInline(li, (bullet || number)[1]);
-        list.appendChild(li);
+        if (!list || list.tagName.toLowerCase() !== tag) list = newList(tag, container, start);
+        sublist = null;
+        lastItem = item;
+        list.appendChild(item);
         return;
       }
 
-      list = null;
+      if (list && lastItem && indent >= 2 && !heading) {  // wrapped text that belongs to the item above
+        lastItem.appendChild(document.createTextNode(" "));
+        appendInline(lastItem, line);
+        return;
+      }
+
+      endList();
       if (heading) {
         flushParagraph();
         const p = document.createElement("p");
