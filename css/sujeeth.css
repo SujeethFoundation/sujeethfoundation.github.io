@@ -98,7 +98,8 @@
 	}
 }
 
-/* Phone layout */
+/* Phone layout: the chat fills the visible screen. The script in footer.html
+   keeps top and height in step with the on-screen keyboard. */
 @media (max-width: 480px) {
 	#chat-toggle {
 		right: 12px;
@@ -106,24 +107,18 @@
 	}
 
 	#chat-container {
-		top: 76px;
+		top: 8px;
 		left: 8px;
 		right: 8px;
-		bottom: 84px;
+		bottom: 8px;
 		width: auto;
 		height: auto;
+		max-height: 100dvh;
 	}
-}
 
-/* Landscape phone layout */
-@media (max-height: 520px) and (min-width: 481px) {
-	#chat-container {
-		top: 76px;
-		bottom: 8px;
-		right: 84px;
-		width: min(400px, calc(100vw - 100px));
-		height: auto;
-	}
+	/* The chat window has its own close button, so hide the launcher and the page behind it while it is open. */
+	html.chat-open #chat-toggle { display: none; }
+	html.chat-open, html.chat-open body { overflow: hidden; }
 }
 
 /* =========================================================

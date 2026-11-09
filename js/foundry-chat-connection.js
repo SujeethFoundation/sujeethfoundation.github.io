@@ -184,6 +184,15 @@
     let suggestionsElement = null;
 
     // options.markdown: render the text as markdown (assistant replies only).
+    function autosize() {
+      input.style.height = "auto";
+      input.style.height = Math.min(input.scrollHeight, 120) + "px";
+    }
+
+    input.addEventListener("input", autosize);
+    // The phone keyboard opening or closing resizes this window; keep the newest message in view.
+    window.addEventListener("resize", () => { transcript.scrollTop = transcript.scrollHeight; });
+
     function addMessage(role, text, files, options) {
       const settings = options || {};
       const wrapper = document.createElement("article");
@@ -411,6 +420,7 @@
       selectedFiles = [];
       renderPending();
       input.value = "";
+      autosize();
       setBusy(true);
       try {
         await sendMessage(text, files);

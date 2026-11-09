@@ -81,7 +81,7 @@ header img { flex: none; width: 32px; height: 32px; border-radius: 50%; }
 .composer-wrap { flex: none; padding: 9px 12px 8px; border-top: 1px solid var(--chat-border); background: var(--chat-cream); }
 .composer { display: flex; align-items: flex-end; gap: 7px; padding: 7px; border: 1px solid var(--chat-border); border-radius: 12px; background: #fff; }
 .composer:focus-within { border-color: var(--chat-accent-color); }
-.composer textarea { flex: 1; min-width: 0; max-height: 120px; padding: 8px 4px; border: 0; outline: 0; resize: vertical; background: transparent; color: var(--chat-text); line-height: 1.4; }
+.composer textarea { flex: 1; min-width: 0; max-height: 120px; padding: 8px 4px; border: 0; outline: 0; resize: none; background: transparent; color: var(--chat-text); line-height: 1.4; }
 .composer-note { margin: 6px 3px 0; color: var(--chat-stone); font-size: 11px; line-height: 1.35; }
 
 /* ---- Small screens ---- */
@@ -89,4 +89,5 @@ header img { flex: none; width: 32px; height: 32px; border-radius: 50%; }
   #transcript { padding: 14px 11px 18px; }
   .bubble { max-width: 94%; }
   .composer-wrap { padding-left: 8px; padding-right: 8px; }
+  .composer textarea { font-size: 16px; }  /* iOS zooms the page when an input is smaller than 16px */
 }
