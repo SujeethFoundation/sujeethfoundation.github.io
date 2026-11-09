@@ -24,7 +24,7 @@
   const MAX_TOTAL_FILE_BYTES = 7 * 1024 * 1024;
   const MAX_HISTORY_MESSAGES = 12;
   const ALLOWED_EXTENSIONS = new Set([
-    "pdf", "png", "jpg", "jpeg", "webp", "txt", "md", "csv", "docx", "pptx", "xlsx"
+    "pdf", "txt", "md", "csv", "docx", "pptx", "xlsx"
   ]);
 
   // Groups: 1 link label, 2 link url, 3 bold, 4 code, 5 italic, 6 bare url.
