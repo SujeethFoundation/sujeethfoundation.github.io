@@ -27,9 +27,9 @@
     // so the keyboard never covers the composer or pushes the header off the top.
     function fit() {
       if (isOpen && phone.matches && viewport) {
-        //container.style.top = (viewport.offsetTop + 8) + "px";
+        container.style.top = (viewport.offsetTop + 80) + "px";
         container.style.bottom = "auto";
-        //container.style.height = Math.max(240, viewport.height - 80) + "px";
+        container.style.height = Math.max(240, viewport.height - 80) + "px";
       } else {
         container.style.top = container.style.bottom = container.style.height = "";
       }
