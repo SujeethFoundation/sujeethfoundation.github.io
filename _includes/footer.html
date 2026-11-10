@@ -2,72 +2,42 @@
   <!-- Begin footer -->
   <footer class="text-off-white">
 
-<!-- Start Bot -->
+  <script>
+    (function () {
+      // The chat page. To go back to Microsoft's hosted chat, use this address instead:
+      // https://copilotstudio.microsoft.com/environments/d18354c7-d020-ecef-8ac6-3358211c110e/bots/tsj_Sujeeth/webchat?__version__=2&enableFileAttachment=true
+      var CHAT_URL = "https://www.sujeeth.org/chat";
 
-  <!-- Minimized Button -->
-  <button id="chat-toggle" type="button" aria-label="Open chat" aria-expanded="false" aria-controls="chat-container">💬</button>
+      var toggle = document.getElementById("chat-toggle");
+      var container = document.getElementById("chat-container");
+      var frame = document.getElementById("chat-frame");
+      var isOpen = false;
 
-  <!-- Chat window. The chat is the page /chat/ (see chat/index.html), loaded the first time the window opens. -->
-  <div id="chat-container" role="dialog" aria-label="Sujeeth Foundation chat">
-    <iframe id="chat-frame" title="Sujeeth Foundation chat"></iframe>
-  </div>
-
-<script>
-  (function () {
-    var CHAT_URL = "https://www.sujeeth.org/chat";
-
-    var toggle = document.getElementById("chat-toggle");
-    var container = document.getElementById("chat-container");
-    var frame = document.getElementById("chat-frame");
-    var phone = window.matchMedia("(max-width: 480px)");
-    var viewport = window.visualViewport;
-    var isOpen = false;
-
-    // On a phone, size the chat to the part of the screen the visitor can actually see,
-    // so the keyboard never covers the composer or pushes the header off the top.
-    function fit() {
-      if (isOpen && phone.matches && viewport) {
-        container.style.top = (viewport.offsetTop + 80) + "px";
-        container.style.bottom = "auto";
-        container.style.height = Math.max(240, viewport.height - 80) + "px";
-      } else {
-        container.style.top = container.style.bottom = container.style.height = "";
+      function setChat(open) {
+        isOpen = open;
+        container.style.display = isOpen ? "flex" : "none";
+        toggle.setAttribute("aria-expanded", String(isOpen));
+        toggle.setAttribute("aria-label", isOpen ? "Close chat" : "Open chat");
+        if (isOpen && !frame.getAttribute("src")) { frame.setAttribute("src", CHAT_URL); }
       }
-    }
 
-    function setChat(open) {
-      isOpen = open;
-      container.style.display = isOpen ? "flex" : "none";
-      document.documentElement.classList.toggle("chat-open", isOpen);
-      toggle.setAttribute("aria-expanded", String(isOpen));
-      toggle.setAttribute("aria-label", isOpen ? "Close chat" : "Open chat");
-      if (isOpen && !frame.getAttribute("src")) { frame.setAttribute("src", CHAT_URL); }
-      fit();
-    }
+      toggle.addEventListener("click", function () { setChat(!isOpen); });
 
-    toggle.addEventListener("click", function () { setChat(!isOpen); });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && isOpen) { setChat(false); toggle.focus(); }
+      });
 
-    if (viewport) {
-      viewport.addEventListener("resize", fit());
-      viewport.addEventListener("scroll", fit());
-    }
-    window.addEventListener("resize", fit());
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && isOpen) { setChat(false); toggle.focus(); }
-    });
-
-    // The close button and the Escape key inside the chat page send this message.
-    // It is accepted only from the chat frame itself.
-    window.addEventListener("message", function (e) {
-      if (e.source === frame.contentWindow && e.data && e.data.type === "sujeeth-chat-close") {
-        setChat(false);
-        toggle.focus();
-      }
-    });
-  })();
-</script>
-<!-- End Bot -->    
+      // The close button and the Escape key inside the chat page send this message.
+      // It is accepted only from the chat frame itself.
+      window.addEventListener("message", function (e) {
+        if (e.source === frame.contentWindow && e.data && e.data.type === "sujeeth-chat-close") {
+          setChat(false);
+          toggle.focus();
+        }
+      });
+    })();
+  </script>
+<!-- End Bot -->      
 
     <div class="footer-top">
       <div class="container">
