@@ -109,11 +109,10 @@
 	#chat-container {
 		top: 8px;
 		left: 8px;
-		right: 8px;
-		bottom: 8px;
-		width: auto;
-		height: auto;
-		max-height: 100dvh;
+    	width: calc(100vw - 24px);
+    	height: min(70dvh, 560px);
+    	right: 12px;
+    	bottom: 12px;
 	}
 
 	/* The chat window has its own close button, so hide the launcher and the page behind it while it is open. */
