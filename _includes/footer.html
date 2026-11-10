@@ -78,8 +78,11 @@
     }
 
     if (isOpen) {
+      previousBodyOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
       syncChatViewport();
     } else {
+      document.body.style.overflow = previousBodyOverflow;
       resetChatViewport();
     }
   }
