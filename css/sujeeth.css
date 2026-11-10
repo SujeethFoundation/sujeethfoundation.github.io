@@ -113,10 +113,6 @@
     	right: 8px;
     	bottom: 8px;
 	}
-
-	/* The chat window has its own close button, so hide the launcher and the page behind it while it is open. */
-	html.chat-open #chat-toggle { display: none; }
-	html.chat-open, html.chat-open body { overflow: hidden; }
 }
 
 /* =========================================================
