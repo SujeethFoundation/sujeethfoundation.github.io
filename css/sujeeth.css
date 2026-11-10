@@ -111,7 +111,7 @@
     	width: calc(100vw - 24px);
     	height: min(70dvh, 560px);
     	right: 8px;
-    	bottom: 80px;
+    	top: 80px;
 	}
 
 	/* The chat window has its own close button, so hide the launcher and the page behind it while it is open. */
