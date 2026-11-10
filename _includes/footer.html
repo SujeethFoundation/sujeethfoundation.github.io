@@ -44,14 +44,7 @@
       ? height - 100
       : Math.min(560, height - 100);
 
-    // Preserve the popup rather than expanding to full screen.
-    // Keep enough room for the header and composer.
-    var popupHeight = Math.max(
-      250,
-      Math.min(560, maxHeight)
-    );
-
-    container.style.height = popupHeight + "px";
+    container.style.height = maxHeight + "px";
 
     container.style.top = keyboardOpen
       ? (offsetTop + 80) + "px"
