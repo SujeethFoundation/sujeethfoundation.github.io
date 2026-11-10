@@ -25,7 +25,6 @@
 
       function setChat(open) {
         isOpen = open;
-        isOpen ? document.documentElement.classList.add('chat-open') : document.documentElement.classList.remove('chat-open');
         container.style.display = isOpen ? "flex" : "none";
         toggle.setAttribute("aria-expanded", String(isOpen));
         toggle.setAttribute("aria-label", isOpen ? "Close chat" : "Open chat");
