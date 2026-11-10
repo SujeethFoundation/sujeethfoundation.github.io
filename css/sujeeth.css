@@ -105,14 +105,6 @@
 		right: 12px;
 		bottom: 12px;
 	}
-
-	#chat-container {
-		left: 8px;
-    	width: calc(100vw - 24px);
-    	height: min(70dvh, 560px);
-    	right: 8px;
-    	bottom: 8px;
-	}
 }
 
 /* =========================================================

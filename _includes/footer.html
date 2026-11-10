@@ -23,7 +23,17 @@
     var viewport = window.visualViewport;
     var isOpen = false;
 
-
+    // On a phone, size the chat to the part of the screen the visitor can actually see,
+    // so the keyboard never covers the composer or pushes the header off the top.
+    function fit() {
+      if (isOpen && phone.matches && viewport) {
+        container.style.top = (viewport.offsetTop + 8) + "px";
+        container.style.bottom = "auto";
+        container.style.height = Math.max(240, viewport.height - 80) + "px";
+      } else {
+        container.style.top = container.style.bottom = container.style.height = "";
+      }
+    }
 
     function setChat(open) {
       isOpen = open;
@@ -34,8 +44,14 @@
       if (isOpen && !frame.getAttribute("src")) { frame.setAttribute("src", CHAT_URL); }
       fit();
     }
-    
+
     toggle.addEventListener("click", function () { setChat(!isOpen); });
+
+    if (viewport) {
+      viewport.addEventListener("resize", fit);
+      viewport.addEventListener("scroll", fit);
+    }
+    window.addEventListener("resize", fit);
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && isOpen) { setChat(false); toggle.focus(); }
