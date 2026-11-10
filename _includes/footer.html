@@ -12,39 +12,129 @@
     <iframe id="chat-frame" title="Sujeeth Foundation chat"></iframe>
   </div>
 
+
 <script>
-function syncChatViewport() {
-  if (!isOpen || !isMobile.matches) return;
+(function () {
+  var CHAT_URL = "https://www.sujeeth.org/chat";
 
-  var height = visualViewport
-    ? visualViewport.height
-    : window.innerHeight;
+  var toggle = document.getElementById("chat-toggle");
+  var container = document.getElementById("chat-container");
+  var frame = document.getElementById("chat-frame");
+  var isOpen = false;
 
-  var offsetTop = visualViewport
-    ? visualViewport.offsetTop
-    : 0;
+  var visualViewport = window.visualViewport;
+  var isMobile = window.matchMedia("(max-width: 480px)");
 
-  var keyboardOpen =
-    visualViewport &&
-    visualViewport.height < window.innerHeight - 150;
+  function syncChatViewport() {
+    if (!isOpen || !isMobile.matches) return;
 
-  var maxHeight = keyboardOpen
-    ? height - 100
-    : Math.min(560, height - 168);
+    var height = visualViewport
+      ? visualViewport.height
+      : window.innerHeight;
 
-  container.style.height = Math.max(250, maxHeight) + "px";
-  container.style.top = keyboardOpen
-    ? (offsetTop + 8) + "px"
-    : "auto";
+    var offsetTop = visualViewport
+      ? visualViewport.offsetTop
+      : 0;
 
-  container.style.bottom = keyboardOpen ? "auto" : "80px";
-}
+    var keyboardOpen =
+      visualViewport &&
+      visualViewport.height < window.innerHeight - 150;
 
-function resetChatViewport() {
-  container.style.height = "";
-  container.style.top = "";
-  container.style.bottom = "";
-}</script>
+    var maxHeight = keyboardOpen
+      ? height - 100
+      : Math.min(560, height - 168);
+
+    // Preserve the popup rather than expanding to full screen.
+    // Keep enough room for the header and composer.
+    var popupHeight = Math.max(
+      250,
+      Math.min(560, maxHeight)
+    );
+
+    container.style.height = popupHeight + "px";
+
+    container.style.top = keyboardOpen
+      ? (offsetTop + 8) + "px"
+      : "auto";
+
+    container.style.bottom = keyboardOpen
+      ? "auto"
+      : "80px";
+  }
+
+  function resetChatViewport() {
+    container.style.height = "";
+    container.style.top = "";
+    container.style.bottom = "";
+  }
+
+  function setChat(open) {
+    isOpen = open;
+
+    container.style.display = isOpen ? "flex" : "none";
+
+    toggle.setAttribute("aria-expanded", String(isOpen));
+    toggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close chat" : "Open chat"
+    );
+
+    // Load the chat only the first time it is opened.
+    if (isOpen && !frame.getAttribute("src")) {
+      frame.setAttribute("src", CHAT_URL);
+    }
+
+    if (isOpen) {
+      syncChatViewport();
+    } else {
+      resetChatViewport();
+    }
+  }
+
+  // Open and close using the floating launcher.
+  toggle.addEventListener("click", function () {
+    setChat(!isOpen);
+  });
+
+  // Monitor browser viewport changes.
+  window.addEventListener("resize", syncChatViewport);
+
+  // Monitor mobile keyboard opening, closing and viewport movement.
+  if (visualViewport) {
+    visualViewport.addEventListener(
+      "resize",
+      syncChatViewport
+    );
+
+    visualViewport.addEventListener(
+      "scroll",
+      syncChatViewport
+    );
+  }
+
+  // Escape closes the chat.
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && isOpen) {
+      setChat(false);
+      toggle.focus();
+    }
+  });
+
+  // Handle close requests from inside the chat iframe.
+  window.addEventListener("message", function (e) {
+    if (
+      e.source === frame.contentWindow &&
+      e.data &&
+      e.data.type === "sujeeth-chat-close"
+    ) {
+      setChat(false);
+      toggle.focus();
+    }
+  });
+
+})();
+</script>
+
 <!-- End Bot -->    
 
     <div class="footer-top">
