@@ -48,10 +48,10 @@
     toggle.addEventListener("click", function () { setChat(!isOpen); });
 
     if (viewport) {
-      viewport.addEventListener("resize", fit);
-      viewport.addEventListener("scroll", fit);
+      viewport.addEventListener("resize", fit());
+      viewport.addEventListener("scroll", fit());
     }
-    window.addEventListener("resize", fit);
+    window.addEventListener("resize", fit());
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && isOpen) { setChat(false); toggle.focus(); }
