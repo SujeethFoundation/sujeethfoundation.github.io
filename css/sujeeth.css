@@ -68,7 +68,7 @@
 	border: 1px solid var(--chat-border);
 	border-radius: 12px !important;
 	box-shadow: 0 10px 30px rgba(26, 39, 68, 0.28);
-  	z-index: 2147483647 !important;
+	z-index: 1000;
 	overflow: hidden;
 }
 
