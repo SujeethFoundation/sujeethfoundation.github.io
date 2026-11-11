@@ -79,11 +79,10 @@
     container.style.zIndex = "2147483647";
 
     if (isMobile.matches) {
-      // Keep the chat at the full layout-viewport height when the
-      // Android keyboard opens. visualViewport.height shrinks with the
-      // keyboard, which was making the chat popup shrink too.
-      var height = document.documentElement.clientHeight || window.innerHeight;
-      var offsetTop = 0;
+      // Match the visible viewport. When the keyboard opens, this keeps
+      // the app above the keyboard so the composer remains reachable.
+      var height = visualViewport ? visualViewport.height : window.innerHeight;
+      var offsetTop = visualViewport ? visualViewport.offsetTop : 0;
 
       container.style.left = "0";
       container.style.right = "0";
@@ -135,6 +134,7 @@
     if (isOpen) {
       // Move out of ancestor stacking contexts so the overlay can cover navigation.
       document.body.appendChild(container);
+      document.documentElement.classList.add("chat-open");
       lockBackgroundScroll();
       container.style.display = "flex";
 
@@ -147,6 +147,7 @@
       resetChatViewport();
       restoreContainer();
       unlockBackgroundScroll();
+      document.documentElement.classList.remove("chat-open");
     }
 
     toggle.setAttribute("aria-expanded", String(isOpen));
