@@ -39,21 +39,14 @@
   function lockBackgroundScroll() {
     savedScrollY = window.scrollY || window.pageYOffset;
     savedBodyStyles = {
-      position: document.body.style.position,
-      top: document.body.style.top,
-      left: document.body.style.left,
-      right: document.body.style.right,
-      width: document.body.style.width,
       overflow: document.body.style.overflow
     };
     savedHtmlOverflow = document.documentElement.style.overflow;
 
+    // Do not set body to position:fixed. On Android this can change the
+    // containing block used by the fixed chat overlay and leave it ending
+    // above the keyboard. Lock scrolling with overflow instead.
     document.documentElement.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = "-" + savedScrollY + "px";
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
     document.body.style.overflow = "hidden";
   }
 
@@ -61,11 +54,6 @@
     if (!savedBodyStyles) return;
 
     document.documentElement.style.overflow = savedHtmlOverflow;
-    document.body.style.position = savedBodyStyles.position;
-    document.body.style.top = savedBodyStyles.top;
-    document.body.style.left = savedBodyStyles.left;
-    document.body.style.right = savedBodyStyles.right;
-    document.body.style.width = savedBodyStyles.width;
     document.body.style.overflow = savedBodyStyles.overflow;
 
     window.scrollTo(0, savedScrollY);
