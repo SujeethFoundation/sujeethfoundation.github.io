@@ -196,11 +196,26 @@
   });
 
   window.addEventListener("message", function (event) {
+    if (event.source !== frame.contentWindow || !event.data) return;
+
     if (
-      event.source === frame.contentWindow &&
-      event.data &&
-      event.data.type === "sujeeth-chat-close"
+      event.data.type === "sujeeth-chat-viewport" &&
+      isOpen &&
+      isMobile.matches &&
+      !virtualKeyboard &&
+      Number.isFinite(event.data.visibleBottom)
     ) {
+      // The iframe reports the bottom edge of its visible viewport, not
+      // its viewport height. Convert that coordinate into a bottom inset
+      // on the outer shell; this works even if only the iframe viewport
+      // reacts to the keyboard.
+      var visibleBottom = Math.max(0, event.data.visibleBottom);
+      var keyboardInset = Math.max(0, container.clientHeight - visibleBottom);
+      container.style.top = "0px";
+      container.style.bottom = keyboardInset + "px";
+    }
+
+    if (event.data.type === "sujeeth-chat-close") {
       setChat(false);
       toggle.focus();
     }
