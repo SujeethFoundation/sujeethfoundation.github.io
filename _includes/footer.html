@@ -160,24 +160,11 @@
   });
 
   window.addEventListener("message", function (event) {
-    if (event.source !== frame.contentWindow || !event.data) return;
-
-    // The keyboard may resize the iframe's viewport without resizing the
-    // embedding page's viewport (notably in some Android Edge versions).
-    // Accept the iframe's measured visible height and apply it to the shell.
     if (
-      event.data.type === "sujeeth-chat-viewport" &&
-      isOpen &&
-      isMobile.matches &&
-      Number.isFinite(event.data.height) &&
-      event.data.height > 0
+      event.source === frame.contentWindow &&
+      event.data &&
+      event.data.type === "sujeeth-chat-close"
     ) {
-      container.style.top = "0px";
-      container.style.bottom = "auto";
-      container.style.height = event.data.height + "px";
-    }
-
-    if (event.data.type === "sujeeth-chat-close") {
       setChat(false);
       toggle.focus();
     }
