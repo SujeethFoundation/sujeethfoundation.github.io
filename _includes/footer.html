@@ -34,6 +34,8 @@
   var savedBodyStyles = null;
   var savedHtmlOverflow = "";
   var visualViewport = window.visualViewport;
+  var virtualKeyboard = navigator.virtualKeyboard || null;
+  var previousKeyboardOverlayMode = null;
   var isMobile = window.matchMedia("(max-width: 480px)");
 
   function lockBackgroundScroll() {
@@ -67,15 +69,32 @@
     container.style.zIndex = "2147483647";
 
     if (isMobile.matches) {
-      // Let fixed positioning determine the available height. Android
-      // browsers can report an innerHeight that is shorter than the actual
-      // area above the keyboard, so avoid setting an explicit pixel height.
-      var offsetTop = visualViewport ? visualViewport.offsetTop : 0;
+      var topInset = 0;
+      var bottomInset = 0;
+
+      // Preferred path: use the standard Virtual Keyboard API when the
+      // browser supports it. The API is controlled by the top-level page,
+      // even though the focused message field lives inside the chat iframe.
+      if (virtualKeyboard && virtualKeyboard.overlaysContent) {
+        var keyboardRect = virtualKeyboard.boundingRect;
+        if (keyboardRect && keyboardRect.height > 0) {
+          bottomInset = Math.max(0, window.innerHeight - keyboardRect.top);
+        }
+      } else if (visualViewport) {
+        // Cross-browser fallback: fit the shell to the top-level visual
+        // viewport. This works when the browser resizes the visual viewport
+        // for its on-screen keyboard instead of exposing VirtualKeyboard.
+        topInset = Math.max(0, visualViewport.offsetTop);
+        bottomInset = Math.max(
+          0,
+          window.innerHeight - visualViewport.height - topInset
+        );
+      }
 
       container.style.left = "0";
       container.style.right = "0";
-      container.style.top = offsetTop + "px";
-      container.style.bottom = "0";
+      container.style.top = topInset + "px";
+      container.style.bottom = bottomInset + "px";
       container.style.width = "100vw";
       container.style.height = "auto";
       container.style.maxHeight = "none";
@@ -124,6 +143,14 @@
       document.body.appendChild(container);
       document.documentElement.classList.add("chat-open");
       lockBackgroundScroll();
+
+      // Let the page own keyboard layout only when the API is available.
+      // Restore the previous setting when the chat closes.
+      if (isMobile.matches && virtualKeyboard) {
+        previousKeyboardOverlayMode = virtualKeyboard.overlaysContent;
+        virtualKeyboard.overlaysContent = true;
+      }
+
       container.style.display = "flex";
 
       if (!frame.getAttribute("src")) {
@@ -134,6 +161,12 @@
       container.style.display = "none";
       resetChatViewport();
       restoreContainer();
+
+      if (virtualKeyboard && previousKeyboardOverlayMode !== null) {
+        virtualKeyboard.overlaysContent = previousKeyboardOverlayMode;
+        previousKeyboardOverlayMode = null;
+      }
+
       unlockBackgroundScroll();
       document.documentElement.classList.remove("chat-open");
     }
@@ -150,6 +183,9 @@
   if (visualViewport) {
     visualViewport.addEventListener("resize", syncChatViewport);
     visualViewport.addEventListener("scroll", syncChatViewport);
+  }
+  if (virtualKeyboard) {
+    virtualKeyboard.addEventListener("geometrychange", syncChatViewport);
   }
 
   document.addEventListener("keydown", function (event) {
