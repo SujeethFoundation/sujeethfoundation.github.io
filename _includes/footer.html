@@ -79,10 +79,12 @@
     container.style.zIndex = "2147483647";
 
     if (isMobile.matches) {
-      // Match the visible viewport. When the keyboard opens, this keeps
-      // the app above the keyboard so the composer remains reachable.
-      var height = visualViewport ? visualViewport.height : window.innerHeight;
+      // Use the layout viewport height, not visualViewport.height.
+      // On Android, visualViewport can stop short of the keyboard edge,
+      // leaving the page visible below the chat. Keep the visual viewport's
+      // top offset, but extend the panel to the layout viewport's bottom.
       var offsetTop = visualViewport ? visualViewport.offsetTop : 0;
+      var height = Math.max(0, window.innerHeight - offsetTop);
 
       container.style.left = "0";
       container.style.right = "0";
