@@ -1,0 +1,128 @@
+/* Sujeeth Foundation chat widget (launcher + iframe shell).
+ * Shared by sujeeth.org and the Power Pages site. Loaded automatically by
+ * /js/sujeeth-chat-widget.js. The chat itself is the page /chat/ inside the iframe;
+ * its styles are in /css/sujeeth-chat.css.
+ *
+ * Phone behavior (<= 480px): the panel is a full-screen app view pinned with
+ * top:0 / bottom:0. Combined with the viewport meta "interactive-widget=resizes-content"
+ * (set by the script), the browser shrinks the layout viewport when the keyboard
+ * opens, so the panel follows it with no JavaScript measuring.
+ *
+ * All selectors are scoped to #sjf-chat so Power Pages / Bootstrap styles can't leak in
+ * and these rules can't leak out. */
+
+:root {
+  --sjf-chat-navy: #1A2744;
+  --sjf-chat-navy-hover: #24365F;
+  --sjf-chat-accent: #277493;
+  --sjf-chat-cream: #FDFAF5;
+  --sjf-chat-border: #E8E0D4;
+  --sjf-chat-z: 2147483646;
+}
+
+/* ---------- Launcher button ---------- */
+#sjf-chat .sjf-chat-toggle {
+  all: unset;
+  box-sizing: border-box;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: var(--sjf-chat-z);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--sjf-chat-navy);
+  box-shadow: 0 4px 14px rgba(26, 39, 68, 0.35);
+  cursor: pointer;
+  transition: background-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+#sjf-chat .sjf-chat-toggle::before {
+  content: "";
+  display: block;
+  width: 28px;
+  height: 28px;
+  background-color: var(--sjf-chat-cream);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+#sjf-chat .sjf-chat-toggle:hover { background-color: var(--sjf-chat-navy-hover); }
+#sjf-chat .sjf-chat-toggle:focus-visible {
+  outline: 3px solid var(--sjf-chat-accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Panel (desktop / tablet default) ---------- */
+#sjf-chat .sjf-chat-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 92px;
+  z-index: var(--sjf-chat-z);
+  display: none;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: min(400px, calc(100vw - 32px));
+  height: min(600px, calc(100vh - 168px));
+  background: var(--sjf-chat-cream);
+  border: 1px solid var(--sjf-chat-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(26, 39, 68, 0.28);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+@supports (height: 100dvh) {
+  #sjf-chat .sjf-chat-panel { height: min(600px, calc(100dvh - 168px)); }
+}
+html.sjf-chat-open #sjf-chat .sjf-chat-panel { display: flex; }
+
+#sjf-chat .sjf-chat-panel iframe {
+  flex: 1 1 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: 0;
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.sjf-chat-open #sjf-chat .sjf-chat-panel { animation: sjf-chat-open 0.15s ease-out; }
+  @keyframes sjf-chat-open {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* ---------- Phones: full-screen app view ---------- */
+@media (max-width: 480px) {
+  #sjf-chat .sjf-chat-toggle { right: 12px; bottom: 12px; }
+
+  #sjf-chat .sjf-chat-panel {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    animation: none;
+  }
+
+  /* The chat has its own close button: hide the launcher while open,
+     and hide the host page so nothing shows through around the keyboard. */
+  html.sjf-chat-open #sjf-chat .sjf-chat-toggle { display: none; }
+  html.sjf-chat-open body > :not(#sjf-chat) { visibility: hidden !important; }
+  html.sjf-chat-open,
+  html.sjf-chat-open body { background: var(--sjf-chat-cream); }
+}
+
+/* ---------- Background scroll lock (CSS only, no position:fixed on body) ---------- */
+html.sjf-chat-open,
+html.sjf-chat-open body { overflow: hidden !important; }
