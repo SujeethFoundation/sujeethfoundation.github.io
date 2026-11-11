@@ -79,19 +79,17 @@
     container.style.zIndex = "2147483647";
 
     if (isMobile.matches) {
-      // Use the layout viewport height, not visualViewport.height.
-      // On Android, visualViewport can stop short of the keyboard edge,
-      // leaving the page visible below the chat. Keep the visual viewport's
-      // top offset, but extend the panel to the layout viewport's bottom.
+      // Let fixed positioning determine the available height. Android
+      // browsers can report an innerHeight that is shorter than the actual
+      // area above the keyboard, so avoid setting an explicit pixel height.
       var offsetTop = visualViewport ? visualViewport.offsetTop : 0;
-      var height = Math.max(0, window.innerHeight - offsetTop);
 
       container.style.left = "0";
       container.style.right = "0";
       container.style.top = offsetTop + "px";
-      container.style.bottom = "auto";
+      container.style.bottom = "0";
       container.style.width = "100vw";
-      container.style.height = height + "px";
+      container.style.height = "auto";
       container.style.maxHeight = "none";
       container.style.borderRadius = "0";
     } else {
