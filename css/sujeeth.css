@@ -101,6 +101,18 @@
 /* Phone layout: the chat fills the visible screen. The script in footer.html
    keeps top and height in step with the on-screen keyboard. */
 @media (max-width: 480px) {
+	/* Treat the mobile chat as a true app screen: hide the site behind it,
+	   including when the on-screen keyboard changes the visible viewport. */
+	html.chat-open,
+	html.chat-open body {
+		background: var(--chat-cream);
+		overflow: hidden !important;
+	}
+
+	html.chat-open body > :not(#chat-container) {
+		visibility: hidden !important;
+	}
+
 	#chat-toggle {
 		right: 12px;
 		bottom: 12px;
