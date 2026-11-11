@@ -10,6 +10,31 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/sujeeth-chat.css">
   <script defer src="/js/foundry-chat-connection.js"></script>
+  <script>
+    (function () {
+      function reportChatViewport() {
+        var viewport = window.visualViewport;
+        var visibleBottom = viewport
+          ? viewport.offsetTop + viewport.height
+          : window.innerHeight;
+
+        if (window.parent !== window && Number.isFinite(visibleBottom)) {
+          window.parent.postMessage({
+            type: "sujeeth-chat-viewport",
+            visibleBottom: Math.round(visibleBottom)
+          }, "https://www.sujeeth.org");
+        }
+      }
+
+      window.addEventListener("resize", reportChatViewport);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", reportChatViewport);
+        window.visualViewport.addEventListener("scroll", reportChatViewport);
+      }
+      window.addEventListener("load", reportChatViewport);
+      reportChatViewport();
+    })();
+  </script>
 </head>
 <body>
   <div class="app">
