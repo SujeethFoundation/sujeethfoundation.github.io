@@ -336,6 +336,7 @@
     async function sendMessage(text, files) {
       let userMessage;
       let typing;
+      let statusTimers = [];
       try {
         const attachments = await encodeFiles(files);
         userMessage = { role: "user", content: text, attachments };
@@ -347,6 +348,12 @@
           suggestionsElement = null;
         }
         typing = addMessage("assistant", "Thinking\u2026");
+        // The reply arrives all at once, so say that work is under way while the visitor waits.
+        const statusText = typing.querySelector(".bubble-text");
+        statusTimers = [
+          setTimeout(() => { statusText.textContent = "Working on it\u2026"; }, 3000),
+          setTimeout(() => { statusText.textContent = "Still working. Longer answers can take a minute."; }, 15000)
+        ];
 
         const response = await fetch(CHAT_ENDPOINT, {
           method: "POST",
@@ -374,6 +381,8 @@
         addMessage("assistant", error && error.message
           ? error.message
           : "I couldn't reach the assistant. Check your connection and try again.");
+      } finally {
+        statusTimers.forEach(clearTimeout);
       }
     }
 
