@@ -11,6 +11,11 @@
   "use strict";
 
   const CHAT_ENDPOINT = "https://ontology-ghgedphdh6eefych.eastus-01.azurewebsites.net/api/chat";
+  const FOLD_ENDPOINT = CHAT_ENDPOINT + "/fold";
+  const WARM_ENDPOINT = CHAT_ENDPOINT + "/health?warm=1";
+  // text/plain keeps these POSTs "simple" for CORS, so the browser skips the OPTIONS preflight round trip.
+  // The API parses the body as JSON whatever the content type.
+  const POST_HEADERS = { "Content-Type": "text/plain;charset=UTF-8" };
   const GREETING = "Hi, I'm the Sujeeth Foundation assistant. I can answer questions about Career Circles and volunteering as a mentor, and help with career questions such as resumes, networking and interviews. Please don't share personal contact details.";
   const SUGGESTIONS = [
     "What is a Career Circle?",
@@ -180,6 +185,8 @@
 
     let history = [];
     let summary = ""; // notes the API wrote on turns it folded away; sent back with each request
+    let foldInFlight = false;
+    let epoch = 0;    // bumped on restart, so a summary that arrives for an abandoned conversation is ignored
     let selectedFiles = [];
     let busy = false;
     let suggestionsElement = null;
@@ -334,6 +341,38 @@
       }
     }
 
+    // Wake the API and load its model client while the visitor reads the greeting and types.
+    function warmApi() {
+      try {
+        fetch(WARM_ENDPOINT, { mode: "no-cors", credentials: "omit", cache: "no-store" }).catch(() => {});
+      } catch (error) { /* warming is best effort */ }
+    }
+
+    // On a long chat the API asks us to fold older turns into notes. That is a second model call, so it runs here,
+    // after the reply is already on screen, instead of making the visitor wait for it.
+    function startFold(keepLast) {
+      if (foldInFlight || !Number.isInteger(keepLast) || keepLast < 1 || history.length <= keepLast) return;
+      const older = history.slice(0, history.length - keepLast);
+      const myEpoch = epoch;
+      foldInFlight = true;
+      fetch(FOLD_ENDPOINT, {
+        method: "POST",
+        mode: "cors",
+        credentials: "omit",
+        headers: POST_HEADERS,
+        body: JSON.stringify({ messages: older.slice(-MAX_HISTORY_MESSAGES), summary })
+      })
+        .then(response => (response.ok ? response.json() : null))
+        .then(data => {
+          if (!data || typeof data.summary !== "string" || !data.summary || myEpoch !== epoch) return;
+          summary = data.summary;
+          // Drop only the turns that were folded. Anything the visitor sent meanwhile stays.
+          history = history.filter(message => !older.includes(message));
+        })
+        .catch(() => { /* the full history keeps working; the API shortens it if it grows */ })
+        .finally(() => { foldInFlight = false; });
+    }
+
     async function sendMessage(text, files) {
       let userMessage;
       let typing;
@@ -360,7 +399,7 @@
           method: "POST",
           mode: "cors",
           credentials: "omit",
-          headers: { "Content-Type": "application/json" },
+          headers: POST_HEADERS,
           body: JSON.stringify({ messages: history.slice(-MAX_HISTORY_MESSAGES), summary })
         });
 
@@ -373,13 +412,14 @@
         }
 
         history.push({ role: "assistant", content: data.reply, attachments: [] });
-        // On a long chat the API folds older turns into notes. Keep the notes and only the newest messages.
+        // An API that folds inline still sends the notes with the reply. Keep the notes and only the newest messages.
         if (typeof data.summary === "string" && data.summary && Number.isInteger(data.keep_last) && data.keep_last > 0) {
           summary = data.summary;
           history = history.slice(-data.keep_last);
         }
         renderMarkdown(data.reply, typing.querySelector(".bubble-text"));
         transcript.scrollTop = transcript.scrollHeight;
+        if (data.fold) startFold(data.fold.keep_last);
       } catch (error) {
         if (userMessage && history[history.length - 1] === userMessage) history.pop();
         if (typing) typing.remove();
@@ -456,6 +496,7 @@
       if (busy) return;
       history = [];
       summary = "";
+      epoch += 1;
       selectedFiles = [];
       renderPending();
       renderGreeting();
@@ -468,6 +509,7 @@
     });
 
     renderGreeting();
+    warmApi();
   }
 
   if (document.readyState === "loading") {

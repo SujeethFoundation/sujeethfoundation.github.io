@@ -70,6 +70,15 @@
     frame = wrap.querySelector("iframe");
 
     toggle.addEventListener("click", function () { setChat(!isOpen); });
+
+    // Start loading the chat page when the visitor reaches for the launcher, so it is ready by the click.
+    // Visitors who never do this download nothing extra.
+    function preload() {
+      if (!frame.getAttribute("src")) frame.setAttribute("src", chatUrl);
+    }
+    ["pointerenter", "focus", "touchstart"].forEach(function (name) {
+      toggle.addEventListener(name, preload, { once: true, passive: true });
+    });
   }
 
   function init() {
