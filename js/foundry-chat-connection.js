@@ -12,6 +12,7 @@
 
   const CHAT_ENDPOINT = "https://sujeethchat-bwbrhgb9f2gbhubt.centralus-01.azurewebsites.net/api/chat";
   const FOLD_ENDPOINT = CHAT_ENDPOINT + "/fold";
+  const STREAM_ENDPOINT = CHAT_ENDPOINT + "/stream";
   const WARM_ENDPOINT = CHAT_ENDPOINT + "/health?warm=1";
   // text/plain keeps these POSTs "simple" for CORS, so the browser skips the OPTIONS preflight round trip.
   // The API parses the body as JSON whatever the content type.
@@ -373,10 +374,129 @@
         .finally(() => { foldInFlight = false; });
     }
 
+    const DEFAULT_ERROR = "The assistant is unavailable right now. Please try again in a minute.";
+
+    // Ask for the whole reply at once (/api/chat). Used when streaming is not available.
+    async function wholeReply(body, bubbleText) {
+      // The reply arrives all at once, so say that work is under way while the visitor waits.
+      const timers = [
+        setTimeout(() => { bubbleText.textContent = "Working on it\u2026"; }, 3000),
+        setTimeout(() => { bubbleText.textContent = "Still working. Longer answers can take a minute."; }, 15000)
+      ];
+      try {
+        const response = await fetch(CHAT_ENDPOINT, {
+          method: "POST",
+          mode: "cors",
+          credentials: "omit",
+          headers: POST_HEADERS,
+          body
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.reply) throw new Error(data.error || DEFAULT_ERROR);
+        return data;
+      } finally {
+        timers.forEach(clearTimeout);
+      }
+    }
+
+    // Read the reply as it is written (server-sent events from /api/chat/stream): a status line while the assistant
+    // works, then the answer in pieces. The final "done" event carries the whole answer and replaces what was drawn.
+    // Throws an error with fallback set when streaming is not available, so the caller can ask for the whole reply.
+    async function streamReply(body, bubbleText) {
+      let response;
+      try {
+        response = await fetch(STREAM_ENDPOINT, { method: "POST", mode: "cors", credentials: "omit", headers: POST_HEADERS, body });
+      } catch (error) {
+        const unavailable = new Error("Streaming is not available.");
+        unavailable.fallback = true;
+        throw unavailable;
+      }
+      if (response.status === 404) {
+        const missing = new Error("Streaming is not available.");
+        missing.fallback = true;
+        throw missing;
+      }
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || DEFAULT_ERROR);
+      }
+
+      let streamed = "";   // answer text received so far
+      let lastStatus = "Thinking\u2026";
+      let finished = null; // the "done" event
+      let live = true;     // false once the final answer is known, so a pending redraw does not replace it
+      let drawing = false;
+
+      function draw() {
+        if (drawing) return;
+        drawing = true;
+        requestAnimationFrame(() => {
+          drawing = false;
+          if (!live || !streamed) return;
+          renderMarkdown(streamed, bubbleText);
+          transcript.scrollTop = transcript.scrollHeight;
+        });
+      }
+
+      function onEvent(event) {
+        if (!event || typeof event !== "object") return;
+        if (event.type === "status" && typeof event.text === "string") {
+          lastStatus = event.text;
+          if (!streamed) bubbleText.textContent = lastStatus;
+        } else if (event.type === "delta" && typeof event.text === "string") {
+          streamed += event.text;
+          draw();
+        } else if (event.type === "reset") {
+          streamed = "";
+          bubbleText.textContent = lastStatus;
+        } else if (event.type === "done" && typeof event.reply === "string") {
+          live = false;
+          finished = event;
+        } else if (event.type === "error") {
+          live = false;
+          throw new Error(typeof event.error === "string" && event.error ? event.error : DEFAULT_ERROR);
+        }
+      }
+
+      let buffer = "";
+      function feed(chunk) {
+        buffer += chunk;
+        let cut;
+        while ((cut = buffer.indexOf("\n\n")) !== -1) {
+          const block = buffer.slice(0, cut);
+          buffer = buffer.slice(cut + 2);
+          for (const line of block.split("\n")) {
+            if (!line.startsWith("data: ")) continue; // keep-alive comments and anything else
+            let event = null;
+            try { event = JSON.parse(line.slice(6)); } catch (error) { /* skip a damaged line */ }
+            onEvent(event);
+          }
+        }
+      }
+
+      try {
+        if (response.body && response.body.getReader) {
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          for (;;) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            feed(decoder.decode(value, { stream: true }));
+          }
+          feed(decoder.decode() + "\n\n");
+        } else {
+          feed((await response.text()) + "\n\n"); // a browser that cannot stream still gets the whole answer
+        }
+      } finally {
+        live = false;
+      }
+      if (!finished) throw new Error("The reply was cut off. Please try again.");
+      return finished;
+    }
+
     async function sendMessage(text, files) {
       let userMessage;
       let typing;
-      let statusTimers = [];
       try {
         const attachments = await encodeFiles(files);
         userMessage = { role: "user", content: text, attachments };
@@ -388,27 +508,15 @@
           suggestionsElement = null;
         }
         typing = addMessage("assistant", "Thinking\u2026");
-        // The reply arrives all at once, so say that work is under way while the visitor waits.
-        const statusText = typing.querySelector(".bubble-text");
-        statusTimers = [
-          setTimeout(() => { statusText.textContent = "Working on it\u2026"; }, 3000),
-          setTimeout(() => { statusText.textContent = "Still working. Longer answers can take a minute."; }, 15000)
-        ];
+        const bubbleText = typing.querySelector(".bubble-text");
+        const body = JSON.stringify({ messages: history.slice(-MAX_HISTORY_MESSAGES), summary });
 
-        const response = await fetch(CHAT_ENDPOINT, {
-          method: "POST",
-          mode: "cors",
-          credentials: "omit",
-          headers: POST_HEADERS,
-          body: JSON.stringify({ messages: history.slice(-MAX_HISTORY_MESSAGES), summary })
-        });
-
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok || !data.reply) {
-          history.pop();
-          typing.remove();
-          addMessage("assistant", data.error || "The assistant is unavailable right now. Please try again in a minute.");
-          return;
+        let data;
+        try {
+          data = await streamReply(body, bubbleText);
+        } catch (error) {
+          if (!(error && error.fallback)) throw error;
+          data = await wholeReply(body, bubbleText);
         }
 
         history.push({ role: "assistant", content: data.reply, attachments: [] });
@@ -427,8 +535,6 @@
         addMessage("assistant", error && error.message
           ? error.message
           : "I couldn't reach the assistant. Check your connection and try again.");
-      } finally {
-        statusTimers.forEach(clearTimeout);
       }
     }
 
