@@ -10,7 +10,7 @@
 (function () {
   "use strict";
 
-  const CHAT_ENDPOINT = "https://ontology-ghgedphdh6eefych.eastus-01.azurewebsites.net/api/chat";
+  const CHAT_ENDPOINT = "https://sujeethchat-bwbrhgb9f2gbhubt.centralus-01.azurewebsites.net/api/chat";
   const FOLD_ENDPOINT = CHAT_ENDPOINT + "/fold";
   const WARM_ENDPOINT = CHAT_ENDPOINT + "/health?warm=1";
   // text/plain keeps these POSTs "simple" for CORS, so the browser skips the OPTIONS preflight round trip.
