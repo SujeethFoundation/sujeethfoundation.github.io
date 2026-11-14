@@ -179,6 +179,7 @@
     }
 
     let history = [];
+    let summary = ""; // notes the API wrote on turns it folded away; sent back with each request
     let selectedFiles = [];
     let busy = false;
     let suggestionsElement = null;
@@ -360,7 +361,7 @@
           mode: "cors",
           credentials: "omit",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: history.slice(-MAX_HISTORY_MESSAGES) })
+          body: JSON.stringify({ messages: history.slice(-MAX_HISTORY_MESSAGES), summary })
         });
 
         const data = await response.json().catch(() => ({}));
@@ -372,6 +373,11 @@
         }
 
         history.push({ role: "assistant", content: data.reply, attachments: [] });
+        // On a long chat the API folds older turns into notes. Keep the notes and only the newest messages.
+        if (typeof data.summary === "string" && data.summary && Number.isInteger(data.keep_last) && data.keep_last > 0) {
+          summary = data.summary;
+          history = history.slice(-data.keep_last);
+        }
         renderMarkdown(data.reply, typing.querySelector(".bubble-text"));
         transcript.scrollTop = transcript.scrollHeight;
       } catch (error) {
@@ -449,6 +455,7 @@
     restartButton.addEventListener("click", () => {
       if (busy) return;
       history = [];
+      summary = "";
       selectedFiles = [];
       renderPending();
       renderGreeting();
