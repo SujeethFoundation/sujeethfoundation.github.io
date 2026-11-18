@@ -263,93 +263,91 @@
   outline-offset: 2px;
 }
 
-/* Small screens: no sideways scrolling. Each row becomes a stacked card,
+/* Always cards, at every width: no sideways scrolling. Each row becomes a stacked card,
    with the column name (from the cell's data-th) shown beside each value. */
-@media (max-width: 767px) {
-  .entity-grid:not(:has(table.cards)) > .view-toolbar {
-    padding: 12px;
-  }
+.entity-grid:not(:has(table.cards)) > .view-toolbar {
+  padding: 12px;
+}
 
-  .entity-grid:not(:has(table.cards)) > .view-toolbar .toolbar-actions {
-    width: 100%;
-    margin-left: 0;
-  }
+.entity-grid:not(:has(table.cards)) > .view-toolbar .toolbar-actions {
+  width: 100%;
+  margin-left: 0;
+}
 
-  .entity-grid:not(:has(table.cards)) > .view-toolbar .btn {
-    flex: 1 1 auto;
-  }
+.entity-grid:not(:has(table.cards)) > .view-toolbar .btn {
+  flex: 1 1 auto;
+}
 
-  .entity-grid:not(:has(table.cards)) table.table,
-  .entity-grid:not(:has(table.cards)) table.table > tbody,
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr,
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td {
-    display: block;
-    width: 100%;
-  }
+.entity-grid:not(:has(table.cards)) table.table,
+.entity-grid:not(:has(table.cards)) table.table > tbody,
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr,
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td {
+  display: block;
+  width: 100%;
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-  }
+.entity-grid:not(:has(table.cards)) table.table > thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr {
-    position: relative;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--sf-grid-line);
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr {
+  position: relative;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--sf-grid-line);
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr:last-child {
-    border-bottom: 0;
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr:last-child {
+  border-bottom: 0;
+}
 
-  /* Alternate the card surfaces so one record ends and the next begins
-     clearly: white, then the theme tint, with a stronger divider. */
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr:nth-child(odd) {
-    background: var(--sf-grid-surface);
-  }
+/* Alternate the card surfaces so one record ends and the next begins
+   clearly: white, then the theme tint, with a stronger divider. */
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr:nth-child(odd) {
+  background: var(--sf-grid-surface);
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr:nth-child(even) {
-    background: color-mix(in srgb, var(--sf-grid-tint) 88%, var(--sf-grid-accent) 12%);
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr:nth-child(even) {
+  background: color-mix(in srgb, var(--sf-grid-tint) 88%, var(--sf-grid-accent) 12%);
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr {
-    border-bottom: 1px solid color-mix(in srgb, var(--sf-grid-on-surface) 22%, transparent);
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr {
+  border-bottom: 1px solid color-mix(in srgb, var(--sf-grid-on-surface) 22%, transparent);
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td {
-    display: grid;
-    grid-template-columns: minmax(90px, 36%) 1fr;
-    gap: 12px;
-    padding: 8px 16px;
-    border-bottom: 0;
-    text-align: left;
-    white-space: normal;
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td {
+  display: grid;
+  grid-template-columns: minmax(90px, 36%) 1fr;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 0;
+  text-align: left;
+  white-space: normal;
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td[data-th]::before {
-    content: attr(data-th);
-    color: var(--sf-grid-muted);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .05em;
-    text-transform: uppercase;
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td[data-th]::before {
+  content: attr(data-th);
+  color: var(--sf-grid-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td:has(> .dropdown.action) {
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    width: auto;
-    padding: 0;
-    display: block;
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td:has(> .dropdown.action) {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: auto;
+  padding: 0;
+  display: block;
+}
 
-  .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td:first-child {
-    padding-right: 64px;
-  }
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td:first-child {
+  padding-right: 64px;
 }
 
 @media (prefers-reduced-motion: reduce) {
