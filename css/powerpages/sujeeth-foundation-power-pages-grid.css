@@ -303,7 +303,7 @@
 /* Each record is its own card. Cards flow into as many columns as fit. */
 .entity-grid:not(:has(table.cards)) table.table > tbody {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 16px;
   padding: 16px;
 }
@@ -369,6 +369,25 @@
 
 .entity-grid:not(:has(table.cards)) table.table > tbody > tr:has(.dropdown.action) > td:first-child {
   padding-right: 64px;
+}
+
+/* Phones: grids often sit inside a padded form card, leaving little width.
+   Stack each label above its value so long values still have room. */
+@media (max-width: 480px) {
+  .entity-grid:not(:has(table.cards)) table.table > tbody {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    padding: 8px 14px;
+  }
+
+  .entity-grid:not(:has(table.cards)) table.table > tbody > tr:has(.dropdown.action) > td:first-child {
+    padding-right: 56px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
