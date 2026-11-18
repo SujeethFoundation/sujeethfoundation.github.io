@@ -581,6 +581,110 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   }
 }
 
+/* ----------------------------------------------- composite field flyout
+   The Address field (and any other composite field) opens a Bootstrap popover
+   inside the form. The portal theme paints it navy, which put the dark label
+   text above on the same navy and made the labels unreadable. It now follows
+   the form card: paper body, navy header band, white inputs, navy Done button. */
+#ProfileFormView .popover {
+  max-width: 340px;
+  padding: 0;
+  overflow: visible;
+  border: 1px solid var(--sf-line) !important;
+  border-radius: var(--sf-radius-card) !important;
+  background: var(--sf-paper) !important;
+  color: var(--sf-ink) !important;
+  box-shadow: 0 14px 36px var(--sf-shadow), 0 2px 6px var(--sf-shadow);
+  font-family: var(--sf-font-body);
+}
+
+#ProfileFormView .popover > .popover-title {
+  margin: 0;
+  padding: .7rem 1rem;
+  border: 0;
+  border-radius: calc(var(--sf-radius-card) - 1px) calc(var(--sf-radius-card) - 1px) 0 0;
+  background: var(--sf-action) !important;
+  color: var(--sf-on-action) !important;
+  font-family: var(--sf-font-body) !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  letter-spacing: .01em;
+  line-height: 1.35;
+}
+
+#ProfileFormView .popover > .popover-content {
+  padding: 1rem;
+  background: transparent !important;
+  color: var(--sf-ink) !important;
+  border-radius: 0 0 var(--sf-radius-card) var(--sf-radius-card);
+}
+
+/* Each field label is three nested labels; only the outer one takes spacing. */
+#ProfileFormView .popover .popover-content > label {
+  display: block;
+  margin: 0 0 .3rem;
+}
+
+#ProfileFormView .popover .popover-content > label label {
+  display: inline;
+  margin: 0;
+  color: var(--sf-ink) !important;
+  font-size: 14px !important;
+  font-weight: 600;
+}
+
+#ProfileFormView .popover .popover-content > input:not(.btn) {
+  margin-bottom: .85rem;
+}
+
+/* Done button. Power Pages renders it as a read-only text input with
+   role="button", so it is matched by its classes. The extra classes keep it
+   above the general text-input rule. */
+#ProfileFormView .popover .popover-content > input.btn.btn-primary[role="button"],
+#ProfileFormView .popover .popover-content > button.btn {
+  display: block;
+  width: 100%;
+  min-height: 2.9rem;
+  margin: .25rem 0 0;
+  padding: .6rem 1.2rem;
+  border: 1px solid var(--sf-action) !important;
+  border-radius: var(--sf-radius-control);
+  background: var(--sf-action) !important;
+  color: var(--sf-on-action) !important;
+  font-family: var(--sf-font-body) !important;
+  font-size: 16px !important;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color .16s ease;
+}
+
+#ProfileFormView .popover .popover-content > input.btn.btn-primary[role="button"]:hover,
+#ProfileFormView .popover .popover-content > button.btn:hover {
+  border-color: var(--sf-action-hover) !important;
+  background: var(--sf-action-hover) !important;
+  color: var(--sf-on-action-hover) !important;
+}
+
+#ProfileFormView .popover .popover-content > input.btn.btn-primary[role="button"]:focus-visible,
+#ProfileFormView .popover .popover-content > button.btn:focus-visible {
+  outline: 3px solid var(--sf-action-hover);
+  outline-offset: 2px;
+}
+
+/* Arrow takes the header band's navy so it reads as one piece. */
+#ProfileFormView .popover.bottom > .arrow {
+  border-bottom-color: var(--sf-line);
+}
+
+#ProfileFormView .popover.bottom > .arrow::after {
+  border-bottom-color: var(--sf-action) !important;
+}
+
+#ProfileFormView .popover.top > .arrow::after {
+  border-top-color: var(--sf-paper) !important;
+}
+
 /* ------------------------------------------------------- reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #ProfileFormView *,

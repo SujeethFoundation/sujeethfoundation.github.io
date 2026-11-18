@@ -300,32 +300,53 @@
   border-bottom: 1px solid var(--sf-grid-line);
 }
 
+/* Each record is its own card. Cards flow into as many columns as fit. */
+.entity-grid:not(:has(table.cards)) table.table > tbody {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr,
 .entity-grid:not(:has(table.cards)) table.table > tbody > tr:last-child {
-  border-bottom: 0;
-}
-
-/* Alternate the card surfaces so one record ends and the next begins
-   clearly: white, then the theme tint, with a stronger divider. */
-.entity-grid:not(:has(table.cards)) table.table > tbody > tr:nth-child(odd) {
+  padding: 6px 0;
+  border: 1px solid var(--sf-grid-line);
+  border-radius: 12px;
   background: var(--sf-grid-surface);
+  box-shadow: 0 2px 8px var(--sf-grid-shadow);
 }
 
-.entity-grid:not(:has(table.cards)) table.table > tbody > tr:nth-child(even) {
-  background: color-mix(in srgb, var(--sf-grid-tint) 88%, var(--sf-grid-accent) 12%);
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr:hover {
+  background: var(--sf-grid-tint);
 }
 
-.entity-grid:not(:has(table.cards)) table.table > tbody > tr {
-  border-bottom: 1px solid color-mix(in srgb, var(--sf-grid-on-surface) 22%, transparent);
+.entity-grid:not(:has(table.cards)) > .view-grid {
+  overflow: visible;
+}
+
+/* Lookup modals cap the grid at a fixed height and scroll it inside the
+   panel, so keep that scrolling there (vertical only). */
+.modal-lookup .entity-grid:not(:has(table.cards)) > .view-grid {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td {
   display: grid;
-  grid-template-columns: minmax(90px, 36%) 1fr;
+  grid-template-columns: 120px minmax(0, 1fr);
   gap: 12px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   padding: 8px 16px;
   border-bottom: 0;
   text-align: left;
   white-space: normal;
+}
+
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td a:not(.btn) {
+  overflow-wrap: anywhere;
+  word-break: break-all;
 }
 
 .entity-grid:not(:has(table.cards)) table.table > tbody > tr > td[data-th]::before {
@@ -346,7 +367,7 @@
   display: block;
 }
 
-.entity-grid:not(:has(table.cards)) table.table > tbody > tr > td:first-child {
+.entity-grid:not(:has(table.cards)) table.table > tbody > tr:has(.dropdown.action) > td:first-child {
   padding-right: 64px;
 }
 

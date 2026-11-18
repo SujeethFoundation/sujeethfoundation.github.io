@@ -17,6 +17,10 @@
 
    Upload as a Web File and load it AFTER the theme stylesheet.
    Variables are prefixed --sfform- to avoid the portal's existing --sf-*.
+
+   Units are px on purpose. The portal theme sets the root font size to 10px,
+   so rem values come out 40% smaller than they read (1rem is 10px, not 16px).
+   Sizes match the Profile page: 16px labels, inputs and buttons.
    ========================================================================== */
 
 :root {
@@ -37,7 +41,8 @@
   /* Shape and size (not colors) */
   --sfform-radius:         6px;
   --sfform-card-radius:    8px;
-  --sfform-field-height:   46px;
+  --sfform-field-height:   52px;
+  --sfform-font:           Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 /* ---------- Card ---------- */
@@ -48,9 +53,14 @@
   border: 1px solid var(--sfform-line);
   border-radius: var(--sfform-card-radius);
   color: var(--sfform-on-surface);
-  font-size: 1rem;
-  line-height: 1.5;
-  padding: 24px 28px;
+  font-family: var(--sfform-font);
+  font-size: 16px;
+  line-height: 1.55;
+  padding: 40px 44px;
+}
+
+.modal-form .modal-body .crmEntityFormView {
+  padding: 28px 32px;
 }
 
 /* A form nested in a form wrapper should not draw two cards */
@@ -58,6 +68,23 @@
   background: transparent;
   border: 0;
   padding: 0;
+}
+
+/* Basic forms are double-wrapped: the outer #EntityFormPanel
+   (.crmEntityFormView) holds the inner .entity-form card. Both take the card
+   padding, so the outer wrapper keeps a modest size and the inner card
+   carries the room. */
+.crmEntityFormView:has(> .entity-form) {
+  padding: 24px 28px;
+}
+
+/* Form controls do not inherit the card's font, so set it on them too. */
+.crmEntityFormView input,
+.crmEntityFormView select,
+.crmEntityFormView textarea,
+.crmEntityFormView button,
+.crmEntityFormView label {
+  font-family: var(--sfform-font);
 }
 
 /* ---------- Strip the nested borders the theme adds ---------- */
@@ -80,12 +107,12 @@
   border: 0;
   color: var(--sfform-on-surface) !important;
   display: block;
-  font-size: 1.75rem;
+  font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  margin: 0 0 28px;
-  padding: 0 0 14px;
+  margin: 0 0 36px;
+  padding: 0 0 18px;
   position: relative;
   width: 100%;
 }
@@ -105,12 +132,12 @@
   border-bottom: 1px solid var(--sfform-line);
   border-left: 4px solid var(--sfform-action);
   color: var(--sfform-on-surface) !important;
-  font-size: 1.2rem;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1.3;
-  margin: 32px 0 18px;
-  padding: 4px 0 8px 12px;
+  margin: 40px 0 24px;
+  padding: 6px 0 10px 16px;
 }
 
 .crmEntityFormView .section-title:first-child {
@@ -143,22 +170,25 @@
 /* ---------- Field spacing ---------- */
 .crmEntityFormView .cell {
   margin-bottom: 20px;
+  padding: 0 24px 28px 0;
 }
 
 /* ---------- Labels and helper text ---------- */
 .crmEntityFormView .field-label,
 .crmEntityFormView label {
   color: var(--sfform-on-surface) !important;
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 6px;
+  line-height: 1.4;
+  margin-bottom: 8px;
 }
 
 .crmEntityFormView .description,
 .crmEntityFormView .help-block {
   color: var(--sfform-muted);
-  font-size: 0.9rem;
-  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-top: 6px;
 }
 
 /* ---------- Text inputs, selects, textareas, date and lookup fields ---------- */
@@ -174,10 +204,11 @@
   border: 1px solid var(--sfform-line-strong);
   border-radius: var(--sfform-radius);
   color: var(--sfform-on-surface);
-  font-size: 1.05rem;
+  font-size: 16px;
   height: var(--sfform-field-height);
+  line-height: 1.45;
   max-width: 100%;
-  padding: 0 14px;
+  padding: 0 16px;
 }
 
 .crmEntityFormView textarea,
@@ -186,9 +217,18 @@
   border: 1px solid var(--sfform-line-strong);
   border-radius: var(--sfform-radius);
   color: var(--sfform-on-surface);
-  font-size: 1.05rem;
+  font-size: 16px;
+  line-height: 1.45;
   min-height: 120px;
-  padding: 12px 14px;
+  padding: 16px;
+}
+
+/* Another stylesheet (likely sujeeth.css) zeroes a textarea's side padding
+   with !important, which left the Address text against its edge. */
+.crmEntityFormView textarea,
+.crmEntityFormView textarea.form-control {
+  padding-right: 16px !important;
+  padding-left: 16px !important;
 }
 
 /* Short fields stay readable on wide screens; textareas fill the card */
@@ -236,9 +276,9 @@
 .crmEntityFormView .picklist-radio {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 28px;
+  gap: 10px 32px;
   list-style: none;
-  margin: 6px 0 0;
+  margin: 10px 0 0;
   padding: 0;
 }
 
@@ -254,7 +294,7 @@
 .crmEntityFormView .picklist-radio label,
 .crmEntityFormView .checkbox label {
   cursor: pointer;
-  font-size: 1.05rem;
+  font-size: 16px;
   font-weight: 400;
   margin: 0;
 }
@@ -273,15 +313,15 @@
 
 .crmEntityFormView .field-validation-error,
 .crmEntityFormView .error-message {
-  font-size: 0.9rem;
-  margin-top: 4px;
+  font-size: 14px;
+  margin-top: 6px;
 }
 
 /* ---------- Buttons (Submit, Next, Previous) ---------- */
 .crmEntityFormView .actions {
   border-top: 1px solid var(--sfform-line) !important;
-  margin-top: 8px;
-  padding-top: 20px;
+  margin-top: 12px;
+  padding-top: 28px;
 }
 
 .crmEntityFormView .submit-btn,
@@ -290,10 +330,10 @@
 .crmEntityFormView input[type="button"].btn,
 .crmEntityFormView button.btn-primary {
   border-radius: var(--sfform-radius);
-  font-size: 1.05rem;
+  font-size: 16px;
   font-weight: 600;
-  min-height: 44px;
-  padding: 11px 32px;
+  min-height: 48px;
+  padding: 13px 36px;
 }
 
 .crmEntityFormView .submit-btn,
@@ -330,8 +370,17 @@
 /* ---------- Small screens ---------- */
 @media (max-width: 600px) {
   .entity-form,
-  .crmEntityFormView {
+  .crmEntityFormView,
+  .modal-form .modal-body .crmEntityFormView {
+    padding: 24px 20px;
+  }
+
+  .crmEntityFormView:has(> .entity-form) {
     padding: 16px;
+  }
+
+  .crmEntityFormView .cell {
+    padding-right: 0;
   }
 
   .crmEntityFormView input.form-control,
