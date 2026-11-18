@@ -1,0 +1,347 @@
+/* ==========================================================================
+   sujeeth-foundation-form.css
+   Shared form styling for the Sujeeth Foundation portal (Power Pages).
+   Styles every {% entityform %}: basic, multistep and modal forms.
+
+   No hard-coded colors. Everything derives from the Power Pages theme
+   variables (--portalThemeColorN / --portalThemeOnColorN), so a change in
+   Design Studio > Styling > Theme flows through to every form.
+
+   Theme slots used (Power Pages theme):
+     Color8 / OnColor8   card surface and the text on it
+     Color5 / OnColor5   page canvas (used for read-only fields)
+     Color4 / OnColor4   primary action (Submit, Next) and focus
+     Color9 / OnColor9   primary action hover
+     Color3              hairlines and dividers
+     Color7              strong input borders
+
+   Upload as a Web File and load it AFTER the theme stylesheet.
+   Variables are prefixed --sfform- to avoid the portal's existing --sf-*.
+   ========================================================================== */
+
+:root {
+  /* Semantic aliases. Re-map a slot here and every form follows. */
+  --sfform-surface:        var(--portalThemeColor8);
+  --sfform-on-surface:     var(--portalThemeOnColor8);
+  --sfform-muted:          color-mix(in srgb, var(--portalThemeOnColor8) 70%, var(--portalThemeColor8));
+  --sfform-canvas:         var(--portalThemeColor5);
+  --sfform-line:           var(--portalThemeColor3);
+  --sfform-line-strong:    color-mix(in srgb, var(--portalThemeColor7) 65%, var(--portalThemeColor8));
+  --sfform-action:         var(--portalThemeColor4);
+  --sfform-on-action:      var(--portalThemeOnColor4);
+  --sfform-action-hover:   var(--portalThemeColor9);
+  --sfform-on-action-hover:var(--portalThemeOnColor9);
+  --sfform-focus:          var(--portalThemeColor4);
+  --sfform-focus-ring:     color-mix(in srgb, var(--portalThemeColor4) 30%, transparent);
+
+  /* Shape and size (not colors) */
+  --sfform-radius:         6px;
+  --sfform-card-radius:    8px;
+  --sfform-field-height:   46px;
+}
+
+/* ---------- Card ---------- */
+.entity-form,
+.crmEntityFormView,
+.modal-form .modal-body .crmEntityFormView {
+  background: var(--sfform-surface);
+  border: 1px solid var(--sfform-line);
+  border-radius: var(--sfform-card-radius);
+  color: var(--sfform-on-surface);
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 24px 28px;
+}
+
+/* A form nested in a form wrapper should not draw two cards */
+.entity-form .crmEntityFormView {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+/* ---------- Strip the nested borders the theme adds ---------- */
+.crmEntityFormView fieldset,
+.crmEntityFormView .tab,
+.crmEntityFormView .section,
+.crmEntityFormView .actions {
+  background: transparent !important;
+  border: 0 !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Titles ---------- */
+/* Page-style heading hierarchy: a large tab title with a short accent bar,
+   and section titles with a left accent stripe and a hairline underneath.
+   Accent color comes from the theme action slot. */
+.crmEntityFormView .tab-title,
+.crmEntityFormView legend {
+  border: 0;
+  color: var(--sfform-on-surface) !important;
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0 0 28px;
+  padding: 0 0 14px;
+  position: relative;
+  width: 100%;
+}
+
+.crmEntityFormView .tab-title::after {
+  background: var(--sfform-action);
+  border-radius: 2px;
+  bottom: 0;
+  content: "";
+  height: 4px;
+  left: 0;
+  position: absolute;
+  width: 56px;
+}
+
+.crmEntityFormView .section-title {
+  border-bottom: 1px solid var(--sfform-line);
+  border-left: 4px solid var(--sfform-action);
+  color: var(--sfform-on-surface) !important;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  margin: 32px 0 18px;
+  padding: 4px 0 8px 12px;
+}
+
+.crmEntityFormView .section-title:first-child {
+  margin-top: 8px;
+}
+
+/* Power Pages renders the title text as an <h3> inside the legend/title
+   element, and the theme gives h1-h6 their own color. Make the heading
+   inherit the title's color and size so it is never lost against the card. */
+.crmEntityFormView .tab-title h1,
+.crmEntityFormView .tab-title h2,
+.crmEntityFormView .tab-title h3,
+.crmEntityFormView .tab-title h4,
+.crmEntityFormView .section-title h1,
+.crmEntityFormView .section-title h2,
+.crmEntityFormView .section-title h3,
+.crmEntityFormView .section-title h4,
+.crmEntityFormView legend h1,
+.crmEntityFormView legend h2,
+.crmEntityFormView legend h3,
+.crmEntityFormView legend h4 {
+  color: inherit !important;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Field spacing ---------- */
+.crmEntityFormView .cell {
+  margin-bottom: 20px;
+}
+
+/* ---------- Labels and helper text ---------- */
+.crmEntityFormView .field-label,
+.crmEntityFormView label {
+  color: var(--sfform-on-surface) !important;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.crmEntityFormView .description,
+.crmEntityFormView .help-block {
+  color: var(--sfform-muted);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* ---------- Text inputs, selects, textareas, date and lookup fields ---------- */
+.crmEntityFormView input.form-control,
+.crmEntityFormView input[type="text"],
+.crmEntityFormView input[type="tel"],
+.crmEntityFormView input[type="email"],
+.crmEntityFormView input[type="number"],
+.crmEntityFormView input[type="url"],
+.crmEntityFormView select,
+.crmEntityFormView select.form-control {
+  background: var(--sfform-surface);
+  border: 1px solid var(--sfform-line-strong);
+  border-radius: var(--sfform-radius);
+  color: var(--sfform-on-surface);
+  font-size: 1.05rem;
+  height: var(--sfform-field-height);
+  max-width: 100%;
+  padding: 0 14px;
+}
+
+.crmEntityFormView textarea,
+.crmEntityFormView textarea.form-control {
+  background: var(--sfform-surface);
+  border: 1px solid var(--sfform-line-strong);
+  border-radius: var(--sfform-radius);
+  color: var(--sfform-on-surface);
+  font-size: 1.05rem;
+  min-height: 120px;
+  padding: 12px 14px;
+}
+
+/* Short fields stay readable on wide screens; textareas fill the card */
+.crmEntityFormView input.form-control,
+.crmEntityFormView select {
+  max-width: 480px;
+}
+
+/* ---------- Focus ---------- */
+.crmEntityFormView input.form-control:focus,
+.crmEntityFormView input[type="text"]:focus,
+.crmEntityFormView input[type="tel"]:focus,
+.crmEntityFormView input[type="email"]:focus,
+.crmEntityFormView input[type="number"]:focus,
+.crmEntityFormView select:focus,
+.crmEntityFormView textarea:focus {
+  border-color: var(--sfform-focus);
+  box-shadow: 0 0 0 3px var(--sfform-focus-ring);
+  outline: none;
+}
+
+/* ---------- Read-only and disabled ---------- */
+.crmEntityFormView input[readonly],
+.crmEntityFormView input[disabled],
+.crmEntityFormView select[disabled],
+.crmEntityFormView textarea[readonly],
+.crmEntityFormView textarea[disabled] {
+  background: var(--sfform-canvas);
+  color: var(--sfform-muted);
+  cursor: not-allowed;
+}
+
+/* ---------- Radios and checkboxes ---------- */
+.crmEntityFormView input[type="radio"],
+.crmEntityFormView input[type="checkbox"] {
+  accent-color: var(--sfform-action);
+  cursor: pointer;
+  height: 20px;
+  margin: 0;
+  width: 20px;
+}
+
+.crmEntityFormView ul.boolean-radio,
+.crmEntityFormView .boolean-radio,
+.crmEntityFormView .picklist-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+
+.crmEntityFormView .boolean-radio li,
+.crmEntityFormView .picklist-radio li,
+.crmEntityFormView .checkbox {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+}
+
+.crmEntityFormView .boolean-radio label,
+.crmEntityFormView .picklist-radio label,
+.crmEntityFormView .checkbox label {
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* ---------- Validation ----------
+   Error colors are left to the theme's Bootstrap defaults (.alert-danger,
+   .has-error, .text-danger) because Power Pages has no theme slot for them.
+   Only spacing and shape are set here. */
+.crmEntityFormView .validation-summary,
+.crmEntityFormView .alert-danger,
+.crmEntityFormView .validation-summary-errors {
+  border-radius: var(--sfform-radius);
+  margin-bottom: 20px;
+  padding: 12px 16px;
+}
+
+.crmEntityFormView .field-validation-error,
+.crmEntityFormView .error-message {
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* ---------- Buttons (Submit, Next, Previous) ---------- */
+.crmEntityFormView .actions {
+  border-top: 1px solid var(--sfform-line) !important;
+  margin-top: 8px;
+  padding-top: 20px;
+}
+
+.crmEntityFormView .submit-btn,
+.crmEntityFormView .button.next,
+.crmEntityFormView .button.previous,
+.crmEntityFormView input[type="button"].btn,
+.crmEntityFormView button.btn-primary {
+  border-radius: var(--sfform-radius);
+  font-size: 1.05rem;
+  font-weight: 600;
+  min-height: 44px;
+  padding: 11px 32px;
+}
+
+.crmEntityFormView .submit-btn,
+.crmEntityFormView .button.next,
+.crmEntityFormView button.btn-primary {
+  background-color: var(--sfform-action);
+  border-color: var(--sfform-action);
+  color: var(--sfform-on-action);
+}
+
+.crmEntityFormView .submit-btn:hover,
+.crmEntityFormView .button.next:hover,
+.crmEntityFormView button.btn-primary:hover {
+  background-color: var(--sfform-action-hover);
+  border-color: var(--sfform-action-hover);
+  color: var(--sfform-on-action-hover);
+}
+
+.crmEntityFormView .submit-btn:focus-visible,
+.crmEntityFormView .button.next:focus-visible,
+.crmEntityFormView .button.previous:focus-visible {
+  box-shadow: 0 0 0 3px var(--sfform-focus-ring);
+  outline: none;
+}
+
+/* ---------- Entity list headers (Open Requests table etc.) ---------- */
+.view-grid th,
+.entity-grid th {
+  line-height: 1.3;
+  vertical-align: bottom;
+  white-space: normal !important;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 600px) {
+  .entity-form,
+  .crmEntityFormView {
+    padding: 16px;
+  }
+
+  .crmEntityFormView input.form-control,
+  .crmEntityFormView select {
+    max-width: 100%;
+  }
+
+  .crmEntityFormView .submit-btn,
+  .crmEntityFormView .button.next,
+  .crmEntityFormView .button.previous {
+    width: 100%;
+  }
+}

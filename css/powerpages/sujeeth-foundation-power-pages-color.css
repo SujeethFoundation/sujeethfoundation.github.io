@@ -1,0 +1,4 @@
+/* Power Pages footer: keep copyright text legible on the dark theme color 5. */
+footer.footer[data-component-theme="portalThemeColor5"] p.smallText {
+  color: #fff;
+}

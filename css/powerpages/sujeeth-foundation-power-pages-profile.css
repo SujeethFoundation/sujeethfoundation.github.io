@@ -1,0 +1,633 @@
+/*
+  Sujeeth Foundation | Power Pages profile refresh (v2)
+  Scope: the /profile/ page. Add to the page's Custom CSS, or load it after
+  the portal theme stylesheet.
+
+  What changed in v2
+  - The edit form is now a light "paper" card with a navy header band, matching
+    the white cards and navy banners in the brand guide. The old dark form
+    hid its own labels and made radio buttons hard to find.
+  - Every label, input, radio and link sets its background and text together.
+  - 16px inputs and labels, 4.5:1 text contrast, visible input borders,
+    3px focus rings.
+  - DM Serif Display for headings and DM Sans for everything else, with
+    safe fallbacks if the fonts are not loaded on this page.
+  - Colors still come from the Power Pages theme. Edit them in Styling.
+
+  Presentation only: this file does not hide, replace, or script the Basic
+  Form, its validation, the Update button, or the delete modal.
+
+  Theme slots used
+    Color 1 / OnColor 1   navy: header bands, Update button
+    Color 2 / OnColor 2   hover and focus accent
+    Color 3 / OnColor 3   soft: active navigation row
+    Color 5 / OnColor 5   page canvas and the ink (text) color on it
+    Color 7 / OnColor 7   not used for surfaces on this page any more
+*/
+
+/* ------------------------------------------------------------------ tokens */
+body:has(#ProfileFormView) {
+  --sf-action: var(--portalThemeColor1);
+  --sf-on-action: var(--portalThemeOnColor1);
+  --sf-action-hover: var(--portalThemeColor2);
+  --sf-on-action-hover: var(--portalThemeOnColor2);
+  --sf-soft: var(--portalThemeColor3);
+  --sf-on-soft: var(--portalThemeOnColor3);
+
+  /* Text that sits on the page canvas, and the card paper built from it. */
+  --sf-ink: var(--portalThemeOnColor5);
+  --sf-muted: color-mix(in srgb, var(--sf-ink) 78%, transparent);
+  --sf-paper: color-mix(in srgb, var(--portalThemeColor5) 35%, #fff);
+  --sf-field: #fff;
+  --sf-on-field: var(--sf-ink);
+
+  --sf-line: color-mix(in srgb, var(--sf-ink) 16%, transparent);
+  --sf-line-strong: color-mix(in srgb, var(--sf-ink) 48%, transparent);
+  --sf-shadow: color-mix(in srgb, var(--sf-ink) 10%, transparent);
+
+  --sf-radius-card: 10px;
+  --sf-radius-control: 6px;
+  --sf-font-body: "DM Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --sf-font-head: "DM Serif Display", Georgia, "Times New Roman", serif;
+}
+
+#ProfileFormView {
+  font-family: var(--sf-font-body);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--sf-ink);
+}
+
+/* ------------------------------------------------------- page heading area */
+body:has(#ProfileFormView) .breadcrumb {
+  display: none !important;
+}
+
+body:has(#ProfileFormView) .page-heading {
+  max-width: 1180px;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto;
+  padding: 2.5rem 2rem 1.75rem;
+  background: none !important;
+  color: var(--sf-ink) !important;
+}
+
+/* The theme paints the heading text white; force it to the page ink. */
+body:has(#ProfileFormView) .page-heading,
+body:has(#ProfileFormView) .page-heading * {
+  color: var(--sf-ink) !important;
+  text-shadow: none !important;
+}
+
+body:has(#ProfileFormView) .page-heading :is(h1, h2, h3, .xrm-attribute-value) {
+  margin: 0;
+  padding: 0;
+  font-family: var(--sf-font-head);
+  font-size: clamp(36px, 4vw, 48px) !important;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  line-height: 1.1;
+}
+
+/* Short accent rule under the heading text, as on the brand cover. */
+body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  margin-top: 16px;
+  background: var(--sf-action-hover);
+}
+
+/* ------------------------------------------------------------ page layout */
+.row:has(#ProfileFormView) {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 2rem 4.5rem;
+}
+
+.row:has(#ProfileFormView) > .col-md-4,
+.row:has(#ProfileFormView) > #mainContent {
+  width: 100% !important;
+  float: none;
+  padding: 0;
+}
+
+.row:has(#ProfileFormView) #mainContent {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------------------------------------- profile rail (identity) */
+.row:has(#ProfileFormView) > .col-md-4 {
+  align-self: start;
+  overflow: hidden;
+  border: 1px solid var(--sf-line);
+  border-radius: var(--sf-radius-card);
+  background: var(--sf-paper);
+  color: var(--sf-ink);
+  box-shadow: 0 6px 18px var(--sf-shadow);
+}
+
+.row:has(#ProfileFormView) > .col-md-4 > :first-child {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  min-height: 6.5rem;
+  padding: 1.25rem 1.35rem;
+  background: var(--sf-action);
+  color: var(--sf-on-action);
+  font-family: var(--sf-font-head);
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.row:has(#ProfileFormView) > .col-md-4 > :first-child img {
+  width: 3.25rem;
+  height: 3.25rem;
+  margin: 0 !important;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Profile / Circles navigation */
+.row:has(#ProfileFormView) > .col-md-4 a,
+.row:has(#ProfileFormView) > .col-md-4 .list-group-item {
+  display: block;
+  padding: .9rem 1.35rem;
+  border: 0;
+  border-top: 1px solid var(--sf-line);
+  background-color: var(--sf-paper);
+  color: var(--sf-ink);
+  font-family: var(--sf-font-body) !important;
+  font-size: 15px !important;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.row:has(#ProfileFormView) > .col-md-4 a:first-of-type {
+  border-left: 4px solid var(--sf-action-hover);
+  padding-left: calc(1.35rem - 4px);
+}
+
+.row:has(#ProfileFormView) > .col-md-4 a:first-of-type,
+.row:has(#ProfileFormView) > .col-md-4 a:hover,
+.row:has(#ProfileFormView) > .col-md-4 a:focus-visible {
+  background-color: var(--sf-soft);
+  color: var(--sf-on-soft);
+}
+
+.row:has(#ProfileFormView) > .col-md-4 a:focus-visible {
+  outline: 3px solid var(--sf-action-hover);
+  outline-offset: -3px;
+}
+
+/* ---------------------------------------------------------- guidance cards */
+.row:has(#ProfileFormView) .page-copy {
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  border: 1px solid var(--sf-line) !important;
+  border-radius: var(--sf-radius-card);
+  background: var(--sf-paper) !important;
+  color: var(--sf-ink) !important;
+  box-shadow: 0 6px 18px var(--sf-shadow);
+}
+
+/* Small caps section labels, like the brand guide's section labels. */
+.row:has(#ProfileFormView) .page-copy h2,
+.row:has(#ProfileFormView) .page-copy legend[role="heading"] {
+  margin: 1.5rem 0 .6rem;
+  color: var(--sf-ink) !important;
+  font-family: var(--sf-font-body) !important;
+  font-size: 12px !important;
+  font-weight: 700;
+  letter-spacing: .14em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.row:has(#ProfileFormView) .page-copy h2:first-child,
+.row:has(#ProfileFormView) .page-copy legend[role="heading"]:first-of-type {
+  margin-top: 0;
+}
+
+/* Bullets become quiet notes with an accent edge (brand "example box"). */
+.row:has(#ProfileFormView) .page-copy ul {
+  margin: 0;
+  padding: .25rem 0 .25rem 1rem;
+  border-left: 3px solid var(--sf-action-hover);
+  background: transparent;
+  color: var(--sf-ink);
+  list-style: none;
+  font-family: var(--sf-font-body) !important;
+  font-size: 15px !important;
+  line-height: 1.6;
+}
+
+.row:has(#ProfileFormView) .page-copy li {
+  font-size: 15px !important;
+}
+
+.row:has(#ProfileFormView) .page-copy li + li {
+  margin-top: .6rem;
+}
+
+/* Links match the sentence around them. The theme was enlarging them. */
+.row:has(#ProfileFormView) .page-copy a {
+  color: var(--sf-ink);
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: 600;
+  line-height: inherit !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.row:has(#ProfileFormView) .page-copy a:hover,
+.row:has(#ProfileFormView) .page-copy a:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+/* --------------------------------------------------------- the edit form */
+.row:has(#ProfileFormView) #mainContent > fieldset > legend,
+.row:has(#ProfileFormView) #mainContent > fieldset > legend :is(h1, h2, h3) {
+  margin: 0 0 1.1rem;
+  padding: 0;
+  border: 0;
+  color: var(--sf-ink) !important;
+  font-family: var(--sf-font-head);
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: -.005em;
+  line-height: 1.2;
+}
+
+#ProfileFormView {
+  margin-top: 0;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  border: 1px solid var(--sf-line);
+  border-top: 4px solid var(--sf-action);
+  border-radius: var(--sf-radius-card);
+  background: var(--sf-paper);
+  color: var(--sf-ink);
+  box-shadow: 0 10px 28px var(--sf-shadow);
+}
+
+#ProfileFormView > h2,
+#ProfileFormView .tab-title {
+  margin: 0 0 1.5rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--sf-line);
+  color: var(--sf-ink);
+  font-family: var(--sf-font-head);
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+#ProfileFormView td,
+#ProfileFormView .cell,
+#ProfileFormView .control,
+#ProfileFormView .form-group {
+  vertical-align: top;
+  color: var(--sf-ink);
+}
+
+/* Labels. !important because the portal theme sets its own label color and
+   it was winning, which left labels unreadable on the old dark form. */
+#ProfileFormView label,
+#ProfileFormView .control-label,
+#ProfileFormView .form-control-label,
+#ProfileFormView .field-label,
+#ProfileFormView .table-info .cell label {
+  display: inline-block;
+  margin-bottom: .4rem;
+  color: var(--sf-ink) !important;
+  font-family: var(--sf-font-body) !important;
+  font-size: 15px !important;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/* Text inputs, selects, textareas */
+#ProfileFormView input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]),
+#ProfileFormView select,
+#ProfileFormView textarea,
+#ProfileFormView .form-control {
+  width: 100%;
+  min-height: 2.9rem;
+  padding: .65rem .85rem;
+  border: 1px solid var(--sf-line-strong) !important;
+  border-radius: var(--sf-radius-control);
+  background-color: var(--sf-field) !important;
+  color: var(--sf-on-field) !important;
+  font-family: var(--sf-font-body) !important;
+  font-size: 16px !important;
+  line-height: 1.4;
+  box-shadow: none;
+  transition: border-color .16s ease, box-shadow .16s ease;
+}
+
+#ProfileFormView textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+#ProfileFormView input::placeholder,
+#ProfileFormView textarea::placeholder {
+  color: color-mix(in srgb, var(--sf-ink) 65%, transparent);
+  opacity: 1;
+}
+
+#ProfileFormView input:focus,
+#ProfileFormView select:focus,
+#ProfileFormView textarea:focus,
+#ProfileFormView .form-control:focus {
+  border-color: var(--sf-action) !important;
+  outline: 3px solid color-mix(in srgb, var(--sf-action-hover) 45%, transparent);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+/* Read-only values such as the e-mail address stay readable. */
+#ProfileFormView input[readonly],
+#ProfileFormView input[disabled] {
+  background-color: color-mix(in srgb, var(--sf-ink) 6%, #fff) !important;
+}
+
+/* Radio and checkbox choices keep their native inputs and labels. */
+#ProfileFormView .boolean-radio,
+#ProfileFormView .picklist-radio,
+#ProfileFormView .radio,
+#ProfileFormView .checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin: .3rem 1.5rem .3rem 0;
+  color: var(--sf-ink);
+}
+
+#ProfileFormView .boolean-radio label,
+#ProfileFormView .picklist-radio label,
+#ProfileFormView .radio label,
+#ProfileFormView .checkbox label,
+#ProfileFormView input[type="radio"] + label,
+#ProfileFormView input[type="checkbox"] + label {
+  margin: 0;
+  font-size: 15px !important;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#ProfileFormView input[type="radio"],
+#ProfileFormView input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  accent-color: var(--sf-action);
+  cursor: pointer;
+}
+
+#ProfileFormView input[type="radio"]:focus-visible,
+#ProfileFormView input[type="checkbox"]:focus-visible {
+  outline: 3px solid var(--sf-action-hover);
+  outline-offset: 2px;
+}
+
+/* Links inside the form (for example the e-mail address). */
+#ProfileFormView a {
+  color: var(--sf-ink);
+  font-size: 16px !important;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Keep Power Pages' own validation colors and error indicators. */
+#ProfileFormView .validation-summary,
+#ProfileFormView .validation-summary-errors {
+  margin: 0 0 1.25rem;
+  padding: 1rem 1.2rem;
+  border-radius: var(--sf-radius-control);
+}
+
+/* ------------------------------------------------------- the Update button
+   It lives outside #ProfileFormView; the page-scoped roles still reach it. */
+#ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton,
+#ProfileFormView input[type="submit"],
+#ProfileFormView button[type="submit"] {
+  min-height: 2.9rem;
+  margin-top: 1.25rem;
+  padding: .7rem 1.6rem;
+  border: 1px solid var(--sf-action) !important;
+  border-radius: var(--sf-radius-control);
+  background-color: var(--sf-action) !important;
+  background-image: none !important;
+  color: var(--sf-on-action) !important;
+  font-family: var(--sf-font-body) !important;
+  font-size: 16px !important;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-shadow: none;
+  box-shadow: 0 3px 8px var(--sf-shadow);
+  transition: background-color .16s ease, transform .16s ease, box-shadow .16s ease;
+}
+
+#ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton:hover,
+#ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton:focus,
+#ProfileFormView input[type="submit"]:hover,
+#ProfileFormView button[type="submit"]:hover {
+  border-color: var(--sf-action-hover) !important;
+  background-color: var(--sf-action-hover) !important;
+  color: var(--sf-on-action-hover) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px var(--sf-shadow);
+}
+
+#ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton:focus-visible,
+#ProfileFormView input[type="submit"]:focus-visible,
+#ProfileFormView button[type="submit"]:focus-visible {
+  outline: 3px solid var(--sf-action-hover);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------- desktop composition
+   Left rail: identity card, then guidance. Right: form, then Update. */
+@media (min-width: 1200px) {
+  .row:has(#ProfileFormView) {
+    grid-template-columns: minmax(250px, 310px) minmax(0, 1fr);
+    grid-template-rows: max-content max-content max-content;
+    align-items: start;
+    column-gap: clamp(2rem, 5vw, 5rem);
+    row-gap: 1.25rem;
+  }
+
+  .row:has(#ProfileFormView) > #mainContent {
+    display: contents;
+  }
+
+  .row:has(#ProfileFormView) > .col-md-4 {
+    grid-area: 1 / 1;
+  }
+
+  .row:has(#ProfileFormView) #mainContent > .page-copy {
+    grid-area: 2 / 1;
+    margin: 0;
+    padding: 1.35rem;
+  }
+
+  .row:has(#ProfileFormView) #mainContent > fieldset {
+    grid-area: 1 / 2 / 3 / 3;
+    min-width: 0;
+  }
+
+  .row:has(#ProfileFormView) #mainContent > div:has(.actions) {
+    grid-area: 3 / 2;
+    margin-top: -1rem;
+  }
+}
+
+/* ---------------------------------------------- one column below 1200px */
+@media (max-width: 1199px) {
+  body:has(#ProfileFormView) #content_form > .container {
+    width: calc(100% - 2rem);
+    max-width: 1180px;
+  }
+
+  #content_form .row:has(#ProfileFormView) {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 1.25rem;
+    padding-bottom: 3rem;
+  }
+
+  #content_form .row:has(#ProfileFormView) > .col-md-4,
+  #content_form .row:has(#ProfileFormView) > #mainContent {
+    display: block;
+    grid-column: 1 !important;
+    width: auto !important;
+    min-width: 0;
+    max-width: none !important;
+    box-sizing: border-box;
+    margin: 0;
+    justify-self: stretch;
+  }
+
+  #content_form .row:has(#ProfileFormView) > .col-md-4 {
+    grid-row: 1 !important;
+  }
+
+  #content_form .row:has(#ProfileFormView) > #mainContent {
+    grid-row: 2 !important;
+  }
+
+  .row:has(#ProfileFormView) #mainContent > .page-copy,
+  .row:has(#ProfileFormView) #mainContent > fieldset,
+  .row:has(#ProfileFormView) #mainContent > div:has(.actions) {
+    width: 100%;
+  }
+
+  .row:has(#ProfileFormView) #mainContent > .page-copy {
+    margin-bottom: 1.25rem;
+  }
+
+  #content_form .row:has(#ProfileFormView) > .col-md-4 .list-group,
+  #content_form .row:has(#ProfileFormView) > .col-md-4 .list-group-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (min-width: 1200px) {
+  body:has(#ProfileFormView) #content_form > .container {
+    width: calc(100% - 2rem);
+    max-width: 1180px;
+  }
+}
+
+/* ------------------------------------------------------------------ phone */
+@media (max-width: 767px) {
+  body:has(#ProfileFormView) .page-heading {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .row:has(#ProfileFormView) {
+    padding: 0 1rem 3rem;
+  }
+
+  #ProfileFormView {
+    padding: 1.25rem;
+  }
+
+  #ProfileFormView .boolean-radio,
+  #ProfileFormView .picklist-radio,
+  #ProfileFormView .radio,
+  #ProfileFormView .checkbox {
+    display: flex;
+    margin-right: 0;
+  }
+
+  #ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton,
+  #ProfileFormView input[type="submit"],
+  #ProfileFormView button[type="submit"] {
+    width: 100%;
+  }
+}
+
+/* ------------------------------------------------------- reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #ProfileFormView *,
+  #ContentContainer_MainContent_MainContent_ContentBottom_SubmitButton {
+    scroll-behavior: auto;
+    transition: none;
+    transform: none !important;
+  }
+}
+
+/* ----------------------------------------------- stock /profile/ markup
+   Fallback for the unmodified Power Pages template, where the identity card,
+   navigation and guidance are direct children of #mainContent. The Foundation
+   template above takes precedence when it is in use. */
+#mainContent:has(#ProfileFormView):not(.row > #mainContent) {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 3rem 2rem 4.5rem;
+}
+
+#mainContent:has(#ProfileFormView) > h2:first-of-type {
+  margin: 0 0 1.5rem;
+  color: var(--sf-ink);
+  font-family: var(--sf-font-head);
+  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+#mainContent:has(#ProfileFormView) > h2:not(:first-of-type) {
+  margin: 2rem 0 .6rem;
+  color: var(--sf-ink) !important;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+#mainContent:has(#ProfileFormView) > h2:not(:first-of-type) + ul {
+  margin: 0;
+  padding: .75rem 1.25rem .75rem 2.25rem;
+  border-left: 3px solid var(--sf-action-hover);
+  background: var(--sf-paper);
+  color: var(--sf-ink);
+}
+
+#mainContent:has(#ProfileFormView) > h2:not(:first-of-type) + ul a {
+  color: inherit;
+  font-weight: 700;
+}

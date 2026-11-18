@@ -1,0 +1,439 @@
+/* Sujeeth Foundation | Power Pages modal styling
+   Load this CSS after the Power Pages theme CSS. These rules apply to all
+   Bootstrap/Power Pages .modal dialogs across the site. They change only the
+   presentation; each dialog keeps its native controls and behavior.
+   Colors follow the active Power Pages theme in the Styling workspace. */
+
+.modal {
+  --sf-modal-action: var(--portalThemeColor1);
+  --sf-modal-on-action: var(--portalThemeOnColor1);
+  --sf-modal-hover: var(--portalThemeColor2);
+  --sf-modal-on-hover: var(--portalThemeOnColor2);
+  --sf-modal-soft: var(--portalThemeColor3);
+  --sf-modal-on-soft: var(--portalThemeOnColor3);
+  --sf-modal-surface: var(--portalThemeColor7);
+  --sf-modal-on-surface: var(--portalThemeOnColor7);
+  /* Entity-form modals (Create / Edit / lookup) load the form in an iframe
+     whose page uses the site's light page background, Color 5. */
+  --sf-modal-canvas: var(--portalThemeColor5);
+  --sf-modal-on-canvas: var(--portalThemeOnColor5);
+  --sf-modal-line: color-mix(in srgb, var(--sf-modal-on-surface) 24%, transparent);
+  --sf-modal-shadow: color-mix(in srgb, var(--sf-modal-on-surface) 25%, transparent);
+  color: var(--sf-modal-on-surface);
+}
+
+.modal .modal-dialog {
+  width: min(680px, calc(100vw - 2rem));
+  max-width: none;
+  margin: clamp(1rem, 7vh, 4rem) auto;
+}
+
+.modal .modal-content {
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--sf-modal-line);
+  border-radius: 16px;
+  background: var(--sf-modal-surface);
+  box-shadow: 0 22px 60px var(--sf-modal-shadow);
+}
+
+.modal .modal-header {
+  display: flex;
+  align-items: center;
+  min-height: 76px;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid var(--sf-modal-line);
+  background: var(--sf-modal-action);
+  color: var(--sf-modal-on-action);
+}
+
+.modal .modal-title,
+.modal .modal-header h1,
+.modal .modal-header h2,
+.modal .modal-header h3,
+.modal .modal-header .fa {
+  margin: 0;
+  color: var(--sf-modal-on-action);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.modal .modal-header .close {
+  margin-left: auto;
+  color: var(--sf-modal-on-action);
+  opacity: .85;
+  text-shadow: none;
+  font-size: 1.8rem;
+}
+
+.modal .modal-header .close:hover,
+.modal .modal-header .close:focus-visible {
+  opacity: 1;
+}
+
+/* Power Pages renders the close button before the title. Keep the DOM order
+   (so reading order and focus order are unchanged) and place the title on the
+   left and the close button on the right. */
+.modal .modal-header .modal-title {
+  order: 1;
+  margin-right: auto;
+}
+
+.modal .modal-header .modal-title .fa {
+  margin-right: .5rem;
+  font-size: inherit;
+}
+
+.modal .modal-header .close {
+  order: 2;
+  margin: 0 0 0 1rem;
+}
+
+/* Entity-form modals: the form lives in an iframe on the light page canvas.
+   Let it fill the dialog instead of floating in a gray frame. */
+.modal .modal-body:has(iframe) {
+  padding: 0;
+  background: var(--sf-modal-canvas);
+  color: var(--sf-modal-on-canvas);
+}
+
+.modal .modal-body iframe {
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - 11rem);
+  border: 0;
+  background: var(--sf-modal-canvas);
+}
+
+/* Lookup popup (Create / Edit forms). The popup is rendered inside the form's
+   iframe, so it can only appear as large as that iframe. While it is open,
+   sujeeth-foundation-power-pages-modal.js adds .sf-nested-open to the modal and
+   the iframe stretches across the screen, so the popup opens over the whole
+   page. The transform reset matters: a transformed ancestor would otherwise
+   keep the fixed-position iframe inside the dialog. */
+.modal.sf-nested-open .modal-dialog {
+  transform: none !important;
+}
+
+.modal.sf-nested-open .modal-body iframe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  max-width: none;
+  height: 100vh !important;
+  max-height: none;
+  z-index: 2;
+  background: transparent;
+}
+
+/* Responsive height: CSS cannot size an iframe to its content. When
+   sujeeth-foundation-power-pages-modal.js is loaded it sets the iframe height
+   to fit the form; without it the iframe keeps the portal's default height,
+   capped above so the dialog never exceeds the viewport. */
+
+.modal .modal-body {
+  height: auto;
+  min-height: 0;
+  max-height: calc(100dvh - 11rem);
+  overflow-y: auto;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--sf-modal-soft);
+  color: var(--sf-modal-on-soft);
+}
+
+.modal fieldset,
+.modal .entity-form,
+.modal .entityform {
+  min-width: 0;
+  margin: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--sf-modal-line);
+  border-radius: 12px;
+  background: var(--sf-modal-surface);
+  color: var(--sf-modal-on-surface);
+}
+
+.modal label,
+.modal .control-label {
+  display: block;
+  margin-bottom: .55rem;
+  color: var(--sf-modal-on-surface);
+  font-size: .95rem;
+  font-weight: 700;
+}
+
+.modal .input-group {
+  display: flex;
+  width: 100%;
+}
+
+.modal .form-control,
+.modal input[type="text"] {
+  min-width: 0;
+  min-height: 46px;
+  border: 1px solid var(--sf-modal-line);
+  border-radius: 8px;
+  background: var(--sf-modal-surface);
+  color: var(--sf-modal-on-surface);
+  box-shadow: none;
+  font-size: 1rem;
+}
+
+.modal .input-group .form-control {
+  flex: 1 1 auto;
+  border-radius: 8px 0 0 8px;
+}
+
+.modal .input-group-btn .btn {
+  min-width: 52px;
+  min-height: 46px;
+  border: 1px solid var(--sf-modal-hover);
+  border-radius: 0 8px 8px 0;
+  background: var(--sf-modal-soft);
+  color: var(--sf-modal-on-soft);
+}
+
+/* Lookup / grid search box. The portal floats it right at a fixed width, which
+   pushes its search button past the edge of the frame on small screens.
+   Left-aligned, full width up to a comfortable maximum, button always visible. */
+.modal .view-toolbar .toolbar-actions {
+  float: none;
+  width: 100%;
+  max-width: 420px;
+}
+
+.modal .view-toolbar .input-group.view-search {
+  float: none;
+  width: 100%;
+}
+
+.modal .view-toolbar .input-group.view-search .form-control {
+  float: none;
+}
+
+.modal .view-toolbar .input-group-btn {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.modal input:focus-visible,
+.modal button:focus-visible,
+.modal .btn:focus-visible {
+  outline: 3px solid var(--sf-modal-hover);
+  outline-offset: 2px;
+}
+
+.modal .actions {
+  margin: 0;
+  padding: 1.25rem 0 0;
+}
+
+.modal .modal-footer {
+  padding: 1rem 1.75rem;
+  border-top: 1px solid var(--sf-modal-line);
+  background: var(--sf-modal-surface);
+  color: var(--sf-modal-on-surface);
+}
+
+.modal .actions .btn-primary,
+.modal input[type="submit"],
+.modal .modal-footer .btn-primary {
+  min-width: 140px;
+  min-height: 46px;
+  padding: .7rem 1.4rem;
+  border: 1px solid var(--sf-modal-action);
+  border-radius: 8px;
+  background: var(--sf-modal-action);
+  background-image: none;
+  color: var(--sf-modal-on-action);
+  font-size: 1rem;
+  font-weight: 700;
+  text-shadow: none;
+}
+
+.modal .actions .btn-primary:hover,
+.modal input[type="submit"]:hover,
+.modal .modal-footer .btn-primary:hover {
+  border-color: var(--sf-modal-hover);
+  background: var(--sf-modal-hover);
+  color: var(--sf-modal-on-hover);
+}
+
+/* Legibility: body copy and footer buttons.
+   Bootstrap's .text-muted (#666) on the soft gray body is too faint, and
+   .btn-light/.btn-warn inherit white text on a light fill. Body copy uses the
+   paired OnColor for its surface; footer buttons sit on the dark surface, so
+   Cancel is outlined and the confirming action uses the hover accent. */
+.modal .modal-body p,
+.modal .modal-body .text-muted {
+  color: var(--sf-modal-on-soft);
+  opacity: 1;
+}
+
+.modal .modal-footer .btn {
+  min-width: 120px;
+  min-height: 46px;
+  padding: .7rem 1.4rem;
+  border: 2px solid var(--sf-modal-on-surface);
+  border-radius: 8px;
+  background: transparent;
+  background-image: none;
+  color: var(--sf-modal-on-surface);
+  font-size: 1rem;
+  font-weight: 700;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+.modal .modal-footer .btn:hover,
+.modal .modal-footer .btn:focus-visible {
+  background: var(--sf-modal-on-surface);
+  color: var(--sf-modal-surface);
+}
+
+.modal .modal-footer .btn-primary,
+.modal .modal-footer .btn-warn,
+.modal .modal-footer .btn-danger {
+  border-color: var(--sf-modal-hover);
+  background: var(--sf-modal-hover);
+  color: var(--sf-modal-on-hover);
+}
+
+.modal .modal-footer .btn-primary:hover,
+.modal .modal-footer .btn-primary:focus-visible,
+.modal .modal-footer .btn-warn:hover,
+.modal .modal-footer .btn-warn:focus-visible,
+.modal .modal-footer .btn-danger:hover,
+.modal .modal-footer .btn-danger:focus-visible {
+  border-color: var(--sf-modal-on-surface);
+  background: var(--sf-modal-on-surface);
+  color: var(--sf-modal-surface);
+}
+
+/* Footer button row (Create / Edit forms, lookup popup: Select, Cancel,
+   Remove value). Bootstrap floats the buttons and gives each a 5px margin, so
+   rows wrap with no vertical gap. A wrapping flex row with one gap value keeps
+   the spacing even. Pixel units on purpose: the portal theme sets the root font
+   size to 10px, so rem values would come out smaller than they read. The clearfix pseudo-elements would become empty flex items,
+   so they are removed. */
+.modal .modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal .modal-footer::before,
+.modal .modal-footer::after {
+  display: none;
+}
+
+.modal .modal-footer .btn,
+.modal .modal-footer .btn + .btn,
+.modal .modal-footer .btn.pull-right {
+  float: none;
+  margin: 0;
+}
+
+/* Disabled buttons stay readable: an outline in the footer text color, dimmed
+   by mixing with transparency instead of lowering the whole button's opacity. */
+.modal .modal-footer .btn[disabled],
+.modal .modal-footer .btn[disabled]:hover,
+.modal .modal-footer .btn[disabled]:focus-visible {
+  border: 2px dashed color-mix(in srgb, var(--sf-modal-on-surface) 65%, transparent);
+  background: transparent;
+  color: color-mix(in srgb, var(--sf-modal-on-surface) 80%, transparent);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .modal .modal-footer {
+    padding: 16px;
+  }
+
+  /* Primary action on its own row; the other two share the next row. */
+  .modal .modal-footer .btn {
+    flex: 1 1 calc(50% - 6px);
+    min-width: 0;
+  }
+
+  .modal .modal-footer .btn-primary {
+    flex-basis: 100%;
+  }
+}
+
+/* Address popover (Bootstrap .popover, e.g. the address composite control).
+   It is not a .modal, so it needs its own theme roles. Bootstrap's default
+   white title text sat on a #f7f7f7 header; the header now uses the soft
+   palette slot with its paired OnColor, matching the modal body. */
+.popover {
+  --sf-pop-soft: var(--portalThemeColor3);
+  --sf-pop-on-soft: var(--portalThemeOnColor3);
+  --sf-pop-surface: var(--portalThemeColor7);
+  --sf-pop-on-surface: var(--portalThemeOnColor7);
+  --sf-pop-line: color-mix(in srgb, var(--sf-pop-on-surface) 24%, transparent);
+  border: 1px solid var(--sf-pop-line);
+  border-radius: 12px;
+  background: var(--sf-pop-surface);
+  color: var(--sf-pop-on-surface);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--sf-pop-on-surface) 25%, transparent);
+}
+
+.popover .popover-title {
+  border-bottom: 1px solid var(--sf-pop-line);
+  border-radius: 11px 11px 0 0;
+  background: var(--sf-pop-soft);
+  color: var(--sf-pop-on-soft);
+  font-weight: 700;
+}
+
+.popover .popover-content {
+  background: var(--sf-pop-surface);
+  color: var(--sf-pop-on-surface);
+  border-radius: 0 0 11px 11px;
+}
+
+.popover.bottom > .arrow:after {
+  border-bottom-color: var(--sf-pop-soft);
+}
+
+.popover.top > .arrow:after {
+  border-top-color: var(--sf-pop-surface);
+}
+
+.popover.left > .arrow:after {
+  border-left-color: var(--sf-pop-surface);
+}
+
+.popover.right > .arrow:after {
+  border-right-color: var(--sf-pop-surface);
+}
+
+/* Power Pages keeps its own validation colors and error indicators. */
+
+@media (max-width: 600px) {
+  .modal .modal-dialog {
+    width: calc(100vw - 1rem);
+    margin: .5rem auto;
+  }
+
+  .modal .modal-header,
+  .modal .modal-body {
+    padding: 1rem;
+  }
+
+  .modal fieldset {
+    padding: 1rem;
+  }
+
+  .modal .actions .btn-primary,
+  .modal input[type="submit"],
+  .modal .modal-footer .btn-primary {
+    width: 100%;
+  }
+}
