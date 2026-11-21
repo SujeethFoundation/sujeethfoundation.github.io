@@ -73,3 +73,7 @@ collections:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+# Publish machine-readable agent discovery files from Jekyll.
+include:
+  - .well-known

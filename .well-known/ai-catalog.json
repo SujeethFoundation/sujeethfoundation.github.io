@@ -1,0 +1,33 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "name": "Sujeeth Foundation",
+    "url": "https://www.sujeeth.org"
+  },
+  "entries": [
+    {
+      "id": "urn:air:sujeeth.org:mcp:career-compass",
+      "displayName": "Career Compass",
+      "description": "Find practical career guidance for students: resume and application feedback, interview preparation, networking, employer research, and Career Circle curriculum.",
+      "type": "application/json",
+      "url": "https://www.sujeeth.org/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "How can I improve my resume for this internship?",
+        "How should I prepare for a behavioral interview?",
+        "What should I research before applying to a company?",
+        "How do I network when I have little experience?"
+      ]
+    },
+    {
+      "id": "urn:air:sujeeth.org:web:career-circles",
+      "displayName": "Career Circles",
+      "description": "Six-week small-group career mentoring program for college students.",
+      "type": "text/html",
+      "url": "https://www.sujeeth.org/circle",
+      "representativeQueries": [
+        "What happens in a Career Circle?",
+        "How can a student get career mentoring?"
+      ]
+    }
+  ]
+}
