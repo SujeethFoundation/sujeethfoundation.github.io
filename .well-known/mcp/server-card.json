@@ -1,0 +1,15 @@
+{
+  "serverInfo": {
+    "name": "Career Compass by the Sujeeth Foundation",
+    "version": "1.0.0",
+    "description": "Career guidance for students preparing for their first job. Find Foundation guidance on resumes, job applications, interview preparation, networking, career exploration and Career Circles."
+  },
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://mcp.sujeeth.org/mcp"
+  },
+  "capabilities": {
+    "tools": {}
+  },
+  "websiteUrl": "https://www.sujeeth.org"
+}
