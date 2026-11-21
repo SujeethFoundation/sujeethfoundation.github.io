@@ -1,8 +1,8 @@
 {
   "serverInfo": {
     "name": "Career Compass by the Sujeeth Foundation",
-    "version": "1.0.0",
-    "description": "Career guidance for students preparing for their first job. Find Foundation guidance on resumes, job applications, interview preparation, networking, career exploration and Career Circles."
+    "version": "1.0",
+    "description": "Anonymous career guidance and discovery for students. Explore job fit, improve resumes and applications, prepare for interviews, research employers, practice networking, and find Sujeeth Foundation Career Circle resources."
   },
   "transport": {
     "type": "streamable-http",
@@ -11,5 +11,9 @@
   "capabilities": {
     "tools": {}
   },
-  "websiteUrl": "https://www.sujeeth.org"
+  "websiteUrl": "https://www.sujeeth.org",
+  "authentication": {
+    "type": "none",
+    "required": false
+  }
 }
