@@ -1,5 +1,6 @@
 ---
 name: career-compass
+skip: true
 description: Use the Sujeeth Foundation's anonymous Career Compass MCP to find source-backed guidance for students preparing for their first job, including applications, resumes, interviews, networking, and career exploration.
 ---
 
