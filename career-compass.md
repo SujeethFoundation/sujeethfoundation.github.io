@@ -24,3 +24,9 @@ Career Compass offers educational guidance. It does not place students in jobs, 
 MCP endpoint: https://mcp.sujeeth.org/mcp
 
 Website: https://www.sujeeth.org
+
+## Agent and browser discovery
+
+Agents can discover the service through the [agent catalog](https://www.sujeeth.org/.well-known/ai-catalog.json), which describes the Career Compass MCP service and public Foundation resources.
+
+On browsers that support the experimental WebMCP API, this site provides two read-only page tools: one returns public Career Compass and Foundation resource links, and the other returns the Career Compass MCP endpoint. The tools do not submit forms, send student information, or change site data.
