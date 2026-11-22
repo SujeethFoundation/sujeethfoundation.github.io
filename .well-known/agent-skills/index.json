@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "name": "Career Compass Agent Skills",
+  "description": "Public, anonymous career coaching instructions from the Sujeeth Foundation. Skills guide student-facing assistance; they are not a declaration of callable MCP tools.",
+  "publisher": {
+    "name": "The Sujeeth Foundation",
+    "url": "https://www.sujeeth.org"
+  },
+  "mcp": {
+    "name": "Career Compass",
+    "version": "1.0",
+    "url": "https://mcp.sujeeth.org/mcp",
+    "authentication": "none"
+  },
+  "skills": [
+    {
+      "id": "resume-review",
+      "name": "Resume and Application Review",
+      "description": "Review student-provided resumes and applications against job descriptions.",
+      "url": "https://www.sujeeth.org/.well-known/agent-skills/resume-review/SKILL.md"
+    },
+    {
+      "id": "interview-prep",
+      "name": "Interview Preparation",
+      "description": "Practice interviews and prepare evidence-based behavioral responses.",
+      "url": "https://www.sujeeth.org/.well-known/agent-skills/interview-prep/SKILL.md"
+    },
+    {
+      "id": "career-exploration",
+      "name": "Career Exploration and Job Fit",
+      "description": "Explore careers, employers, and roles based on student goals.",
+      "url": "https://www.sujeeth.org/.well-known/agent-skills/career-exploration/SKILL.md"
+    },
+    {
+      "id": "networking",
+      "name": "Networking and Informational Interviews",
+      "description": "Prepare outreach, informational conversations, and follow-up.",
+      "url": "https://www.sujeeth.org/.well-known/agent-skills/networking/SKILL.md"
+    },
+    {
+      "id": "job-search-strategy",
+      "name": "Job Search Strategy",
+      "description": "Plan applications, follow-up, offers, and negotiation.",
+      "url": "https://www.sujeeth.org/.well-known/agent-skills/job-search-strategy/SKILL.md"
+    }
+  ]
+}
