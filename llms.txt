@@ -36,6 +36,8 @@ Students can ask for help with:
 - [WebMCP tools](https://www.sujeeth.org/): Read-only browser tools for public Career Compass resource links and MCP endpoint details when a browser supports experimental WebMCP.
 - [robots.txt](https://www.sujeeth.org/robots.txt): Crawling rules and the catalog's Agentmap directive.
 
+- [Agent Skills Index](https://www.sujeeth.org/.well-known/agent-skills/index.json): Five public Career Compass guidance skills for resume reviews, interviews, career exploration, networking, and job-search strategy.
+
 ## Boundaries
 
 Do not send private student records, credentials, or sensitive personal information to public discovery services. Career Compass does not guarantee interviews, job offers, or employment. The Foundation's Online Circle member activities remain subject to their separate access rules.
