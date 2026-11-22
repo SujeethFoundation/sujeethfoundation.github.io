@@ -1,5 +1,6 @@
 ---
 layout: null
+skip: true
 permalink: /career-compass.md
 ---
 # Career Compass by the Sujeeth Foundation
