@@ -1,26 +1,27 @@
 ---
 name: career-compass
 skip: true
-description: Use the Sujeeth Foundation's anonymous Career Compass MCP to find source-backed guidance for students preparing for their first job, including applications, resumes, interviews, networking, and career exploration.
+description: Find source-backed Sujeeth Foundation guidance for students preparing for a first job.
 ---
 
 # Career Compass
 
-Career Compass is an anonymous, read-only MCP search service at https://mcp.sujeeth.org/mcp (version 1.0). It is not a resume scoring engine, application submission service, or interview simulator.
+Career Compass is an anonymous, read-only MCP search service for career guidance. Use it to find Sujeeth Foundation resources for resumes, applications, interviews, networking, career exploration, job-search planning, and Career Circles.
 
-## Actual MCP tools
+Endpoint: `https://mcp.sujeeth.org/mcp`  
+Version: `1.0`
 
-- `search_sujeeth_foundation`: Main ontology-guided search across approved websites and the Foundation wiki. Use first for questions about job-search guidance or Foundation programs.
-- `get_documents`: Read more of selected search results by passing URLs returned by search. Use when excerpts are insufficient.
-- `search_website`: Search ontology-approved websites only.
-- `search_wiki`: Search Foundation wiki content only.
+## Available tools
 
-These are the four public tools documented by the MCP repository. Administrative diagnostic tools are not available publicly.
+- `search_sujeeth_foundation`: Search approved Foundation websites and the Foundation wiki. Start here for questions about job-search guidance or Foundation programs.
+- `get_documents`: Read more of a search result by passing a URL returned by search.
+- `search_website`: Search ontology-approved websites.
+- `search_wiki`: Search the Foundation wiki.
 
-## Student use cases
+These are the four public MCP tools. Resume review and interview preparation are guidance topics, not separate MCP tools or endpoints.
 
-Use those same tools to retrieve relevant Foundation guidance for resume and application feedback, interview preparation, career exploration, networking, job-search planning, and Career Circles. These are topics for coaching, **not** separate MCP endpoints or tools. A connected AI assistant can discuss student-provided material and practice answers using retrieved guidance; the MCP itself only searches and reads sources.
+## Using the results
 
-## Retrieval rules
+Search first, then read the most relevant documents when an excerpt is not enough. Cite the source URLs you use. Respect out-of-scope and degraded-service responses.
 
-Search results contain excerpts and source URLs. Read selected documents when needed. Respect ontology-approved sources and out-of-scope or degraded-service responses. Cite source URLs. Do not invent statistics, personal achievements, employment outcomes, or claims about an employer. Do not expose private student records or recorded Circle sessions.
+Career Compass can help an assistant discuss material a student provides and practice responses using retrieved guidance. It does not submit applications, score candidates, promise outcomes, access private student records, or expose recorded Career Circle sessions.
