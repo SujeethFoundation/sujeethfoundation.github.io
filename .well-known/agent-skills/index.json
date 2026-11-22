@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "name": "Career Compass Agent Skills",
+  "description": "One public Career Compass agent skill describing the four actual read-only MCP search tools and student-facing coaching use cases. No dedicated resume or interview MCP endpoints exist.",
+  "publisher": {
+    "name": "The Sujeeth Foundation",
+    "url": "https://www.sujeeth.org"
+  },
+  "mcp": {
+    "name": "Career Compass",
+    "version": "1.0",
+    "url": "https://mcp.sujeeth.org/mcp",
+    "authentication": "none"
+  },
+  "skills": [
+    {
+      "id": "career-compass",
+      "name": "Career Compass",
+      "description": "Use four public MCP search and document tools to ground career guidance in Sujeeth Foundation sources.",
+      "url": "https://www.sujeeth.org/.well-known/agent-skills/career-compass/SKILL.md"
+    }
+  ]
+}
