@@ -43,6 +43,7 @@
     return ({ 100000000: "Public", 100000001: "Onboarding", 100000002: "On demand", 100000003: "End survey" })[number] || "Activity";
   }
   function safeUrl(raw) {
+    if (!String(raw || "").trim()) return null;
     try {
       var url = new URL(raw, window.location.href);
       return /^https?:$/.test(url.protocol) ? url.href : null;
