@@ -60,10 +60,10 @@
     if (/^(www\.)?vimeo\.com$/.test(parsed.hostname)) return "https://player.vimeo.com/video" + parsed.pathname;
     return url;
   }
-  function isSharePointShareLink(raw) {
+  function isSharePointUrl(raw) {
     try {
       var parsed = new URL(raw);
-      return /(^|\.)sharepoint\.com$/i.test(parsed.hostname) && /^\/:v:\//i.test(parsed.pathname);
+      return /(^|\.)sharepoint\.com$/i.test(parsed.hostname);
     } catch (_) { return false; }
   }
 
@@ -223,7 +223,7 @@
       if (section.description) content.appendChild(element("p", "sf-course-player__section-description", section.description));
       var video = videoUrl(section.videoUrl);
       if (video) {
-        if (isSharePointShareLink(video)) {
+        if (isSharePointUrl(video)) {
           var videoNotice = element("div", "sf-course-player__video-link");
           videoNotice.appendChild(element("p", "", "This video is stored in SharePoint and must open in a new tab."));
           var videoLink = element("a", "sf-course-player__resource", "Open section video");
@@ -255,7 +255,10 @@
         var resource = safeUrl(activity.url);
         if (quiz) {
           body.appendChild(element("p", "sf-course-player__quiz", "Quiz" + (activity.scoreRequired !== "" ? " · Passing score: " + activity.scoreRequired + "%" : "")));
-          if (resource) {
+          if (resource && isSharePointUrl(resource)) {
+            var sharePointLink = element("a", "sf-course-player__resource", "Open activity resource");
+            sharePointLink.href = resource; sharePointLink.target = "_blank"; sharePointLink.rel = "noopener noreferrer"; body.appendChild(sharePointLink);
+          } else if (resource) {
             var frame = document.createElement("iframe");
             frame.className = "sf-course-player__quiz-frame"; frame.src = resource; frame.title = activity.name;
             body.appendChild(frame);
