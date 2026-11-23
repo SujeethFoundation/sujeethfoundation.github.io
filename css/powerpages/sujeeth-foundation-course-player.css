@@ -9,7 +9,7 @@
   --cp-accent-text: var(--portalThemeOnColor4, #fff);
   --cp-line: color-mix(in srgb, var(--cp-text) 15%, transparent);
   --cp-muted: color-mix(in srgb, var(--cp-text) 63%, transparent);
-  color: var(--cp-text); background: var(--cp-surface); font-size: 16px; line-height: 1.5;
+  padding-inline: clamp(20px, 4vw, 56px); color: var(--cp-text); background: var(--cp-surface); font-size: 16px; line-height: 1.5;
 }
 .sf-course-player__header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; padding: 28px 0 22px; border-bottom: 1px solid var(--cp-line); }
 .sf-course-player__title { margin: 0; color: var(--cp-text); font-size: clamp(28px, 4vw, 42px); line-height: 1.08; }
