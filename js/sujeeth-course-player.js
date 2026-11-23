@@ -24,6 +24,7 @@
     apiRoot: (script && script.getAttribute("data-api-root")) || "/_api",
     allowProgressWrite: script && script.getAttribute("data-progress-write") === "true",
     requireEnrollment: script && script.getAttribute("data-require-enrollment") === "true",
+    subscribeUrl: script && script.getAttribute("data-subscribe-url"),
     allowRichContent: script && script.getAttribute("data-rich-content") === "true"
   };
 
@@ -113,16 +114,24 @@
   function load() {
     var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
     var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description&$filter=" + query("suj_onlinecourseid eq " + guid(cfg.courseId)));
-    var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
+    var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl,suj_subscription_access&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
     var enrollmentUrl = api(entity.enrollments + "?$select=suj_onlinecourseenrollmentid,suj_access_status,suj_completed_on&$filter=" + query(courseFilter + " and suj_access_status eq 100000000"));
     var requests = [readAll(courseUrl), readAll(sectionUrl)];
-    if (cfg.requireEnrollment) requests.push(readAll(enrollmentUrl));
+    var canCheckEnrollment = Boolean(guid(cfg.contactId));
+    if (canCheckEnrollment) requests.push(readAll(enrollmentUrl));
     return Promise.all(requests).then(function (result) {
       state.course = result[0][0] || null;
       state.sections = result[1].map(function (row) {
-        return { id: guid(value(row, "suj_onlinecoursesectionid")), name: value(row, "suj_name"), order: value(row, "suj_display_order"), description: value(row, "suj_description"), videoUrl: value(row, "suj_videourl") };
+        return {
+          id: guid(value(row, "suj_onlinecoursesectionid")),
+          name: value(row, "suj_name"),
+          order: value(row, "suj_display_order"),
+          description: value(row, "suj_description"),
+          videoUrl: value(row, "suj_videourl"),
+          subscriptionAccess: value(row, "suj_subscription_access")
+        };
       }).sort(byOrder);
-      state.enrollment = cfg.requireEnrollment ? (result[2][0] || null) : null;
+      state.enrollment = canCheckEnrollment ? (result[2][0] || null) : null;
       return Promise.all(state.sections.map(function (section) {
         var filter = "_suj_online_course_section_value eq " + section.id;
         var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,suj_stage,suj_passing_score_percent,suj_quiz_key,_suj_prerequisite_activity_value";
@@ -163,6 +172,7 @@
   }
   function overallCompletion() { return { completed: state.activities.filter(isComplete).length, total: state.activities.length }; }
   function activityById(id) { return state.activities.find(function (activity) { return activity.id === id; }); }
+  function sectionLocked(section) { return Number(section.subscriptionAccess) === 100000001 && !state.enrollment; }
 
   function render(root) {
     root.replaceChildren();
@@ -199,17 +209,22 @@
       navigation.appendChild(mobileToggle);
       state.sections.forEach(function (section) {
         var focused = section.id === state.activeSectionId;
-        var group = element("section", "sf-course-player__section" + (focused ? " is-active" : ""));
+        var locked = sectionLocked(section);
+        var group = element("section", "sf-course-player__section" + (focused ? " is-active" : "") + (locked ? " is-locked" : ""));
         var count = sectionCompletion(section.id);
         var label = element("button", "sf-course-player__section-title", section.order + ". " + section.name);
         label.type = "button"; label.setAttribute("aria-expanded", String(focused));
+        if (locked) label.setAttribute("aria-label", section.order + ". " + section.name + " — subscription only");
         label.addEventListener("click", function () {
+          if (locked) { openSubscriptionModal(section); return; }
           state.activeSectionId = section.id;
           if (window.matchMedia("(max-width: 780px)").matches) state.mobileNavigationOpen = false;
           drawNavigation(); drawContent();
         });
         var status = element("span", "sf-course-player__section-status", count.completed + "/" + count.total);
-        label.appendChild(status); group.appendChild(label);
+        label.appendChild(status);
+        if (locked) label.appendChild(element("span", "sf-course-player__locked-badge", "Subscription"));
+        group.appendChild(label);
         if (!focused) { navigation.appendChild(group); return; }
         var list = element("ol", "sf-course-player__activity-list");
         sectionActivities(section.id).forEach(function (activity) {
@@ -247,6 +262,28 @@
           content.appendChild(frame);
         }
       } else content.appendChild(element("p", "sf-course-player__empty", "The section video will appear here."));
+    }
+
+    function openSubscriptionModal(section) {
+      var overlay = element("div", "sf-course-player__modal-backdrop");
+      var dialog = element("section", "sf-course-player__modal sf-course-player__subscription-modal");
+      dialog.setAttribute("role", "dialog"); dialog.setAttribute("aria-modal", "true"); dialog.setAttribute("aria-label", "Subscription required");
+      var close = element("button", "sf-course-player__modal-close", "Close"); close.type = "button";
+      function dismiss() { overlay.remove(); }
+      close.addEventListener("click", dismiss);
+      overlay.addEventListener("click", function (event) { if (event.target === overlay) dismiss(); });
+      dialog.appendChild(close);
+      dialog.appendChild(element("h2", "sf-course-player__modal-title", "Continue with Career Ascent"));
+      var body = element("div", "sf-course-player__modal-body");
+      body.appendChild(element("p", "", section.name + " is available with an active subscription."));
+      body.appendChild(element("p", "", "Subscribe to unlock this section and the rest of the on-demand course."));
+      var subscribeUrl = safeUrl(cfg.subscribeUrl);
+      if (subscribeUrl) {
+        var subscribe = element("a", "sf-course-player__resource", "Subscribe");
+        subscribe.href = subscribeUrl; subscribe.target = "_self";
+        body.appendChild(subscribe);
+      }
+      dialog.appendChild(body); overlay.appendChild(dialog); document.body.appendChild(overlay); close.focus();
     }
 
     function openActivity(activity) {
