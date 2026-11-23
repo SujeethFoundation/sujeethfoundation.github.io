@@ -13,6 +13,8 @@ Add an optional `<div data-sf-course-player></div>` where the player should rend
 
 The player centers the selected section's `Video URL`. Its navigation expands only the selected section, and activity buttons open a modal. An activity with a Quiz Key is treated as a quiz and embeds its External URL in the modal; other activities display their Content/Description there.
 
+SharePoint Online pages cannot be embedded from the Power Pages domain. A SharePoint Video URL therefore displays an **Open section video** button; use an embeddable YouTube, Vimeo, Stream, or Clipchamp URL for in-page playback.
+
 ## Required Power Pages configuration
 
 The signed-in learner needs table permissions for the course tables. Enable the Power Pages Web API and list the selected columns in each table's `Webapi/<table logical name>/fields` site setting. The player does not depend on Dataverse views.

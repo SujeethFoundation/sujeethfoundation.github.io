@@ -60,6 +60,9 @@
     if (/^(www\.)?vimeo\.com$/.test(parsed.hostname)) return "https://player.vimeo.com/video" + parsed.pathname;
     return url;
   }
+  function isSharePointUrl(raw) {
+    try { return /(^|\.)sharepoint\.com$/i.test(new URL(raw).hostname); } catch (_) { return false; }
+  }
 
   function token() {
     return new Promise(function (resolve, reject) {
@@ -217,10 +220,18 @@
       if (section.description) content.appendChild(element("p", "sf-course-player__section-description", section.description));
       var video = videoUrl(section.videoUrl);
       if (video) {
-        var frame = document.createElement("iframe");
-        frame.className = "sf-course-player__video"; frame.src = video; frame.title = section.name + " video";
-        frame.setAttribute("allowfullscreen", ""); frame.setAttribute("loading", "lazy");
-        content.appendChild(frame);
+        if (isSharePointUrl(video)) {
+          var videoNotice = element("div", "sf-course-player__video-link");
+          videoNotice.appendChild(element("p", "", "This video is stored in SharePoint and must open in a new tab."));
+          var videoLink = element("a", "sf-course-player__resource", "Open section video");
+          videoLink.href = video; videoLink.target = "_blank"; videoLink.rel = "noopener noreferrer"; videoNotice.appendChild(videoLink);
+          content.appendChild(videoNotice);
+        } else {
+          var frame = document.createElement("iframe");
+          frame.className = "sf-course-player__video"; frame.src = video; frame.title = section.name + " video";
+          frame.setAttribute("allowfullscreen", ""); frame.setAttribute("loading", "lazy");
+          content.appendChild(frame);
+        }
       } else content.appendChild(element("p", "sf-course-player__empty", "The section video will appear here."));
     }
 
