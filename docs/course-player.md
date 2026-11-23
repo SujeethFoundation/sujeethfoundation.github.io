@@ -11,6 +11,8 @@ Load the player from a Power Pages course page:
 
 Add an optional `<div data-sf-course-player></div>` where the player should render. Without it, the player is appended to the page body.
 
+The player centers the selected section's `Video URL`. Its navigation expands only the selected section, and activity buttons open a modal. An activity with a Quiz Key is treated as a quiz and embeds its External URL in the modal; other activities display their Content/Description there.
+
 ## Required Power Pages configuration
 
 The signed-in learner needs table permissions for the course tables. Enable the Power Pages Web API and list the selected columns in each table's `Webapi/<table logical name>/fields` site setting. The player does not depend on Dataverse views.
