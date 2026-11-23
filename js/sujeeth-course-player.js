@@ -60,8 +60,11 @@
     if (/^(www\.)?vimeo\.com$/.test(parsed.hostname)) return "https://player.vimeo.com/video" + parsed.pathname;
     return url;
   }
-  function isSharePointUrl(raw) {
-    try { return /(^|\.)sharepoint\.com$/i.test(new URL(raw).hostname); } catch (_) { return false; }
+  function isSharePointShareLink(raw) {
+    try {
+      var parsed = new URL(raw);
+      return /(^|\.)sharepoint\.com$/i.test(parsed.hostname) && /^\/:v:\//i.test(parsed.pathname);
+    } catch (_) { return false; }
   }
 
   function token() {
@@ -220,7 +223,7 @@
       if (section.description) content.appendChild(element("p", "sf-course-player__section-description", section.description));
       var video = videoUrl(section.videoUrl);
       if (video) {
-        if (isSharePointUrl(video)) {
+        if (isSharePointShareLink(video)) {
           var videoNotice = element("div", "sf-course-player__video-link");
           videoNotice.appendChild(element("p", "", "This video is stored in SharePoint and must open in a new tab."));
           var videoLink = element("a", "sf-course-player__resource", "Open section video");
