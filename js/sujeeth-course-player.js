@@ -19,7 +19,8 @@
     new URL("../css/powerpages/sujeeth-foundation-course-player.css", scriptSrc).href;
   var cfg = {
     courseId: script && script.getAttribute("data-course-id"),
-    courseName: (script && script.getAttribute("data-course-name")) || "Course",
+    courseName: (script && script.getAttribute("data-course-name")) || "",
+    contactId: script && script.getAttribute("data-contact-id"),
     apiRoot: (script && script.getAttribute("data-api-root")) || "/_api",
     allowProgressWrite: script && script.getAttribute("data-progress-write") === "true",
     allowRichContent: script && script.getAttribute("data-rich-content") === "true"
@@ -31,7 +32,7 @@
     enrollments: "suj_onlinecourseenrollments",
     progress: "suj_onlinecourseactivityprogresses"
   };
-  var state = { sections: [], activities: [], progress: [], enrollment: null, activeId: null };
+  var state = { course: null, sections: [], activities: [], progress: [], enrollment: null, activeId: null };
 
   function guid(value) { return String(value || "").replace(/[{}]/g, ""); }
   function query(value) { return encodeURIComponent(value); }
@@ -91,13 +92,15 @@
 
   function load() {
     var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
+    var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description&$filter=" + query("suj_onlinecourseid eq " + guid(cfg.courseId)));
     var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
     var enrollmentUrl = api(entity.enrollments + "?$select=suj_onlinecourseenrollmentid,suj_access_status,suj_completed_on&$filter=" + query(courseFilter + " and suj_access_status eq 100000000"));
-    return Promise.all([readAll(sectionUrl), readAll(enrollmentUrl)]).then(function (result) {
-      state.sections = result[0].map(function (row) {
+    return Promise.all([readAll(courseUrl), readAll(sectionUrl), readAll(enrollmentUrl)]).then(function (result) {
+      state.course = result[0][0] || null;
+      state.sections = result[1].map(function (row) {
         return { id: guid(value(row, "suj_onlinecoursesectionid")), name: value(row, "suj_name"), order: value(row, "suj_display_order"), description: value(row, "suj_description"), videoUrl: value(row, "suj_videourl") };
       }).sort(byOrder);
-      state.enrollment = result[1][0] || null;
+      state.enrollment = result[2][0] || null;
       return Promise.all(state.sections.map(function (section) {
         var filter = "_suj_online_course_section_value eq " + section.id;
         var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,suj_stage,suj_passing_score_percent,suj_quiz_key,_suj_prerequisite_activity_value";
@@ -140,7 +143,7 @@
     root.replaceChildren();
     root.className = "sf-course-player";
     var header = element("header", "sf-course-player__header");
-    var heading = element("h1", "sf-course-player__title", cfg.courseName);
+    var heading = element("h1", "sf-course-player__title", cfg.courseName || value(state.course, "suj_name") || "Course");
     var overall = element("div", "sf-course-player__overall");
     header.append(heading, overall);
     var layout = element("div", "sf-course-player__layout");
@@ -205,10 +208,11 @@
       var actions = element("div", "sf-course-player__actions");
       var complete = isComplete(activity);
       if (complete) actions.appendChild(element("span", "sf-course-player__complete-label", "Completed"));
-      else if (cfg.allowProgressWrite && state.enrollment) {
+      else if (cfg.allowProgressWrite && state.enrollment && cfg.contactId) {
         var completeButton = element("button", "sf-course-player__complete-button", "Mark complete"); completeButton.type = "button";
         completeButton.addEventListener("click", function () { saveCompletion(activity, completeButton); }); actions.appendChild(completeButton);
       } else if (!state.enrollment) actions.appendChild(element("p", "sf-course-player__notice", "Sign in with an active enrollment to save progress."));
+      else if (!cfg.contactId) actions.appendChild(element("p", "sf-course-player__notice", "Your learner profile could not be identified, so progress cannot be saved."));
       var index = state.activities.findIndex(function (item) { return item.id === activity.id; });
       if (index >= 0 && state.activities[index + 1]) {
         var next = element("button", "sf-course-player__next", "Next activity"); next.type = "button";
@@ -226,6 +230,7 @@
         "suj_online_course_activity@odata.bind": "/" + entity.activities + "(" + activity.id + ")",
         "suj_online_course_enrollment@odata.bind": "/" + entity.enrollments + "(" + enrollmentId + ")"
       };
+      body["suj_completedby@odata.bind"] = "/contacts(" + guid(cfg.contactId) + ")";
       request(api(entity.progress), { method: "POST", body: JSON.stringify(body) }).then(function (response) {
         if (!response.ok) throw new Error("Could not save completion (" + response.status + ").");
         return response.headers.get("entityid") || "";
