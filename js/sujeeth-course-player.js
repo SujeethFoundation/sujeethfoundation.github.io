@@ -33,7 +33,7 @@
     enrollments: "suj_onlinecourseenrollments",
     progress: "suj_onlinecourseactivityprogresses"
   };
-  var state = { course: null, sections: [], activities: [], progress: [], enrollment: null, activeSectionId: null };
+  var state = { course: null, sections: [], activities: [], progress: [], enrollment: null, activeSectionId: null, mobileNavigationOpen: false };
 
   function guid(value) { return String(value || "").replace(/[{}]/g, ""); }
   function query(value) { return encodeURIComponent(value); }
@@ -190,13 +190,23 @@
 
     function drawNavigation() {
       navigation.replaceChildren();
+      navigation.classList.toggle("is-mobile-open", state.mobileNavigationOpen);
+      var mobileToggle = element("button", "sf-course-player__mobile-toggle", "Course sections · " + (state.activeSectionId ? (state.sections.findIndex(function (section) { return section.id === state.activeSectionId; }) + 1) : 1) + " of " + state.sections.length);
+      mobileToggle.type = "button";
+      mobileToggle.setAttribute("aria-expanded", String(state.mobileNavigationOpen));
+      mobileToggle.addEventListener("click", function () { state.mobileNavigationOpen = !state.mobileNavigationOpen; drawNavigation(); });
+      navigation.appendChild(mobileToggle);
       state.sections.forEach(function (section) {
         var focused = section.id === state.activeSectionId;
         var group = element("section", "sf-course-player__section" + (focused ? " is-active" : ""));
         var count = sectionCompletion(section.id);
         var label = element("button", "sf-course-player__section-title", section.order + ". " + section.name);
         label.type = "button"; label.setAttribute("aria-expanded", String(focused));
-        label.addEventListener("click", function () { state.activeSectionId = section.id; drawNavigation(); drawContent(); });
+        label.addEventListener("click", function () {
+          state.activeSectionId = section.id;
+          if (window.matchMedia("(max-width: 780px)").matches) state.mobileNavigationOpen = false;
+          drawNavigation(); drawContent();
+        });
         var status = element("span", "sf-course-player__section-status", count.completed + "/" + count.total);
         label.appendChild(status); group.appendChild(label);
         if (!focused) { navigation.appendChild(group); return; }
