@@ -51,4 +51,4 @@ Use the **Subscription Access** choice on **Online Course Section** to control e
 
 Add `suj_subscription_access` to the Power Pages Web API fields for `suj_onlinecoursesection`. To give the prompt a destination, add `data-subscribe-url` to the player script tag.
 
-The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment.
+The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment. Activity stages are not used by the player.
