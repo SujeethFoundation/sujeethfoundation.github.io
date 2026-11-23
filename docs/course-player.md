@@ -5,7 +5,7 @@ Load the player from a Power Pages course page:
 ```html
 <script defer src="https://www.sujeeth.org/js/sujeeth-course-player.js"
   data-course-id="ONLINE-COURSE-GUID"
-  data-course-name="Career Ascent"
+  data-contact-id="{{ user.id }}"
   data-progress-write="true"></script>
 ```
 
@@ -26,7 +26,8 @@ For a course page hosted outside Power Pages, set `data-api-root` to that Power 
 
 ## Optional attributes
 
-- `data-progress-write="true"` enables the **Mark complete** control. It remains read-only by default.
+- `data-progress-write="true"` enables the **Mark complete** control. It remains read-only by default. A signed-in portal contact must also be supplied through `data-contact-id`; use `{{ user.id }}` in Power Pages HTML.
+- `data-course-name="…"` overrides the course name fetched from Dataverse. It is optional.
 - `data-rich-content="true"` renders staff-authored activity content as HTML. Leave it off for plain-text rendering.
 - `data-css-url="https://…"` uses a different stylesheet.
 
