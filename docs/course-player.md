@@ -13,7 +13,7 @@ Add an optional `<div data-sf-course-player></div>` where the player should rend
 
 The player centers the selected section's `Video URL`. Its navigation expands only the selected section, and activity buttons open a modal. An activity with a Quiz Key is treated as a quiz and embeds its External URL in the modal; other activities display their Content/Description there.
 
-SharePoint Online sharing URLs (such as `/:v:/...`) cannot be embedded from the Power Pages domain and display an **Open section video** button. Use the Stream-on-SharePoint `/_layouts/15/embed.aspx?UniqueId=...` URL, or an embeddable YouTube, Vimeo, or Clipchamp URL, for in-page playback.
+SharePoint-hosted section videos and quiz resources open in a new tab. This avoids SharePoint cross-site framing restrictions. Use an embeddable YouTube, Vimeo, or Clipchamp URL for in-page playback.
 
 ## Required Power Pages configuration
 
