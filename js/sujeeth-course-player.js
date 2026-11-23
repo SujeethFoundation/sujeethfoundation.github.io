@@ -40,9 +40,6 @@
   function query(value) { return encodeURIComponent(value); }
   function value(record, name) { return record && record[name] != null ? record[name] : ""; }
   function byOrder(a, b) { return Number(a.order || 0) - Number(b.order || 0) || String(a.name).localeCompare(String(b.name)); }
-  function stageName(number) {
-    return ({ 100000000: "Public", 100000001: "Onboarding", 100000002: "On demand", 100000003: "End survey" })[number] || "Activity";
-  }
   function safeUrl(raw) {
     if (!String(raw || "").trim()) return null;
     try {
@@ -134,7 +131,7 @@
       state.enrollment = canCheckEnrollment ? (result[2][0] || null) : null;
       return Promise.all(state.sections.map(function (section) {
         var filter = "_suj_online_course_section_value eq " + section.id;
-        var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,suj_stage,suj_passing_score_percent,suj_quiz_key,_suj_prerequisite_activity_value";
+        var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,suj_passing_score_percent,suj_quiz_key,_suj_prerequisite_activity_value";
         return readAll(api(entity.activities + "?$select=" + fields + "&$filter=" + query(filter) + "&$orderby=suj_display_order asc"));
       }));
     }).then(function (activityGroups) {
@@ -144,7 +141,7 @@
             id: guid(value(row, "suj_onlinecourseactivityid")), sectionId: state.sections[index].id,
             name: value(row, "suj_name"), order: value(row, "suj_display_order"),
             content: value(row, "suj_content"), url: value(row, "suj_external_url"),
-            stage: value(row, "suj_stage"), scoreRequired: value(row, "suj_passing_score_percent"),
+            scoreRequired: value(row, "suj_passing_score_percent"),
             quizKey: value(row, "suj_quiz_key"), prerequisiteId: guid(value(row, "_suj_prerequisite_activity_value"))
           };
         }));
