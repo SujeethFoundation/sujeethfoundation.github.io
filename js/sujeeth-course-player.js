@@ -33,7 +33,7 @@
     enrollments: "suj_onlinecourseenrollments",
     progress: "suj_onlinecourseactivityprogresses"
   };
-  var state = { course: null, sections: [], activities: [], progress: [], enrollment: null, activeId: null };
+  var state = { course: null, sections: [], activities: [], progress: [], enrollment: null, activeSectionId: null };
 
   function guid(value) { return String(value || "").replace(/[{}]/g, ""); }
   function query(value) { return encodeURIComponent(value); }
@@ -47,6 +47,18 @@
       var url = new URL(raw, window.location.href);
       return /^https?:$/.test(url.protocol) ? url.href : null;
     } catch (_) { return null; }
+  }
+  function videoUrl(raw) {
+    var url = safeUrl(raw);
+    if (!url) return null;
+    var parsed = new URL(url);
+    if (parsed.hostname === "youtu.be") return "https://www.youtube.com/embed/" + parsed.pathname.slice(1);
+    if (/^(www\.)?youtube\.com$/.test(parsed.hostname)) {
+      var id = parsed.searchParams.get("v");
+      return id ? "https://www.youtube.com/embed/" + id : url;
+    }
+    if (/^(www\.)?vimeo\.com$/.test(parsed.hostname)) return "https://player.vimeo.com/video" + parsed.pathname;
+    return url;
   }
 
   function token() {
@@ -173,19 +185,22 @@
     function drawNavigation() {
       navigation.replaceChildren();
       state.sections.forEach(function (section) {
-        var group = element("section", "sf-course-player__section");
+        var focused = section.id === state.activeSectionId;
+        var group = element("section", "sf-course-player__section" + (focused ? " is-active" : ""));
         var count = sectionCompletion(section.id);
-        var label = element("h2", "sf-course-player__section-title", section.order + ". " + section.name);
+        var label = element("button", "sf-course-player__section-title", section.order + ". " + section.name);
+        label.type = "button"; label.setAttribute("aria-expanded", String(focused));
+        label.addEventListener("click", function () { state.activeSectionId = section.id; drawNavigation(); drawContent(); });
         var status = element("span", "sf-course-player__section-status", count.completed + "/" + count.total);
         label.appendChild(status); group.appendChild(label);
+        if (!focused) { navigation.appendChild(group); return; }
         var list = element("ol", "sf-course-player__activity-list");
         sectionActivities(section.id).forEach(function (activity) {
           var item = element("li", "sf-course-player__activity-item");
-          var button = element("button", "sf-course-player__activity-link" + (activity.id === state.activeId ? " is-active" : ""), activity.name);
+          var button = element("button", "sf-course-player__activity-link", activity.name);
           button.type = "button"; button.dataset.activityId = activity.id;
-          button.setAttribute("aria-current", activity.id === state.activeId ? "step" : "false");
           if (isComplete(activity)) button.classList.add("is-complete");
-          button.addEventListener("click", function () { state.activeId = activity.id; drawNavigation(); drawContent(); });
+          button.addEventListener("click", function () { openActivity(activity); });
           item.appendChild(button); list.appendChild(item);
         });
         group.appendChild(list); navigation.appendChild(group);
@@ -194,40 +209,66 @@
 
     function drawContent() {
       content.replaceChildren();
-      var activity = activityById(state.activeId) || state.activities[0];
-      if (!activity) { content.appendChild(element("p", "sf-course-player__empty", "This course does not have any activities yet.")); return; }
-      state.activeId = activity.id;
-      var section = state.sections.find(function (item) { return item.id === activity.sectionId; });
-      content.appendChild(element("p", "sf-course-player__eyebrow", (section ? section.name + " · " : "") + stageName(activity.stage)));
-      content.appendChild(element("h2", "sf-course-player__activity-title", activity.name));
-      if (activity.content) {
-        var body = element("div", "sf-course-player__body");
-        if (cfg.allowRichContent) body.innerHTML = activity.content; else setText(body, activity.content);
-        content.appendChild(body);
-      }
-      var resource = safeUrl(activity.url);
-      if (resource) {
-        var link = element("a", "sf-course-player__resource", "Open activity resource");
-        link.href = resource; link.target = "_blank"; link.rel = "noopener noreferrer"; content.appendChild(link);
-      }
-      if (activity.quizKey) content.appendChild(element("p", "sf-course-player__quiz", "Quiz: " + activity.quizKey + (activity.scoreRequired !== "" ? " · Passing score: " + activity.scoreRequired + "%" : "")));
-      var actions = element("div", "sf-course-player__actions");
-      var complete = isComplete(activity);
-      if (complete) actions.appendChild(element("span", "sf-course-player__complete-label", "Completed"));
-      else if (cfg.allowProgressWrite && cfg.contactId && (!cfg.requireEnrollment || state.enrollment)) {
-        var completeButton = element("button", "sf-course-player__complete-button", "Mark complete"); completeButton.type = "button";
-        completeButton.addEventListener("click", function () { saveCompletion(activity, completeButton); }); actions.appendChild(completeButton);
-      } else if (cfg.requireEnrollment && !state.enrollment) actions.appendChild(element("p", "sf-course-player__notice", "Sign in with an active enrollment to save progress."));
-      else if (!cfg.contactId) actions.appendChild(element("p", "sf-course-player__notice", "Your learner profile could not be identified, so progress cannot be saved."));
-      var index = state.activities.findIndex(function (item) { return item.id === activity.id; });
-      if (index >= 0 && state.activities[index + 1]) {
-        var next = element("button", "sf-course-player__next", "Next activity"); next.type = "button";
-        next.addEventListener("click", function () { state.activeId = state.activities[index + 1].id; drawNavigation(); drawContent(); }); actions.appendChild(next);
-      }
-      content.appendChild(actions);
+      var section = state.sections.find(function (item) { return item.id === state.activeSectionId; }) || state.sections[0];
+      if (!section) { content.appendChild(element("p", "sf-course-player__empty", "This course does not have any sections yet.")); return; }
+      state.activeSectionId = section.id;
+      content.appendChild(element("p", "sf-course-player__eyebrow", "Section " + section.order));
+      content.appendChild(element("h2", "sf-course-player__section-heading", section.name));
+      if (section.description) content.appendChild(element("p", "sf-course-player__section-description", section.description));
+      var video = videoUrl(section.videoUrl);
+      if (video) {
+        var frame = document.createElement("iframe");
+        frame.className = "sf-course-player__video"; frame.src = video; frame.title = section.name + " video";
+        frame.setAttribute("allowfullscreen", ""); frame.setAttribute("loading", "lazy");
+        content.appendChild(frame);
+      } else content.appendChild(element("p", "sf-course-player__empty", "The section video will appear here."));
     }
 
-    function saveCompletion(activity, button) {
+    function openActivity(activity) {
+      var overlay = element("div", "sf-course-player__modal-backdrop");
+      var dialog = element("section", "sf-course-player__modal");
+      dialog.setAttribute("role", "dialog"); dialog.setAttribute("aria-modal", "true"); dialog.setAttribute("aria-label", activity.name);
+      var close = element("button", "sf-course-player__modal-close", "Close"); close.type = "button";
+      function dismiss() { overlay.remove(); }
+      close.addEventListener("click", dismiss);
+      overlay.addEventListener("click", function (event) { if (event.target === overlay) dismiss(); });
+      var title = element("h2", "sf-course-player__modal-title", activity.name);
+      var body = element("div", "sf-course-player__modal-body");
+      dialog.append(close, title, body); overlay.appendChild(dialog); document.body.appendChild(overlay); close.focus();
+      function drawModal() {
+        body.replaceChildren();
+        var quiz = Boolean(activity.quizKey);
+        var resource = safeUrl(activity.url);
+        if (quiz) {
+          body.appendChild(element("p", "sf-course-player__quiz", "Quiz" + (activity.scoreRequired !== "" ? " · Passing score: " + activity.scoreRequired + "%" : "")));
+          if (resource) {
+            var frame = document.createElement("iframe");
+            frame.className = "sf-course-player__quiz-frame"; frame.src = resource; frame.title = activity.name;
+            body.appendChild(frame);
+          } else if (activity.content) {
+            var quizText = element("div", "sf-course-player__body");
+            if (cfg.allowRichContent) quizText.innerHTML = activity.content; else setText(quizText, activity.content);
+            body.appendChild(quizText);
+          } else body.appendChild(element("p", "sf-course-player__empty", "This quiz has not been configured yet."));
+        } else {
+          var description = element("div", "sf-course-player__body");
+          if (cfg.allowRichContent) description.innerHTML = activity.content; else setText(description, activity.content);
+          body.appendChild(description);
+          if (resource) { var link = element("a", "sf-course-player__resource", "Open activity resource"); link.href = resource; link.target = "_blank"; link.rel = "noopener noreferrer"; body.appendChild(link); }
+        }
+        var actions = element("div", "sf-course-player__actions");
+        if (isComplete(activity)) actions.appendChild(element("span", "sf-course-player__complete-label", "Completed"));
+        else if (cfg.allowProgressWrite && cfg.contactId && (!cfg.requireEnrollment || state.enrollment)) {
+          var completeButton = element("button", "sf-course-player__complete-button", "Mark complete"); completeButton.type = "button";
+          completeButton.addEventListener("click", function () { saveCompletion(activity, completeButton, function () { drawOverall(); drawNavigation(); drawModal(); }); }); actions.appendChild(completeButton);
+        } else if (cfg.requireEnrollment && !state.enrollment) actions.appendChild(element("p", "sf-course-player__notice", "Sign in with an active enrollment to save progress."));
+        else if (!cfg.contactId) actions.appendChild(element("p", "sf-course-player__notice", "Your learner profile could not be identified, so progress cannot be saved."));
+        body.appendChild(actions);
+      }
+      drawModal();
+    }
+
+    function saveCompletion(activity, button, afterSave) {
       button.disabled = true; setText(button, "Saving…");
       var body = {
         suj_name: activity.name + " progress",
@@ -244,14 +285,15 @@
         return response.headers.get("entityid") || "";
       }).then(function (id) {
         state.progress.push({ id: guid(id), activityId: activity.id, completedOn: new Date().toISOString(), score: "" });
-        drawOverall(); drawNavigation(); drawContent();
+        if (typeof afterSave === "function") afterSave(); else { drawOverall(); drawNavigation(); drawContent(); }
       }).catch(function (error) {
         button.disabled = false; setText(button, "Mark complete");
         window.alert(error.message + " Check the table permissions and Web API columns for Online Course Activity Progress.");
       });
     }
 
-    drawOverall(); drawNavigation(); state.activeId = state.activeId || (state.activities[0] && state.activities[0].id); drawContent();
+    state.activeSectionId = state.activeSectionId || (state.sections[0] && state.sections[0].id);
+    drawOverall(); drawNavigation(); drawContent();
   }
 
   function start() {
