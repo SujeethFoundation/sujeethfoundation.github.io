@@ -40,3 +40,15 @@ For a course page hosted outside Power Pages, set `data-api-root` to that Power 
 
 The script loads `https://www.sujeeth.org/css/powerpages/sujeeth-foundation-course-player.css` by default. Add `https://www.sujeeth.org` to the Power Pages CSP `script-src` directive before embedding the script.
 
+
+
+### Section subscription access
+
+Use the **Subscription Access** choice on **Online Course Section** to control entry to a section:
+
+- **Public** — any visitor may open the section.
+- **Subscription only** — a visitor without an active course enrollment sees the subscription prompt instead.
+
+Add `suj_subscription_access` to the Power Pages Web API fields for `suj_onlinecoursesection`. To give the prompt a destination, add `data-subscribe-url` to the player script tag.
+
+The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment.
