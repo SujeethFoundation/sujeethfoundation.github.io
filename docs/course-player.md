@@ -11,9 +11,9 @@ Load the player from a Power Pages course page:
 
 Add an optional `<div data-sf-course-player></div>` where the player should render. Without it, the player is appended to the page body.
 
-The player centers the selected section's `Video URL`. Its navigation expands only the selected section, and activity buttons open a modal. An activity with a Quiz Key is treated as a quiz and embeds its External URL in the modal; other activities display their Content/Description there.
+The player centers the selected section's `Video URL`. Its navigation expands only the selected section, and activity buttons open a modal that displays the activity Content/Description and an optional External URL.
 
-SharePoint-hosted section videos and quiz resources open in a new tab. This avoids SharePoint cross-site framing restrictions. Use an embeddable YouTube, Vimeo, or Clipchamp URL for in-page playback.
+SharePoint-hosted section videos open in a new tab. This avoids SharePoint cross-site framing restrictions. Use an embeddable YouTube, Vimeo, or Clipchamp URL for in-page playback.
 
 ## Required Power Pages configuration
 
@@ -22,7 +22,7 @@ The signed-in learner needs table permissions for the course tables. Enable the 
 | Table | Required columns |
 | --- | --- |
 | Online Course Section | ID, name, display order, description, video URL, online course |
-| Online Course Activity | ID, name, display order, content, external URL, stage, passing score percent, quiz key, prerequisite activity, online course section |
+| Online Course Activity | ID, name, display order, content, external URL, prerequisite activity, online course section |
 | Online Course Enrollment | ID, online course, access status, completed on, learner |
 | Online Course Activity Progress | ID, online course enrollment, online course activity, completed on, completed by, score percent, name |
 
@@ -51,4 +51,4 @@ Use the **Subscription Access** choice on **Online Course Section** to control e
 
 Add `suj_subscription_access` to the Power Pages Web API fields for `suj_onlinecoursesection`. To give the prompt a destination, add `data-subscribe-url` to the player script tag.
 
-The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment. Activity stages are not used by the player.
+The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment.
