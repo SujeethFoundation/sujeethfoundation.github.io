@@ -52,3 +52,43 @@ Use the **Subscription Access** choice on **Online Course Section** to control e
 Add `suj_subscription_access` to the Power Pages Web API fields for `suj_onlinecoursesection`. To give the prompt a destination, add `data-subscribe-url` to the player script tag.
 
 The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment.
+
+
+### Paid subscription checkout
+
+Add `data-payments-url` to turn the subscription prompt into a checkout modal:
+
+```html
+<script defer src="https://www.sujeeth.org/js/sujeeth-course-player.js"
+  data-course-id="ONLINE-COURSE-GUID"
+  data-contact-id="{{ user.id }}"
+  data-payments-url="https://suj-payments.azurewebsites.net/api"
+  data-progress-write="true"></script>
+```
+
+Without `data-payments-url` the prompt keeps its old behavior and links to `data-subscribe-url`. Optional `data-sign-in-url` (default `/SignIn`) is where signed-out visitors are sent.
+
+What the modal does:
+
+1. Signed-out visitors get a Sign in link (returns them to the course page).
+2. On open it asks the payments service for a quote and shows price, coupon discount, and total.
+3. **Apply** re-quotes with the coupon. The service decides whether the coupon is valid; the browser never calculates a price.
+4. **Pay** creates the order. A free total enrolls immediately; otherwise the learner is sent to PayPal and returns to this page with `?sf_payment=success` (or `cancel`).
+5. On return the player polls Online Course Enrollment until the webhook has created the enrollment (up to about a minute), unlocks the sections, and shows a confirmation.
+
+#### Payments service contract
+
+`POST {payments-url}/checkout`, JSON, called from the Power Pages origin (that origin must be in the service's allowlist and its CORS settings).
+
+`POST {payments-url}/checkout/status` with `{ orderId, contactId }` returns `{ state }` where state is `completed`, `pending`, `declined` or `waiting`. The player calls it after PayPal returns (the order ID is the `token` parameter PayPal adds) so it can tell a learner their payment was declined or is on hold. It only answers for an order that belongs to that contact.
+
+Request: `{ courseId, contactId, couponCode, quoteOnly?, returnUrl?, cancelUrl? }`
+
+| Case | Response |
+| --- | --- |
+| `quoteOnly: true` | `200 { courseName, currency, price, discount, total, couponApplied, testMode }` |
+| Payment due | `200 { status: "redirect", approvalUrl, orderId }` (must be an https paypal.com URL) |
+| Total is zero | `200 { status: "enrolled" }` (service has created the enrollment) |
+| Any failure | `4xx/5xx { error: "message shown to the learner" }` |
+
+`returnUrl` and `cancelUrl` are this page's URL with `sf_payment` added; the service must check they match the allowlisted origin. An invalid coupon returns `200` with `couponApplied: false` and `discount: 0`, so the learner can still pay full price.
