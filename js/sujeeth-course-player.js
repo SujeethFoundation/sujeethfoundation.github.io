@@ -131,7 +131,7 @@
       state.enrollment = canCheckEnrollment ? (result[2][0] || null) : null;
       return Promise.all(state.sections.map(function (section) {
         var filter = "_suj_online_course_section_value eq " + section.id;
-        var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,suj_passing_score_percent,suj_quiz_key,_suj_prerequisite_activity_value";
+        var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,_suj_prerequisite_activity_value";
         return readAll(api(entity.activities + "?$select=" + fields + "&$filter=" + query(filter) + "&$orderby=suj_display_order asc"));
       }));
     }).then(function (activityGroups) {
@@ -141,8 +141,7 @@
             id: guid(value(row, "suj_onlinecourseactivityid")), sectionId: state.sections[index].id,
             name: value(row, "suj_name"), order: value(row, "suj_display_order"),
             content: value(row, "suj_content"), url: value(row, "suj_external_url"),
-            scoreRequired: value(row, "suj_passing_score_percent"),
-            quizKey: value(row, "suj_quiz_key"), prerequisiteId: guid(value(row, "_suj_prerequisite_activity_value"))
+            prerequisiteId: guid(value(row, "_suj_prerequisite_activity_value"))
           };
         }));
       }, []);
@@ -296,36 +295,24 @@
       dialog.append(close, title, body); overlay.appendChild(dialog); document.body.appendChild(overlay); close.focus();
       function drawModal() {
         body.replaceChildren();
-        var quiz = Boolean(activity.quizKey);
         var resource = safeUrl(activity.url);
-        if (quiz) {
-          body.appendChild(element("p", "sf-course-player__quiz", "Quiz" + (activity.scoreRequired !== "" ? " · Passing score: " + activity.scoreRequired + "%" : "")));
-          if (resource && isSharePointUrl(resource)) {
-            var sharePointLink = element("a", "sf-course-player__resource", "Open activity resource");
-            sharePointLink.href = resource; sharePointLink.target = "_blank"; sharePointLink.rel = "noopener noreferrer"; body.appendChild(sharePointLink);
-          } else if (resource) {
-            var frame = document.createElement("iframe");
-            frame.className = "sf-course-player__quiz-frame"; frame.src = resource; frame.title = activity.name;
-            body.appendChild(frame);
-          } else if (activity.content) {
-            var quizText = element("div", "sf-course-player__body");
-            if (cfg.allowRichContent) quizText.innerHTML = activity.content; else setText(quizText, activity.content);
-            body.appendChild(quizText);
-          } else body.appendChild(element("p", "sf-course-player__empty", "This quiz has not been configured yet."));
-        } else {
-          var description = element("div", "sf-course-player__body");
-          if (cfg.allowRichContent) description.innerHTML = activity.content; else setText(description, activity.content);
-          body.appendChild(description);
-          if (resource) { var link = element("a", "sf-course-player__resource", "Open activity resource"); link.href = resource; link.target = "_blank"; link.rel = "noopener noreferrer"; body.appendChild(link); }
+        var description = element("div", "sf-course-player__body");
+        if (cfg.allowRichContent) description.innerHTML = activity.content; else setText(description, activity.content);
+        body.appendChild(description);
+        if (resource) {
+          var link = element("a", "sf-course-player__resource", "Open activity resource");
+          link.href = resource; link.target = "_blank"; link.rel = "noopener noreferrer";
+          body.appendChild(link);
         }
         var actions = element("div", "sf-course-player__actions");
-        if (isComplete(activity)) actions.appendChild(element("span", "sf-course-player__complete-label", "Completed"));
-        else if (cfg.allowProgressWrite && cfg.contactId && (!cfg.requireEnrollment || state.enrollment)) {
-          var completeButton = element("button", "sf-course-player__complete-button", "Mark complete"); completeButton.type = "button";
-          completeButton.addEventListener("click", function () { saveCompletion(activity, completeButton, function () { drawOverall(); drawNavigation(); drawModal(); }); }); actions.appendChild(completeButton);
-        } else if (cfg.requireEnrollment && !state.enrollment) actions.appendChild(element("p", "sf-course-player__notice", "Sign in with an active enrollment to save progress."));
-        else if (!cfg.contactId) actions.appendChild(element("p", "sf-course-player__notice", "Your learner profile could not be identified, so progress cannot be saved."));
-        body.appendChild(actions);
+        if (isComplete(activity)) actions.appendChild(element("span", "sf-course-player__complete", "Completed"));
+        else if (cfg.allowProgressWrite) {
+          var complete = element("button", "sf-course-player__complete-button", "Mark complete");
+          complete.type = "button";
+          complete.addEventListener("click", function () { setComplete(activity).then(function () { drawModal(); drawNavigation(); drawOverall(); }); });
+          actions.appendChild(complete);
+        }
+        if (actions.childNodes.length) body.appendChild(actions);
       }
       drawModal();
     }
