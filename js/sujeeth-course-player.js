@@ -25,6 +25,8 @@
     allowProgressWrite: script && script.getAttribute("data-progress-write") === "true",
     requireEnrollment: script && script.getAttribute("data-require-enrollment") === "true",
     subscribeUrl: script && script.getAttribute("data-subscribe-url"),
+    paymentsUrl: (script && script.getAttribute("data-payments-url")) || "",
+    signInUrl: (script && script.getAttribute("data-sign-in-url")) || "/SignIn",
     allowRichContent: script && script.getAttribute("data-rich-content") === "true"
   };
 
@@ -112,10 +114,9 @@
     var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
     var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description&$filter=" + query("suj_onlinecourseid eq " + guid(cfg.courseId)));
     var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl,suj_subscription_access&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
-    var enrollmentUrl = api(entity.enrollments + "?$select=suj_onlinecourseenrollmentid,suj_access_status,suj_completed_on&$filter=" + query(courseFilter + " and suj_access_status eq 100000000"));
     var requests = [readAll(courseUrl), readAll(sectionUrl)];
     var canCheckEnrollment = Boolean(guid(cfg.contactId));
-    if (canCheckEnrollment) requests.push(readAll(enrollmentUrl));
+    if (canCheckEnrollment) requests.push(readAll(enrollmentUrl()));
     return Promise.all(requests).then(function (result) {
       state.course = result[0][0] || null;
       state.sections = result[1].map(function (row) {
@@ -169,6 +170,43 @@
   function overallCompletion() { return { completed: state.activities.filter(isComplete).length, total: state.activities.length }; }
   function activityById(id) { return state.activities.find(function (activity) { return activity.id === id; }); }
   function sectionLocked(section) { return Number(section.subscriptionAccess) === 100000001 && !state.enrollment; }
+
+  function enrollmentUrl() {
+    var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
+    return api(entity.enrollments + "?$select=suj_onlinecourseenrollmentid,suj_access_status,suj_completed_on&$filter=" + query(courseFilter + " and suj_access_status eq 100000000"));
+  }
+  function refreshEnrollment() {
+    if (!guid(cfg.contactId)) return Promise.resolve(null);
+    return readAll(enrollmentUrl()).then(function (rows) { state.enrollment = rows[0] || null; return state.enrollment; });
+  }
+
+  // Payments service. The browser never chooses an environment or an amount: it sends the
+  // course, the coupon text and the signed-in contact, and the service decides the charge.
+  function payments(path, body) {
+    var root = String(cfg.paymentsUrl).replace(/\/$/, "");
+    return fetch(root + "/" + path, {
+      method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(body)
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (!response.ok) { var error = new Error(data.error || "The payment service returned " + response.status + "."); error.status = response.status; throw error; }
+        return data;
+      });
+    });
+  }
+  function money(amount, currency) {
+    try { return new Intl.NumberFormat(undefined, { style: "currency", currency: currency || "USD" }).format(Number(amount)); }
+    catch (_) { return "$" + Number(amount).toFixed(2); }
+  }
+  function pageUrlWith(flag) {
+    var url = new URL(window.location.href);
+    ["sf_payment", "token", "PayerID"].forEach(function (name) { url.searchParams.delete(name); });
+    if (flag) url.searchParams.set("sf_payment", flag);
+    url.hash = "";
+    return url.href;
+  }
+  function isPayPalUrl(raw) {
+    try { var u = new URL(raw); return u.protocol === "https:" && /(^|\.)paypal\.com$/i.test(u.hostname); } catch (_) { return false; }
+  }
 
   function render(root) {
     root.replaceChildren();
@@ -265,21 +303,157 @@
       var dialog = element("section", "sf-course-player__modal sf-course-player__subscription-modal");
       dialog.setAttribute("role", "dialog"); dialog.setAttribute("aria-modal", "true"); dialog.setAttribute("aria-label", "Subscription required");
       var close = element("button", "sf-course-player__modal-close", "Close"); close.type = "button";
-      function dismiss() { overlay.remove(); }
+      function dismiss() { overlay.remove(); document.removeEventListener("keydown", onKey); }
+      function onKey(event) { if (event.key === "Escape") dismiss(); }
       close.addEventListener("click", dismiss);
       overlay.addEventListener("click", function (event) { if (event.target === overlay) dismiss(); });
-      dialog.appendChild(close);
-      dialog.appendChild(element("h2", "sf-course-player__modal-title", "Continue with Career Ascent"));
+      document.addEventListener("keydown", onKey);
+      var title = element("h2", "sf-course-player__modal-title", "Continue with Career Ascent");
       var body = element("div", "sf-course-player__modal-body");
-      body.appendChild(element("p", "", section.name + " is available with an active subscription."));
-      body.appendChild(element("p", "", "Subscribe to unlock this section and the rest of the on-demand course."));
-      var subscribeUrl = safeUrl(cfg.subscribeUrl);
-      if (subscribeUrl) {
-        var subscribe = element("a", "sf-course-player__resource", "Subscribe");
-        subscribe.href = subscribeUrl; subscribe.target = "_self";
-        body.appendChild(subscribe);
+      dialog.append(close, title, body); overlay.appendChild(dialog); document.body.appendChild(overlay); close.focus();
+      drawSubscribe(body, title, section, dismiss);
+    }
+
+    // Payment modal. Views: sign-in, fallback link, checkout (quote + coupon + pay), success.
+    function drawSubscribe(body, title, section, dismiss) {
+      body.replaceChildren();
+      var intro = element("p", "", (section ? "“" + section.name + "”" : "This section") + " is for subscribers. Pay once and your access never expires.");
+      body.appendChild(intro);
+
+      if (!guid(cfg.contactId)) {
+        body.appendChild(element("p", "", "Sign in to subscribe, then you can pay and unlock every section."));
+        var signIn = element("a", "sf-course-player__resource", "Sign in");
+        signIn.href = cfg.signInUrl + (cfg.signInUrl.indexOf("?") === -1 ? "?" : "&") + "returnUrl=" + encodeURIComponent(window.location.pathname + window.location.search);
+        body.appendChild(signIn); return;
       }
-      dialog.appendChild(body); overlay.appendChild(dialog); document.body.appendChild(overlay); close.focus();
+      if (!cfg.paymentsUrl) {
+        var fallback = safeUrl(cfg.subscribeUrl);
+        body.appendChild(element("p", "", "Subscribe to unlock this section and the rest of the on-demand course."));
+        if (fallback) { var link = element("a", "sf-course-player__resource", "Subscribe"); link.href = fallback; link.target = "_self"; body.appendChild(link); }
+        return;
+      }
+
+      var couponApplied = "";
+      var quoteData = null;
+      var summary = element("dl", "sf-course-player__price-summary");
+      var couponRow = element("form", "sf-course-player__coupon");
+      var couponLabel = element("label", "sf-course-player__coupon-label", "Coupon code");
+      var couponInput = element("input", "sf-course-player__coupon-input");
+      couponInput.type = "text"; couponInput.autocomplete = "off"; couponInput.autocapitalize = "characters"; couponInput.spellcheck = false; couponInput.maxLength = 60;
+      couponInput.id = "sf-coupon-" + Math.random().toString(36).slice(2); couponLabel.htmlFor = couponInput.id;
+      var apply = element("button", "sf-course-player__coupon-apply", "Apply"); apply.type = "submit";
+      couponRow.append(couponLabel, couponInput, apply);
+      var message = element("p", "sf-course-player__pay-message"); message.setAttribute("role", "status"); message.setAttribute("aria-live", "polite");
+      var pay = element("button", "sf-course-player__complete-button sf-course-player__pay-button", "Loading price…"); pay.type = "button"; pay.disabled = true;
+      var testNote = element("p", "sf-course-player__test-note");
+      body.append(summary, couponRow, message, pay, testNote);
+
+      function say(text, kind) { setText(message, text); message.className = "sf-course-player__pay-message" + (kind ? " is-" + kind : ""); }
+      function busy(on) { couponInput.disabled = on; apply.disabled = on; pay.disabled = on || !quoteData; }
+      function row(label, text, className) {
+        var line = element("div", "sf-course-player__price-row" + (className ? " " + className : ""));
+        line.append(element("dt", "", label), element("dd", "", text)); summary.appendChild(line);
+      }
+      function drawQuote() {
+        summary.replaceChildren();
+        row(quoteData.courseName || "Career Ascent", money(quoteData.price, quoteData.currency));
+        if (Number(quoteData.discount) > 0) row("Coupon " + couponApplied, "−" + money(quoteData.discount, quoteData.currency), "is-discount");
+        row("Total today", money(quoteData.total, quoteData.currency), "is-total");
+        var free = Number(quoteData.total) <= 0;
+        setText(pay, free ? "Enroll for free" : "Pay " + money(quoteData.total, quoteData.currency) + " with PayPal");
+        setText(testNote, quoteData.testMode ? "Test environment: PayPal sandbox only, no real money moves." : "");
+        pay.disabled = false;
+      }
+      function quote(code) {
+        busy(true); say(code ? "Checking coupon…" : "");
+        return payments("checkout", { courseId: guid(cfg.courseId), contactId: guid(cfg.contactId), couponCode: code || "", quoteOnly: true })
+          .then(function (data) {
+            quoteData = data; couponApplied = data.couponApplied ? (code || "").toUpperCase() : "";
+            drawQuote();
+            if (code) say(data.couponApplied ? "Coupon applied." : "That coupon does not apply.", data.couponApplied ? "ok" : "error");
+          }).catch(function (error) {
+            if (!quoteData) { setText(pay, "Pay with PayPal"); pay.disabled = true; }
+            say(error.message || "We could not check that coupon.", "error");
+          }).then(function () { busy(false); });
+      }
+      couponRow.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var code = couponInput.value.trim();
+        if (!code) { couponApplied = ""; quote(""); return; }
+        quote(code);
+      });
+      pay.addEventListener("click", function () {
+        busy(true); say("Starting checkout…");
+        payments("checkout", {
+          courseId: guid(cfg.courseId), contactId: guid(cfg.contactId), couponCode: couponApplied,
+          returnUrl: pageUrlWith("success"), cancelUrl: pageUrlWith("cancel")
+        }).then(function (data) {
+          if (data.status === "enrolled") {
+            return refreshEnrollment().then(function () { drawNavigation(); drawContent(); drawPaid(body, title, dismiss); });
+          }
+          if (data.status === "redirect" && isPayPalUrl(data.approvalUrl)) {
+            say("Taking you to PayPal…"); window.location.assign(data.approvalUrl); return;
+          }
+          throw new Error("Checkout did not return a PayPal approval link.");
+        }).catch(function (error) { busy(false); say(error.message || "Checkout failed. You were not charged.", "error"); });
+      });
+      quote("");
+    }
+
+    function drawPaid(body, title, dismiss) {
+      setText(title, "You're in");
+      body.replaceChildren();
+      body.appendChild(element("p", "", "Your enrollment is active. Every section of the course is now unlocked, and your access does not expire."));
+      var go = element("button", "sf-course-player__complete-button", "Start learning"); go.type = "button";
+      go.addEventListener("click", dismiss); body.appendChild(go);
+    }
+
+    // Returning from PayPal: the webhook creates the enrollment, so confirm by polling for it.
+    function handlePaymentReturn() {
+      var url = new URL(window.location.href);
+      var flag = url.searchParams.get("sf_payment");
+      var orderId = url.searchParams.get("token") || "";
+      if (!flag) return;
+      window.history.replaceState(null, "", pageUrlWith(null));
+      var overlay = element("div", "sf-course-player__modal-backdrop");
+      var dialog = element("section", "sf-course-player__modal sf-course-player__subscription-modal");
+      dialog.setAttribute("role", "dialog"); dialog.setAttribute("aria-modal", "true"); dialog.setAttribute("aria-label", "Payment status");
+      var close = element("button", "sf-course-player__modal-close", "Close"); close.type = "button";
+      var title = element("h2", "sf-course-player__modal-title", "Confirming your payment");
+      var body = element("div", "sf-course-player__modal-body"); body.setAttribute("aria-live", "polite");
+      function dismiss() { stopped = true; overlay.remove(); }
+      var stopped = false;
+      close.addEventListener("click", dismiss);
+      dialog.append(close, title, body); overlay.appendChild(dialog); document.body.appendChild(overlay); close.focus();
+      if (flag === "cancel") {
+        setText(title, "Checkout canceled");
+        body.appendChild(element("p", "", "You were not charged. You can subscribe any time from a locked section."));
+        return;
+      }
+      body.appendChild(element("p", "", "Thanks. We're waiting for PayPal to confirm. This usually takes a few seconds."));
+      var attempts = 0;
+      function finish(heading, text) { setText(title, heading); body.replaceChildren(element("p", "", text)); }
+      // Ask PayPal (through the payments service) how this order ended, so a declined or
+      // held payment gets a straight answer instead of a spinner.
+      function paymentState() {
+        if (!orderId || !cfg.paymentsUrl) return Promise.resolve("waiting");
+        return payments("checkout/status", { orderId: orderId, contactId: guid(cfg.contactId) })
+          .then(function (data) { return data.state || "waiting"; }).catch(function () { return "waiting"; });
+      }
+      (function poll() {
+        if (stopped) return;
+        refreshEnrollment().then(function (enrollment) {
+          if (stopped) return;
+          if (enrollment) { drawNavigation(); drawContent(); drawPaid(body, title, dismiss); return; }
+          return paymentState().then(function (state) {
+            if (stopped) return;
+            if (state === "declined") { finish("Payment not completed", "PayPal declined this payment, so you were not charged and you are not enrolled. Close this window and try again, or use a different payment method."); return; }
+            if (state === "pending") { finish("Payment on hold", "PayPal is holding this payment for review. You have not been enrolled yet. Access unlocks automatically once PayPal releases it, usually within a day. You do not need to pay again."); return; }
+            if (++attempts >= 20) { finish("Still processing", "We haven't seen your enrollment yet. If PayPal charged you, access appears within a few minutes. Refresh this page to check, or contact us and we'll sort it out."); return; }
+            window.setTimeout(poll, 3000);
+          });
+        }).catch(function () { if (!stopped && ++attempts < 20) window.setTimeout(poll, 3000); });
+      })();
     }
 
     function openActivity(activity) {
@@ -343,6 +517,7 @@
 
     state.activeSectionId = state.activeSectionId || (state.sections[0] && state.sections[0].id);
     drawOverall(); drawNavigation(); drawContent();
+    handlePaymentReturn();
   }
 
   function start() {

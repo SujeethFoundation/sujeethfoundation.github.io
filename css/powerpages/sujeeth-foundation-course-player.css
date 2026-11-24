@@ -61,3 +61,21 @@
 .sf-course-player__section.is-locked .sf-course-player__section-title { color: var(--cp-muted); }
 .sf-course-player__locked-badge { flex: 0 0 auto; margin-left: auto; padding: 2px 7px; border-radius: 999px; background: var(--cp-tint); color: var(--cp-tint-text); font-size: 11px; font-weight: 700; }
 .sf-course-player__subscription-modal { width: min(520px, 100%); }
+
+/* Payment modal */
+.sf-course-player__price-summary { margin: 20px 0 0; padding: 0; border-top: 1px solid var(--cp-line); }
+.sf-course-player__price-row { display: flex; justify-content: space-between; gap: 16px; margin: 0; padding: 10px 0; border-bottom: 1px solid var(--cp-line); }
+.sf-course-player__price-row dt, .sf-course-player__price-row dd { margin: 0; font-weight: 400; }
+.sf-course-player__price-row.is-discount dd { color: #1d6b3a; }
+.sf-course-player__price-row.is-total dt, .sf-course-player__price-row.is-total dd { font-weight: 800; font-size: 1.1em; }
+.sf-course-player__coupon { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0 0; }
+.sf-course-player__coupon-label { flex: 1 0 100%; font-size: 14px; font-weight: 700; }
+.sf-course-player__coupon-input { flex: 1 1 160px; min-height: 42px; padding: 8px 12px; border: 1px solid var(--cp-line); border-radius: 7px; background: #fff; color: #1c2938; font: inherit; text-transform: uppercase; }
+.sf-course-player__coupon-apply { min-height: 42px; padding: 8px 16px; border: 1px solid var(--cp-accent); border-radius: 7px; background: transparent; color: var(--cp-accent); font: inherit; font-weight: 800; cursor: pointer; }
+.sf-course-player__coupon-apply:disabled, .sf-course-player__pay-button:disabled { opacity: .55; cursor: not-allowed; }
+.sf-course-player__pay-message { min-height: 1.4em; margin: 10px 0 0; font-size: 14px; color: var(--cp-muted); }
+.sf-course-player__pay-message.is-ok { color: #1d6b3a; }
+.sf-course-player__pay-message.is-error { color: #9f1c1c; }
+.sf-course-player__pay-button { width: 100%; margin-top: 10px; }
+.sf-course-player__test-note { margin: 10px 0 0; font-size: 13px; color: #8a5a00; }
+.sf-course-player__test-note:empty { display: none; }
