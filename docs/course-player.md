@@ -24,7 +24,7 @@ The signed-in learner needs table permissions for the course tables. Enable the 
 | Online Course Section | ID, name, display order, description, video URL, online course |
 | Online Course Activity | ID, name, display order, content, external URL, prerequisite activity, online course section |
 | Online Course Enrollment | ID, online course, access status, completed on, learner |
-| Online Course Activity Progress | ID, online course enrollment, online course activity, completed on, completed by, score percent, name |
+| Online Course Activity Progress | ID, online course enrollment, online course activity, completed on, completed by, name |
 
 For free courses, give **Online Course Activity Progress** Contact-scope permissions through the `Completed By` relationship. This lets a learner read and create only their own progress rows without an enrollment record.
 
@@ -92,3 +92,16 @@ Request: `{ courseId, contactId, couponCode, quoteOnly?, returnUrl?, cancelUrl? 
 | Any failure | `4xx/5xx { error: "message shown to the learner" }` |
 
 `returnUrl` and `cancelUrl` are this page's URL with `sf_payment` added; the service must check they match the allowlisted origin. An invalid coupon returns `200` with `couponApplied: false` and `discount: 0`, so the learner can still pay full price.
+
+
+### Completion expiry
+
+If the course sets **Completion Valid Days** (`suj_completion_valid_days`), an activity counts as complete only until that many days after its **Completed On** date. After that it shows as not done, the section and overall counts drop, and the activity modal offers **Renew completion**, which moves the existing progress row's date forward (one row per activity).
+
+Add `suj_completion_valid_days` to the Web API fields for `suj_onlinecourse`. Without it the player loads normally and completions never expire. Renewing needs **Write** as well as Create and Read on Online Course Activity Progress, through the same Contact-scope permission.
+
+The window is course-wide. Every activity, including onboarding, uses the same number.
+
+### Unmarking an activity
+
+With `data-progress-write="true"`, a completed activity also shows **Mark incomplete**. It clears the Completed On date on the learner's progress row (the row is kept), so the activity counts as not done until it is marked complete again. This needs Write permission, the same as renewing a completion.
