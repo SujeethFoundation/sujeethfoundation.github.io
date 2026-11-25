@@ -36,10 +36,11 @@
     enrollments: "suj_onlinecourseenrollments",
     progress: "suj_onlinecourseactivityprogresses"
   };
-  var state = { validDays: null, course: null, sections: [], activities: [], progress: [], enrollment: null, activeSectionId: null, mobileNavigationOpen: false };
+  var state = { validDays: null, course: null, sections: [], activities: [], progress: [], enrollment: null, pendingProgress: {}, activeSectionId: null, mobileNavigationOpen: false };
 
   function guid(value) { return String(value || "").replace(/[{}]/g, ""); }
   function query(value) { return encodeURIComponent(value); }
+  function odataString(value) { return "'" + String(value || "").replace(/'/g, "''") + "'"; }
   function value(record, name) { return record && record[name] != null ? record[name] : ""; }
   function byOrder(a, b) { return Number(a.order || 0) - Number(b.order || 0) || String(a.name).localeCompare(String(b.name)); }
   function safeUrl(raw) {
@@ -523,39 +524,94 @@
       drawModal();
     }
 
+    function responseError(response, action) {
+      return response.text().then(function (text) {
+        var detail = "";
+        try {
+          var data = JSON.parse(text);
+          detail = data && data.error && data.error.message ? ": " + data.error.message : "";
+        } catch (_) { detail = text ? ": " + text.slice(0, 300) : ""; }
+        throw new Error(action + " (" + response.status + ")" + detail);
+      });
+    }
+
+    function recordIdFromResponse(response) {
+      var raw = response.headers.get("entityid") || response.headers.get("OData-EntityId") || response.headers.get("location") || "";
+      var match = String(raw).match(/\(([0-9a-f-]{36})\)/i) || String(raw).match(/([0-9a-f-]{36})/i);
+      return match ? guid(match[1]) : "";
+    }
+
+    // A previous POST can have succeeded even when the browser did not receive its response.
+    // Locate that unlinked, Contact-owned record before issuing another POST on a retry.
+    function findProgressStub(activity) {
+      var fields = "suj_onlinecourseactivityprogressid,suj_name,_suj_completedby_value,_suj_online_course_activity_value";
+      var filter = "suj_name eq " + odataString(activity.name + " progress") +
+        " and _suj_completedby_value eq " + guid(cfg.contactId);
+      return readAll(api(entity.progress + "?$select=" + fields + "&$filter=" + query(filter)))
+        .then(function (rows) {
+          var stub = rows.find(function (row) { return !value(row, "_suj_online_course_activity_value"); });
+          return stub ? guid(value(stub, "suj_onlinecourseactivityprogressid")) : "";
+        });
+    }
+
+    function createProgressStub(activity) {
+      var stub = {
+        suj_name: activity.name + " progress",
+        "suj_completedby@odata.bind": "/contacts(" + guid(cfg.contactId) + ")"
+      };
+      return request(api(entity.progress), { method: "POST", body: JSON.stringify(stub) }).then(function (response) {
+        if (!response.ok) return responseError(response, "Could not create the progress record");
+        var id = recordIdFromResponse(response);
+        // Power Pages normally returns entityid. The lookup makes a missing header recoverable.
+        return id ? id : findProgressStub(activity);
+      }).then(function (id) {
+        if (!id) throw new Error("The progress record was created, but its ID was not returned. Retry Mark complete; the player will look for the existing record before creating another.");
+        console.info("Sujeeth course player: progress stub created", { activityId: activity.id, progressId: id });
+        return id;
+      });
+    }
+
+    function updateProgressCompletion(progressId, activity, completedOn) {
+      var update = {
+        suj_completed_on: completedOn,
+        "suj_online_course_activity@odata.bind": "/" + entity.activities + "(" + activity.id + ")"
+      };
+      if (state.enrollment) {
+        var enrollmentId = guid(value(state.enrollment, "suj_onlinecourseenrollmentid"));
+        update["suj_online_course_enrollment@odata.bind"] = "/" + entity.enrollments + "(" + enrollmentId + ")";
+      }
+      return request(api(entity.progress + "(" + progressId + ")"), { method: "PATCH", body: JSON.stringify(update) }).then(function (response) {
+        if (!response.ok) return responseError(response, "Could not link the progress record to this activity");
+        console.info("Sujeeth course player: progress completion linked", { activityId: activity.id, progressId: progressId });
+      });
+    }
+
     function saveCompletion(activity, button, afterSave) {
-      var label = button.textContent;
+      var label = button.textContent, now = new Date().toISOString();
+      var existing = progressFor(activity.id), progressId = state.pendingProgress[activity.id] || "";
       button.disabled = true; setText(button, "Saving…");
-      var now = new Date().toISOString();
-      var existing = progressFor(activity.id);
       var saving;
       if (existing && existing.id) {
-        // Renewing: keep one progress row per activity and move its completion date forward.
         saving = request(api(entity.progress + "(" + existing.id + ")"), { method: "PATCH", body: JSON.stringify({ suj_completed_on: now }) }).then(function (response) {
-          if (!response.ok) throw new Error("Could not save completion (" + response.status + ").");
+          if (!response.ok) return responseError(response, "Could not save completion");
           existing.completedOn = now;
         });
       } else {
-        var body = {
-          suj_name: activity.name + " progress",
-          suj_completed_on: now,
-          "suj_online_course_activity@odata.bind": "/" + entity.activities + "(" + activity.id + ")"
-        };
-        if (state.enrollment) {
-          var enrollmentId = guid(value(state.enrollment, "suj_onlinecourseenrollmentid"));
-          body["suj_online_course_enrollment@odata.bind"] = "/" + entity.enrollments + "(" + enrollmentId + ")";
-        }
-        body["suj_completedby@odata.bind"] = "/contacts(" + guid(cfg.contactId) + ")";
-        saving = request(api(entity.progress), { method: "POST", body: JSON.stringify(body) }).then(function (response) {
-          if (!response.ok) throw new Error("Could not save completion (" + response.status + ").");
-          state.progress.push({ id: guid(response.headers.get("entityid") || ""), activityId: activity.id, completedOn: now });
-        });
+        saving = (progressId ? Promise.resolve(progressId) : findProgressStub(activity).then(function (id) { return id || createProgressStub(activity); }))
+          .then(function (id) {
+            progressId = id; state.pendingProgress[activity.id] = id;
+            return updateProgressCompletion(id, activity, now);
+          }).then(function () {
+            delete state.pendingProgress[activity.id];
+            state.progress.push({ id: progressId, activityId: activity.id, completedOn: now });
+          });
       }
       saving.then(function () {
         if (typeof afterSave === "function") afterSave(); else { drawOverall(); drawNavigation(); drawContent(); }
       }).catch(function (error) {
-        button.disabled = false; setText(button, label);
-        window.alert(error.message + " Check the table permissions and Web API columns for Online Course Activity Progress.");
+        button.disabled = false; setText(button, progressId ? "Retry save" : label);
+        console.error("Sujeeth course player: completion save failed", { activityId: activity.id, progressId: progressId || null, error: error });
+        window.alert(error.message + (progressId ? " The progress record was created; retrying will update that same record." : "") + " Check the table permissions and Web API columns for Online Course Activity Progress.");
       });
     }
 
