@@ -557,7 +557,7 @@
     function createProgressStub(activity) {
       var stub = {
         suj_name: activity.name + " progress",
-        "suj_completedby@odata.bind": "/contacts(" + guid(cfg.contactId) + ")"
+        "suj_CompletedBy@odata.bind": "/contacts(" + guid(cfg.contactId) + ")"
       };
       return request(api(entity.progress), { method: "POST", body: JSON.stringify(stub) }).then(function (response) {
         if (!response.ok) return responseError(response, "Could not create the progress record");
