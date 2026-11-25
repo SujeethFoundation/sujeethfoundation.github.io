@@ -36,7 +36,7 @@
     enrollments: "suj_onlinecourseenrollments",
     progress: "suj_onlinecourseactivityprogresses"
   };
-  var state = { course: null, sections: [], activities: [], progress: [], enrollment: null, activeSectionId: null, mobileNavigationOpen: false };
+  var state = { validDays: null, course: null, sections: [], activities: [], progress: [], enrollment: null, activeSectionId: null, mobileNavigationOpen: false };
 
   function guid(value) { return String(value || "").replace(/[{}]/g, ""); }
   function query(value) { return encodeURIComponent(value); }
@@ -112,13 +112,21 @@
 
   function load() {
     var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
-    var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description&$filter=" + query("suj_onlinecourseid eq " + guid(cfg.courseId)));
+    var courseFilterById = "&$filter=" + query("suj_onlinecourseid eq " + guid(cfg.courseId));
+    var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description,suj_completion_valid_days" + courseFilterById);
+    // If the validity column is not in the Web API fields yet, load the course without it
+    // (completions then never expire) instead of breaking the whole player.
+    var courseRequest = readAll(courseUrl).catch(function () {
+      return readAll(api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description" + courseFilterById));
+    });
     var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl,suj_subscription_access&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
-    var requests = [readAll(courseUrl), readAll(sectionUrl)];
+    var requests = [courseRequest, readAll(sectionUrl)];
     var canCheckEnrollment = Boolean(guid(cfg.contactId));
     if (canCheckEnrollment) requests.push(readAll(enrollmentUrl()));
     return Promise.all(requests).then(function (result) {
       state.course = result[0][0] || null;
+      var days = Number(value(state.course, "suj_completion_valid_days"));
+      state.validDays = days > 0 ? days : null;
       state.sections = result[1].map(function (row) {
         return {
           id: guid(value(row, "suj_onlinecoursesectionid")),
@@ -146,7 +154,7 @@
           };
         }));
       }, []);
-      var fields = "suj_onlinecourseactivityprogressid,_suj_online_course_activity_value,suj_completed_on,suj_score_percent";
+      var fields = "suj_onlinecourseactivityprogressid,_suj_online_course_activity_value,suj_completed_on";
       var progressUrl = api(entity.progress + "?$select=" + fields);
       if (state.enrollment) {
         var enrollmentId = guid(value(state.enrollment, "suj_onlinecourseenrollmentid"));
@@ -155,13 +163,28 @@
       return readAll(progressUrl);
     }).then(function (progress) {
       state.progress = progress.map(function (row) {
-        return { id: guid(value(row, "suj_onlinecourseactivityprogressid")), activityId: guid(value(row, "_suj_online_course_activity_value")), completedOn: value(row, "suj_completed_on"), score: value(row, "suj_score_percent") };
+        return { id: guid(value(row, "suj_onlinecourseactivityprogressid")), activityId: guid(value(row, "_suj_online_course_activity_value")), completedOn: value(row, "suj_completed_on") };
       });
     });
   }
 
-  function progressFor(activityId) { return state.progress.find(function (item) { return item.activityId === activityId; }); }
-  function isComplete(activity) { return Boolean(progressFor(activity.id) && progressFor(activity.id).completedOn); }
+  // The most recent completion for an activity, whether or not it has expired.
+  function progressFor(activityId) {
+    return state.progress.filter(function (item) { return item.activityId === activityId; })
+      .sort(function (a, b) { return String(b.completedOn || "").localeCompare(String(a.completedOn || "")); })[0];
+  }
+  function expiresOn(item) {
+    if (!state.validDays || !item || !item.completedOn) return null;
+    return new Date(new Date(item.completedOn).getTime() + state.validDays * 86400000);
+  }
+  function isExpired(activity) {
+    var item = progressFor(activity.id), end = expiresOn(item);
+    return Boolean(item && item.completedOn && end && end.getTime() <= Date.now());
+  }
+  function isComplete(activity) {
+    var item = progressFor(activity.id);
+    return Boolean(item && item.completedOn && !isExpired(activity));
+  }
   function sectionActivities(sectionId) { return state.activities.filter(function (activity) { return activity.sectionId === sectionId; }).sort(byOrder); }
   function sectionCompletion(sectionId) {
     var activities = sectionActivities(sectionId);
@@ -479,9 +502,18 @@
           body.appendChild(link);
         }
         var actions = element("div", "sf-course-player__actions");
-        if (isComplete(activity)) actions.appendChild(element("span", "sf-course-player__complete", "Completed"));
-        else if (cfg.allowProgressWrite) {
-          var complete = element("button", "sf-course-player__complete-button", "Mark complete");
+        if (isComplete(activity)) {
+          actions.appendChild(element("span", "sf-course-player__complete", "Completed"));
+          var ends = expiresOn(progressFor(activity.id));
+          if (ends) actions.appendChild(element("span", "sf-course-player__expiry", "Valid until " + ends.toLocaleDateString()));
+          if (cfg.allowProgressWrite) {
+            var undo = element("button", "sf-course-player__next", "Mark incomplete"); undo.type = "button";
+            undo.addEventListener("click", function () { clearCompletion(activity, undo, function () { drawModal(); drawNavigation(); drawOverall(); }); });
+            actions.appendChild(undo);
+          }
+        } else if (cfg.allowProgressWrite) {
+          if (isExpired(activity)) actions.appendChild(element("p", "sf-course-player__expiry", "Your completion expired on " + expiresOn(progressFor(activity.id)).toLocaleDateString() + ". Mark it complete again to renew."));
+          var complete = element("button", "sf-course-player__complete-button", isExpired(activity) ? "Renew completion" : "Mark complete");
           complete.type = "button";
           complete.addEventListener("click", function () { saveCompletion(activity, complete, function () { drawModal(); drawNavigation(); drawOverall(); }); });
           actions.appendChild(complete);
@@ -492,25 +524,54 @@
     }
 
     function saveCompletion(activity, button, afterSave) {
+      var label = button.textContent;
       button.disabled = true; setText(button, "Saving…");
-      var body = {
-        suj_name: activity.name + " progress",
-        suj_completed_on: new Date().toISOString(),
-        "suj_online_course_activity@odata.bind": "/" + entity.activities + "(" + activity.id + ")"
-      };
-      if (state.enrollment) {
-        var enrollmentId = guid(value(state.enrollment, "suj_onlinecourseenrollmentid"));
-        body["suj_online_course_enrollment@odata.bind"] = "/" + entity.enrollments + "(" + enrollmentId + ")";
+      var now = new Date().toISOString();
+      var existing = progressFor(activity.id);
+      var saving;
+      if (existing && existing.id) {
+        // Renewing: keep one progress row per activity and move its completion date forward.
+        saving = request(api(entity.progress + "(" + existing.id + ")"), { method: "PATCH", body: JSON.stringify({ suj_completed_on: now }) }).then(function (response) {
+          if (!response.ok) throw new Error("Could not save completion (" + response.status + ").");
+          existing.completedOn = now;
+        });
+      } else {
+        var body = {
+          suj_name: activity.name + " progress",
+          suj_completed_on: now,
+          "suj_online_course_activity@odata.bind": "/" + entity.activities + "(" + activity.id + ")"
+        };
+        if (state.enrollment) {
+          var enrollmentId = guid(value(state.enrollment, "suj_onlinecourseenrollmentid"));
+          body["suj_online_course_enrollment@odata.bind"] = "/" + entity.enrollments + "(" + enrollmentId + ")";
+        }
+        body["suj_completedby@odata.bind"] = "/contacts(" + guid(cfg.contactId) + ")";
+        saving = request(api(entity.progress), { method: "POST", body: JSON.stringify(body) }).then(function (response) {
+          if (!response.ok) throw new Error("Could not save completion (" + response.status + ").");
+          state.progress.push({ id: guid(response.headers.get("entityid") || ""), activityId: activity.id, completedOn: now });
+        });
       }
-      body["suj_completedby@odata.bind"] = "/contacts(" + guid(cfg.contactId) + ")";
-      request(api(entity.progress), { method: "POST", body: JSON.stringify(body) }).then(function (response) {
-        if (!response.ok) throw new Error("Could not save completion (" + response.status + ").");
-        return response.headers.get("entityid") || "";
-      }).then(function (id) {
-        state.progress.push({ id: guid(id), activityId: activity.id, completedOn: new Date().toISOString(), score: "" });
+      saving.then(function () {
         if (typeof afterSave === "function") afterSave(); else { drawOverall(); drawNavigation(); drawContent(); }
       }).catch(function (error) {
-        button.disabled = false; setText(button, "Mark complete");
+        button.disabled = false; setText(button, label);
+        window.alert(error.message + " Check the table permissions and Web API columns for Online Course Activity Progress.");
+      });
+    }
+
+    // Unmarking clears the completion date on the learner's existing progress row
+    // (the row stays), so it only needs Write permission.
+    function clearCompletion(activity, button, afterSave) {
+      var existing = progressFor(activity.id);
+      if (!existing || !existing.id) { if (typeof afterSave === "function") afterSave(); return; }
+      var label = button.textContent;
+      button.disabled = true; setText(button, "Saving…");
+      request(api(entity.progress + "(" + existing.id + ")"), { method: "PATCH", body: JSON.stringify({ suj_completed_on: null }) }).then(function (response) {
+        if (!response.ok) throw new Error("Could not unmark this activity (" + response.status + ").");
+        existing.completedOn = "";
+        if (typeof afterSave === "function") afterSave(); else { drawOverall(); drawNavigation(); drawContent(); }
+      }).catch(function (error) {
+        button.disabled = false; setText(button, label);
         window.alert(error.message + " Check the table permissions and Web API columns for Online Course Activity Progress.");
       });
     }
