@@ -483,7 +483,7 @@
         else if (cfg.allowProgressWrite) {
           var complete = element("button", "sf-course-player__complete-button", "Mark complete");
           complete.type = "button";
-          complete.addEventListener("click", function () { setComplete(activity).then(function () { drawModal(); drawNavigation(); drawOverall(); }); });
+          complete.addEventListener("click", function () { saveCompletion(activity, complete, function () { drawModal(); drawNavigation(); drawOverall(); }); });
           actions.appendChild(complete);
         }
         if (actions.childNodes.length) body.appendChild(actions);
