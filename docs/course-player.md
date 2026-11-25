@@ -1,3 +1,7 @@
+---
+skip: true
+---
+
 # Course player assets
 
 Load the player from a Power Pages course page:
