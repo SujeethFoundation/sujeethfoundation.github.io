@@ -588,6 +588,12 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   }
 }
 
+/* The Address field shows a Bootstrap tooltip ("User can edit by pressing
+   enter.") that Power Pages appends to <body>, so it is scoped by :has(). */
+body:has(#ProfileFormView) .tooltip {
+  display: none !important;
+}
+
 /* ----------------------------------------------- composite field flyout
    The Address field (and any other composite field) opens a Bootstrap popover
    inside the form. The portal theme paints it navy, which put the dark label
@@ -619,11 +625,16 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   line-height: 1.35;
 }
 
+/* The heading band is hidden, so the body carries all four rounded corners. */
+#ProfileFormView .popover > .popover-title {
+  display: none !important;
+}
+
 #ProfileFormView .popover > .popover-content {
   padding: 1rem;
   background: transparent !important;
   color: var(--sf-ink) !important;
-  border-radius: 0 0 var(--sf-radius-card) var(--sf-radius-card);
+  border-radius: var(--sf-radius-card);
 }
 
 /* Each field label is three nested labels; only the outer one takes spacing. */
@@ -679,13 +690,13 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   outline-offset: 2px;
 }
 
-/* Arrow takes the header band's navy so it reads as one piece. */
+/* Arrow matches the paper body now that the heading band is hidden. */
 #ProfileFormView .popover.bottom > .arrow {
   border-bottom-color: var(--sf-line);
 }
 
 #ProfileFormView .popover.bottom > .arrow::after {
-  border-bottom-color: var(--sf-action) !important;
+  border-bottom-color: var(--sf-paper) !important;
 }
 
 #ProfileFormView .popover.top > .arrow::after {
