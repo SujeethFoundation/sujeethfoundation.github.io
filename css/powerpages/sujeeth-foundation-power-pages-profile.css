@@ -462,7 +462,9 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
 @media (min-width: 1200px) {
   .row:has(#ProfileFormView) {
     grid-template-columns: minmax(250px, 310px) minmax(0, 1fr);
-    grid-template-rows: max-content max-content max-content;
+    /* Row 3 is a flexible spacer so the tall form can span it without
+       stretching rows 1-2, which hold the left rail cards. */
+    grid-template-rows: max-content max-content 1fr max-content;
     align-items: start;
     column-gap: clamp(2rem, 5vw, 5rem);
     row-gap: 1.25rem;
@@ -483,12 +485,12 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   }
 
   .row:has(#ProfileFormView) #mainContent > fieldset {
-    grid-area: 1 / 2 / 3 / 3;
+    grid-area: 1 / 2 / 4 / 3;
     min-width: 0;
   }
 
   .row:has(#ProfileFormView) #mainContent > div:has(.actions) {
-    grid-area: 3 / 2;
+    grid-area: 4 / 2;
     margin-top: -1rem;
   }
 }
