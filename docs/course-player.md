@@ -25,10 +25,12 @@ The signed-in learner needs table permissions for the course tables. Enable the 
 
 | Table | Required columns |
 | --- | --- |
-| Online Course Section | ID, name, display order, description, video URL, online course |
-| Online Course Activity | ID, name, display order, content, external URL, prerequisite activity, online course section |
+| Online Course Section | ID, name, display order, description, video URL, online course, prerequisite activity (`suj_prerequisite_activity`), subscription access |
+| Online Course Activity | ID, name, display order, content, external URL, online course section |
 | Online Course Enrollment | ID, online course, access status, completed on, learner |
 | Online Course Activity Progress | ID, online course enrollment, online course activity, completed on, completed by, name |
+
+A section prerequisite must refer to an activity in the same course. A section stays locked if the prerequisite is unavailable or incomplete. This navigation control is not a security boundary; protect restricted content and progress writes server-side.
 
 For free courses, give **Online Course Activity Progress** Contact-scope permissions through the `Completed By` relationship. This lets a learner read and create only their own progress rows without an enrollment record.
 
