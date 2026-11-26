@@ -581,6 +581,11 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   #ProfileFormView button[type="submit"] {
     width: 100%;
   }
+
+  /* Scores section (read-only career scores) is hidden on phones. */
+  #ProfileFormView fieldset[aria-label="Scores"] {
+    display: none !important;
+  }
 }
 
 /* ----------------------------------------------- composite field flyout
