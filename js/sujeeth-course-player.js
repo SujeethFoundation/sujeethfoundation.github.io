@@ -286,7 +286,7 @@
     function ensureCertificateAward() {
       var courseId = guid(cfg.courseId), contactId = guid(cfg.contactId);
       var certificateFilter = "_suj_online_course_value eq " + courseId + " and statecode eq 0";
-      return readAll(api("suj_certificates?$select=suj_certificateid,suj_name&$filter=" + query(certificateFilter)))
+      return readAll(api("suj_certificates?$select=suj_certificateid,suj_name,_suj_partnership_value&$filter=" + query(certificateFilter)))
         .then(function (certificates) {
           if (certificates.length !== 1) throw new Error("This course needs exactly one active certificate before it can be added.");
           var certificate = certificates[0], certificateId = guid(certificate.suj_certificateid);
@@ -309,6 +309,8 @@
               "suj_Certificate@odata.bind": "/suj_certificates(" + certificateId + ")",
               "suj_Contact@odata.bind": "/contacts(" + contactId + ")"
             };
+            var partnershipId = guid(value(certificate, "_suj_partnership_value"));
+            if (partnershipId) award["suj_Partnership@odata.bind"] = "/mshied_scholarships(" + partnershipId + ")";
             return request(api("suj_certificateawards"), { method: "POST", body: JSON.stringify(award) })
               .then(function (response) {
                 if (response.ok) return;
