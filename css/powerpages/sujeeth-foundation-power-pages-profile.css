@@ -588,6 +588,12 @@ body:has(#ProfileFormView) .page-heading :is(h1, h2, h3)::after {
   }
 }
 
+/* The Address field shows a Bootstrap tooltip ("User can edit by pressing
+   enter.") that Power Pages appends to <body>, so it is scoped by :has(). */
+body:has(#ProfileFormView) .tooltip {
+  display: none !important;
+}
+
 /* ----------------------------------------------- composite field flyout
    The Address field (and any other composite field) opens a Bootstrap popover
    inside the form. The portal theme paints it navy, which put the dark label
