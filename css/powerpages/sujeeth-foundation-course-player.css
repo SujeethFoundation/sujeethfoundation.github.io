@@ -80,3 +80,7 @@
 
 /* Completion expiry */
 .sf-course-player__expiry { margin: 0; font-size: 14px; color: var(--cp-muted); }
+
+/* Prerequisite-locked sections remain focusable for their tooltip. */
+.sf-course-player__section.is-prerequisite-locked .sf-course-player__section-title { cursor: not-allowed; }
+.sf-course-player__prerequisite-lock { flex: 0 0 auto; }
