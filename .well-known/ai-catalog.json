@@ -1,0 +1,58 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Sujeeth Foundation",
+    "identifier": "sujeeth.org",
+    "documentationUrl": "https://www.sujeeth.org/career-compass.md"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:sujeeth.org:mcp:career-compass",
+      "displayName": "Career Compass",
+      "type": "application/mcp-server+json",
+      "url": "https://www.sujeeth.org/.well-known/mcp/server-card.json",
+      "description": "Anonymous career guidance and Foundation resource discovery for students.",
+      "capabilities": [
+        "search_sujeeth_foundation",
+        "get_documents",
+        "search_wiki",
+        "search_website"
+      ],
+      "representativeQueries": [
+        "How can I improve my resume for this internship?",
+        "How should I prepare for a behavioral interview?",
+        "What should I research before applying to a company?",
+        "How do I network when I have little experience?"
+      ],
+      "version": "1.0",
+      "updatedAt": "2026-11-21T00:00:00Z",
+      "metadata": {
+        "transport": "streamable-http",
+        "endpoint": "https://mcp.sujeeth.org/mcp",
+        "authentication": "none"
+      }
+    },
+    {
+      "identifier": "urn:air:sujeeth.org:resource:career-circles",
+      "displayName": "Career Circles",
+      "type": "text/html",
+      "url": "https://www.sujeeth.org/circle",
+      "description": "Six-week small-group career mentoring program for college students.",
+      "representativeQueries": [
+        "What happens in a Career Circle?",
+        "How can a student get career mentoring?"
+      ]
+    },
+    {
+      "identifier": "urn:air:sujeeth.org:guide:career-compass",
+      "displayName": "Career Compass guide",
+      "type": "text/markdown",
+      "url": "https://www.sujeeth.org/career-compass.md",
+      "description": "Public guide to Career Compass scope, student use cases, and access.",
+      "representativeQueries": [
+        "What can Career Compass help a student do?",
+        "How do I connect to Career Compass?"
+      ]
+    }
+  ]
+}

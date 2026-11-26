@@ -1,0 +1,113 @@
+---
+skip: true
+---
+
+# Course player assets
+
+Load the player from a Power Pages course page:
+
+```html
+<script defer src="https://www.sujeeth.org/js/sujeeth-course-player.js"
+  data-course-id="ONLINE-COURSE-GUID"
+  data-contact-id="{{ user.id }}"
+  data-progress-write="true"></script>
+```
+
+Add an optional `<div data-sf-course-player></div>` where the player should render. Without it, the player is appended to the page body.
+
+The player centers the selected section's `Video URL`. Its navigation expands only the selected section, and activity buttons open a modal that displays the activity Content/Description and an optional External URL.
+
+SharePoint-hosted section videos open in a new tab. This avoids SharePoint cross-site framing restrictions. Use an embeddable YouTube, Vimeo, or Clipchamp URL for in-page playback.
+
+## Required Power Pages configuration
+
+The signed-in learner needs table permissions for the course tables. Enable the Power Pages Web API and list the selected columns in each table's `Webapi/<table logical name>/fields` site setting. The player does not depend on Dataverse views.
+
+| Table | Required columns |
+| --- | --- |
+| Online Course Section | ID, name, display order, description, video URL, online course, prerequisite activity (`suj_prerequisite_activity`), subscription access |
+| Online Course Activity | ID, name, display order, content, external URL, online course section |
+| Online Course Enrollment | ID, online course, access status, completed on, learner |
+| Online Course Activity Progress | ID, online course enrollment, online course activity, completed on, completed by, name |
+
+A section prerequisite must refer to an activity in the same course. A section stays locked if the prerequisite is unavailable or incomplete. This navigation control is not a security boundary; protect restricted content and progress writes server-side.
+
+For free courses, give **Online Course Activity Progress** Contact-scope permissions through the `Completed By` relationship. This lets a learner read and create only their own progress rows without an enrollment record.
+
+For a course page hosted outside Power Pages, set `data-api-root` to that Power Pages site's `/_api` URL only if that site is configured to permit the request. The normal installation runs inside the Power Pages page and uses its same-origin API automatically.
+
+## Optional attributes
+
+- `data-progress-write="true"` enables the **Mark complete** control. It remains read-only by default. A signed-in portal contact must also be supplied through `data-contact-id`; use `{{ user.id }}` in Power Pages HTML.
+- `data-require-enrollment="true"` requires an active enrollment before a learner can save progress. Omit it for free courses: progress is then attached directly to the signed-in contact and the activity.
+- `data-course-name="…"` overrides the course name fetched from Dataverse. It is optional.
+- `data-rich-content="true"` renders staff-authored activity content as HTML. Leave it off for plain-text rendering.
+- `data-css-url="https://…"` uses a different stylesheet.
+
+The script loads `https://www.sujeeth.org/css/powerpages/sujeeth-foundation-course-player.css` by default. Add `https://www.sujeeth.org` to the Power Pages CSP `script-src` directive before embedding the script.
+
+
+
+### Section subscription access
+
+Use the **Subscription Access** choice on **Online Course Section** to control entry to a section:
+
+- **Public** — any visitor may open the section.
+- **Subscription only** — a visitor without an active course enrollment sees the subscription prompt instead.
+
+Add `suj_subscription_access` to the Power Pages Web API fields for `suj_onlinecoursesection`. To give the prompt a destination, add `data-subscribe-url` to the player script tag.
+
+The player uses the visitor's active **Online Course Enrollment** only for this section-entry check. A course can remain free and still save activity progress without requiring an enrollment.
+
+
+### Paid subscription checkout
+
+Add `data-payments-url` to turn the subscription prompt into a checkout modal:
+
+```html
+<script defer src="https://www.sujeeth.org/js/sujeeth-course-player.js"
+  data-course-id="ONLINE-COURSE-GUID"
+  data-contact-id="{{ user.id }}"
+  data-payments-url="https://suj-payments.azurewebsites.net/api"
+  data-progress-write="true"></script>
+```
+
+Without `data-payments-url` the prompt keeps its old behavior and links to `data-subscribe-url`. Optional `data-sign-in-url` (default `/SignIn`) is where signed-out visitors are sent.
+
+What the modal does:
+
+1. Signed-out visitors get a Sign in link (returns them to the course page).
+2. On open it asks the payments service for a quote and shows price, coupon discount, and total.
+3. **Apply** re-quotes with the coupon. The service decides whether the coupon is valid; the browser never calculates a price.
+4. **Pay** creates the order. A free total enrolls immediately; otherwise the learner is sent to PayPal and returns to this page with `?sf_payment=success` (or `cancel`).
+5. On return the player polls Online Course Enrollment until the webhook has created the enrollment (up to about a minute), unlocks the sections, and shows a confirmation.
+
+#### Payments service contract
+
+`POST {payments-url}/checkout`, JSON, called from the Power Pages origin (that origin must be in the service's allowlist and its CORS settings).
+
+`POST {payments-url}/checkout/status` with `{ orderId, contactId }` returns `{ state }` where state is `completed`, `pending`, `declined` or `waiting`. The player calls it after PayPal returns (the order ID is the `token` parameter PayPal adds) so it can tell a learner their payment was declined or is on hold. It only answers for an order that belongs to that contact.
+
+Request: `{ courseId, contactId, couponCode, quoteOnly?, returnUrl?, cancelUrl? }`
+
+| Case | Response |
+| --- | --- |
+| `quoteOnly: true` | `200 { courseName, currency, price, discount, total, couponApplied, testMode }` |
+| Payment due | `200 { status: "redirect", approvalUrl, orderId }` (must be an https paypal.com URL) |
+| Total is zero | `200 { status: "enrolled" }` (service has created the enrollment) |
+| Any failure | `4xx/5xx { error: "message shown to the learner" }` |
+
+`returnUrl` and `cancelUrl` are this page's URL with `sf_payment` added; the service must check they match the allowlisted origin. An invalid coupon returns `200` with `couponApplied: false` and `discount: 0`, so the learner can still pay full price.
+
+
+### Completion expiry
+
+If the course sets **Completion Valid Days** (`suj_completion_valid_days`), an activity counts as complete only until that many days after its **Completed On** date. After that it shows as not done, the section and overall counts drop, and the activity modal offers **Renew completion**, which moves the existing progress row's date forward (one row per activity).
+
+Add `suj_completion_valid_days` to the Web API fields for `suj_onlinecourse`. Without it the player loads normally and completions never expire. Renewing needs **Write** as well as Create and Read on Online Course Activity Progress, through the same Contact-scope permission.
+
+The window is course-wide. Every activity, including onboarding, uses the same number.
+
+### Unmarking an activity
+
+With `data-progress-write="true"`, a completed activity also shows **Mark incomplete**. It clears the Completed On date on the learner's progress row (the row is kept), so the activity counts as not done until it is marked complete again. This needs Write permission, the same as renewing a completion.

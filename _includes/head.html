@@ -9,7 +9,8 @@
   {%- endif -%}
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
-        
+  <link rel="ai-catalog" type="application/ai-catalog+json" href="{{ '/.well-known/ai-catalog.json' | relative_url }}">
+
   <!-- Google Fonts  -->
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'> <!-- Body font -->
   <link href='https://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'> <!-- Navbar font -->
@@ -42,6 +43,7 @@
   <![endif]-->
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   <link rel="stylesheet" href="/css/sujeeth.css">
+  <script src="{{ '/assets/js/career-compass-webmcp.js' | relative_url }}" defer></script>
 
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){

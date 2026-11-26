@@ -1,0 +1,18 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://mcp.sujeeth.org/mcp",
+      "service-doc": [
+        {
+          "href": "https://www.sujeeth.org/career"
+        }
+      ],
+      "describedby": [
+        {
+          "href": "https://www.sujeeth.org/.well-known/mcp/server-card.json",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

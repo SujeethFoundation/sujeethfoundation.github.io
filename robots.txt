@@ -7,3 +7,7 @@ Disallow: /joinvolunteer
 Disallow: /joinpartner
 Disallow: /stories
 Sitemap: https://sujeeth.org/sitemap.xml
+Agentmap: https://www.sujeeth.org/.well-known/ai-catalog.json
+
+# AI content-use preferences (emerging Content Signals convention)
+Content-Signal: ai-train=no, search=yes, ai-input=yes

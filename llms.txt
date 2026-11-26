@@ -1,0 +1,43 @@
+# The Sujeeth Foundation
+
+> The Sujeeth Foundation helps college students navigate the job search and work toward a career that fits their interests, skills, values, and goals. Career Compass is its anonymous MCP-powered career guidance service.
+
+Website: https://www.sujeeth.org
+Career Compass MCP: https://mcp.sujeeth.org/mcp
+Access: Anonymous; no OAuth or login required for the MCP endpoint.
+Version: 1.0
+
+## Career Compass
+
+Career Compass helps students find practical guidance grounded in the Foundation's six-week Career Circle curriculum and related website and wiki resources. It uses ontology-guided retrieval to identify relevant concepts and search Foundation materials. Responses should be treated as educational guidance, not hiring decisions or guarantees.
+
+Students can ask for help with:
+- Resume and job application reviews: assess clarity, relevance, achievements, and alignment to a job description when the student supplies the material.
+- Interview preparation: practice common and behavioral questions, prepare STAR examples, and develop thoughtful questions for employers.
+- Career exploration: research roles, industries, employers, and personal fit.
+- Networking: prepare informational interview requests, conversations, and follow-up messages.
+- Job-search strategy: plan applications, follow-up, offer evaluation, and negotiation.
+- Career Circles: understand the six-week mentorship program and its curriculum.
+
+## Foundation resources
+
+- [Career Compass guide](https://www.sujeeth.org/career-compass.md): Student use cases, scope, and MCP endpoint.
+- [Career Circles](https://www.sujeeth.org/circle): Six-week small-group mentoring program.
+- [Career guidance](https://www.sujeeth.org/career): Career preparation information.
+- [Website home](https://www.sujeeth.org/): Foundation overview.
+- [Blog](https://www.sujeeth.org/blog): Articles and updates.
+- [Sitemap](https://www.sujeeth.org/sitemap.xml): Public page index.
+
+## Machine-readable discovery
+
+- [MCP Server Card](https://www.sujeeth.org/.well-known/mcp/server-card.json): Career Compass service metadata.
+- [Agent capability catalog](https://www.sujeeth.org/.well-known/ai-catalog.json): ARD-compatible discovery entries for Career Compass and public Foundation resources.
+- [API catalog](https://www.sujeeth.org/.well-known/api-catalog): Linked service discovery information.
+- [WebMCP tools](https://www.sujeeth.org/): Read-only browser tools for public Career Compass resource links and MCP endpoint details when a browser supports experimental WebMCP.
+- [robots.txt](https://www.sujeeth.org/robots.txt): Crawling rules and the catalog's Agentmap directive.
+
+- [Agent Skills Index](https://www.sujeeth.org/.well-known/agent-skills/index.json): One Career Compass skill documenting its four public MCP search and document tools and their career-guidance use cases.
+
+## Boundaries
+
+Do not send private student records, credentials, or sensitive personal information to public discovery services. Career Compass does not guarantee interviews, job offers, or employment. The Foundation's Online Circle member activities remain subject to their separate access rules.
