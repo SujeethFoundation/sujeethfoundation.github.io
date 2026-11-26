@@ -114,7 +114,7 @@
   function load() {
     var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
     var courseFilterById = "&$filter=" + query("suj_onlinecourseid eq " + guid(cfg.courseId));
-    var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description,suj_completion_valid_days" + courseFilterById);
+    var courseUrl = api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description,suj_completion_valid_days,suj_end_survey_threshold_percent" + courseFilterById);
     // If the validity column is not in the Web API fields yet, load the course without it
     // (completions then never expire) instead of breaking the whole player.
     var courseRequest = readAll(courseUrl).catch(function () {
@@ -261,6 +261,64 @@
       meter.setAttribute("role", "progressbar"); meter.setAttribute("aria-valuemin", "0"); meter.setAttribute("aria-valuemax", "100"); meter.setAttribute("aria-valuenow", String(percent));
       var fill = element("span", "sf-course-player__meter-fill"); fill.style.width = percent + "%";
       meter.appendChild(fill); overall.appendChild(meter);
+      var threshold = state.course && state.course.suj_end_survey_threshold_percent;
+      if (cfg.contactId && total.total && threshold != null && threshold !== "" &&
+          Number(threshold) >= 0 && Number(threshold) <= 100 &&
+          total.completed * 100 >= Number(threshold) * total.total) {
+        var certificateButton = element("button", "sf-course-player__complete-button", "Continue to my certificates");
+        certificateButton.type = "button";
+        var certificateMessage = element("p", "sf-course-player__notice");
+        certificateMessage.setAttribute("role", "status");
+        certificateButton.addEventListener("click", function () {
+          certificateButton.disabled = true;
+          setText(certificateMessage, "Preparing your certificate…");
+          ensureCertificateAward().then(function () {
+            window.location.assign("/MyCertificates/");
+          }).catch(function (error) {
+            certificateButton.disabled = false;
+            setText(certificateMessage, error.message || "We could not prepare your certificate. Please try again.");
+          });
+        });
+        overall.append(certificateButton, certificateMessage);
+      }
+    }
+
+    function ensureCertificateAward() {
+      var courseId = guid(cfg.courseId), contactId = guid(cfg.contactId);
+      var certificateFilter = "_suj_online_course_value eq " + courseId + " and statecode eq 0";
+      return readAll(api("suj_certificates?$select=suj_certificateid,suj_name&$filter=" + query(certificateFilter)))
+        .then(function (certificates) {
+          if (certificates.length !== 1) throw new Error("This course needs exactly one active certificate before it can be added.");
+          var certificate = certificates[0], certificateId = guid(certificate.suj_certificateid);
+          var awardFilter = "_suj_certificate_value eq " + certificateId + " and _suj_contact_value eq " + contactId;
+          var awardUrl = api("suj_certificateawards?$select=suj_certificateawardid,suj_award_status&$filter=" + query(awardFilter));
+          function existingAward() {
+            return readAll(awardUrl).then(function (awards) {
+              if (!awards.length) return false;
+              if (awards.some(function (award) { return Number(award.suj_award_status) === 100000002; })) {
+                throw new Error("This certificate was revoked. Please contact the Foundation for help.");
+              }
+              return true;
+            });
+          }
+          return existingAward().then(function (exists) {
+            if (exists) return;
+            var award = {
+              suj_name: certificate.suj_name,
+              suj_award_status: 100000000,
+              "suj_Certificate@odata.bind": "/suj_certificates(" + certificateId + ")",
+              "suj_Contact@odata.bind": "/contacts(" + contactId + ")"
+            };
+            return request(api("suj_certificateawards"), { method: "POST", body: JSON.stringify(award) })
+              .then(function (response) {
+                if (response.ok) return;
+                // A concurrent request can create the award first; reuse it if present.
+                return existingAward().then(function (found) {
+                  if (!found) return responseError(response, "Could not create the certificate award");
+                });
+              });
+          });
+        });
     }
 
     function drawNavigation() {
@@ -671,4 +729,6 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();
+
+
 
