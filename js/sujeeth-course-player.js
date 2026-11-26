@@ -120,7 +120,7 @@
     var courseRequest = readAll(courseUrl).catch(function () {
       return readAll(api("suj_onlinecourses?$select=suj_onlinecourseid,suj_name,suj_description" + courseFilterById));
     });
-    var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl,suj_subscription_access&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
+    var sectionUrl = api(entity.sections + "?$select=suj_onlinecoursesectionid,suj_name,suj_display_order,suj_description,suj_videourl,suj_subscription_access,_suj_prerequisite_activity_value&$filter=" + query(courseFilter) + "&$orderby=suj_display_order asc");
     var requests = [courseRequest, readAll(sectionUrl)];
     var canCheckEnrollment = Boolean(guid(cfg.contactId));
     if (canCheckEnrollment) requests.push(readAll(enrollmentUrl()));
@@ -135,13 +135,14 @@
           order: value(row, "suj_display_order"),
           description: value(row, "suj_description"),
           videoUrl: value(row, "suj_videourl"),
-          subscriptionAccess: value(row, "suj_subscription_access")
+          subscriptionAccess: value(row, "suj_subscription_access"),
+          prerequisiteId: guid(value(row, "_suj_prerequisite_activity_value"))
         };
       }).sort(byOrder);
       state.enrollment = canCheckEnrollment ? (result[2][0] || null) : null;
       return Promise.all(state.sections.map(function (section) {
         var filter = "_suj_online_course_section_value eq " + section.id;
-        var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url,_suj_prerequisite_activity_value";
+        var fields = "suj_onlinecourseactivityid,suj_name,suj_display_order,suj_content,suj_external_url";
         return readAll(api(entity.activities + "?$select=" + fields + "&$filter=" + query(filter) + "&$orderby=suj_display_order asc"));
       }));
     }).then(function (activityGroups) {
@@ -150,8 +151,7 @@
           return {
             id: guid(value(row, "suj_onlinecourseactivityid")), sectionId: state.sections[index].id,
             name: value(row, "suj_name"), order: value(row, "suj_display_order"),
-            content: value(row, "suj_content"), url: value(row, "suj_external_url"),
-            prerequisiteId: guid(value(row, "_suj_prerequisite_activity_value"))
+            content: value(row, "suj_content"), url: value(row, "suj_external_url")
           };
         }));
       }, []);
@@ -193,7 +193,13 @@
   }
   function overallCompletion() { return { completed: state.activities.filter(isComplete).length, total: state.activities.length }; }
   function activityById(id) { return state.activities.find(function (activity) { return activity.id === id; }); }
-  function sectionLocked(section) { return Number(section.subscriptionAccess) === 100000001 && !state.enrollment; }
+  function prerequisiteLocked(section) {
+    if (!section.prerequisiteId) return false;
+    var prerequisite = activityById(section.prerequisiteId);
+    return !prerequisite || !isComplete(prerequisite);
+  }
+  function subscriptionLocked(section) { return Number(section.subscriptionAccess) === 100000001 && !state.enrollment; }
+  function sectionLocked(section) { return prerequisiteLocked(section) || subscriptionLocked(section); }
 
   function enrollmentUrl() {
     var courseFilter = "_suj_online_course_value eq " + guid(cfg.courseId);
@@ -272,16 +278,25 @@
         var count = sectionCompletion(section.id);
         var label = element("button", "sf-course-player__section-title", section.order + ". " + section.name);
         label.type = "button"; label.setAttribute("aria-expanded", String(focused));
-        if (locked) label.setAttribute("aria-label", section.order + ". " + section.name + " — subscription only");
+        if (prerequisiteLocked(section)) {
+          var prerequisite = activityById(section.prerequisiteId);
+          var message = "Opens after " + (prerequisite ? prerequisite.name : "the prerequisite activity");
+          var lock = element("span", "sf-course-player__prerequisite-lock", "🔒");
+          lock.setAttribute("aria-hidden", "true"); label.prepend(lock);
+          label.setAttribute("aria-disabled", "true"); label.title = message;
+          label.setAttribute("aria-label", section.order + ". " + section.name + ". " + message);
+          group.classList.add("is-prerequisite-locked");
+        } else if (locked) label.setAttribute("aria-label", section.order + ". " + section.name + " — subscription only");
         label.addEventListener("click", function () {
-          if (locked) { openSubscriptionModal(section); return; }
+          if (prerequisiteLocked(section)) return;
+          if (subscriptionLocked(section)) { openSubscriptionModal(section); return; }
           state.activeSectionId = section.id;
           if (window.matchMedia("(max-width: 780px)").matches) state.mobileNavigationOpen = false;
           drawNavigation(); drawContent();
         });
         var status = element("span", "sf-course-player__section-status", count.completed + "/" + count.total);
         label.appendChild(status);
-        if (locked) label.appendChild(element("span", "sf-course-player__locked-badge", "Subscription"));
+        if (!prerequisiteLocked(section) && subscriptionLocked(section)) label.appendChild(element("span", "sf-course-player__locked-badge", "Subscription"));
         group.appendChild(label);
         if (!focused) { navigation.appendChild(group); return; }
         var list = element("ol", "sf-course-player__activity-list");
@@ -299,8 +314,8 @@
 
     function drawContent() {
       content.replaceChildren();
-      var section = state.sections.find(function (item) { return item.id === state.activeSectionId; }) || state.sections[0];
-      if (!section) { content.appendChild(element("p", "sf-course-player__empty", "This course does not have any sections yet.")); return; }
+      var section = state.sections.find(function (item) { return item.id === state.activeSectionId && !sectionLocked(item); }) || state.sections.find(function (item) { return !sectionLocked(item); });
+      if (!section) { state.activeSectionId = null; content.appendChild(element("p", "sf-course-player__empty", state.sections.length ? "No sections are available yet." : "This course does not have any sections yet.")); return; }
       state.activeSectionId = section.id;
       content.appendChild(element("p", "sf-course-player__eyebrow", "Section " + section.order));
       content.appendChild(element("h2", "sf-course-player__section-heading", section.name));
@@ -509,14 +524,14 @@
           if (ends) actions.appendChild(element("span", "sf-course-player__expiry", "Valid until " + ends.toLocaleDateString()));
           if (cfg.allowProgressWrite) {
             var undo = element("button", "sf-course-player__next", "Mark incomplete"); undo.type = "button";
-            undo.addEventListener("click", function () { clearCompletion(activity, undo, function () { drawModal(); drawNavigation(); drawOverall(); }); });
+            undo.addEventListener("click", function () { clearCompletion(activity, undo, function () { drawModal(); drawContent(); drawNavigation(); drawOverall(); }); });
             actions.appendChild(undo);
           }
         } else if (cfg.allowProgressWrite) {
           if (isExpired(activity)) actions.appendChild(element("p", "sf-course-player__expiry", "Your completion expired on " + expiresOn(progressFor(activity.id)).toLocaleDateString() + ". Mark it complete again to renew."));
           var complete = element("button", "sf-course-player__complete-button", isExpired(activity) ? "Renew completion" : "Mark complete");
           complete.type = "button";
-          complete.addEventListener("click", function () { saveCompletion(activity, complete, function () { drawModal(); drawNavigation(); drawOverall(); }); });
+          complete.addEventListener("click", function () { saveCompletion(activity, complete, function () { drawModal(); drawContent(); drawNavigation(); drawOverall(); }); });
           actions.appendChild(complete);
         }
         if (actions.childNodes.length) body.appendChild(actions);
@@ -632,8 +647,9 @@
       });
     }
 
-    state.activeSectionId = state.activeSectionId || (state.sections[0] && state.sections[0].id);
-    drawOverall(); drawNavigation(); drawContent();
+    var firstAvailable = state.sections.find(function (section) { return !sectionLocked(section); });
+    state.activeSectionId = firstAvailable ? firstAvailable.id : null;
+    drawOverall(); drawContent(); drawNavigation();
     handlePaymentReturn();
   }
 
