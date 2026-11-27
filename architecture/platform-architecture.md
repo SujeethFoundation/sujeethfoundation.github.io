@@ -79,7 +79,7 @@ Search results also include wiki and portal pages, so the portal's public pages 
 - Crawl: ontology-approved domains only. One queue message per page. Page cap `MAX_PAGES_PER_DOMAIN` (10,000), depth `MAX_CRAWL_DEPTH` (5).
 - Storage: chunks and vectors in Blob Storage, index in Table Storage (`searchchunks`), loaded into memory by every instance. Azure AI Search is retired. A prebuilt snapshot under `index-snapshot/` speeds startup.
 - Search: BM25 plus 1-bit vector shortlist re-ranked on 8-bit vectors, fused by reciprocal rank, with concept and phrase bonuses. One result per page.
-- Schedules (UTC): crawl recovery 10:00 daily, index reconcile 11:00 daily, job cleanup 11:30 daily, weekly crawl Sundays 08:00 for `sujeeth.org` and `topics.sujeeth.org`.
+- Schedules (UTC): crawl recovery 10:00 daily, index reconcile 11:00 daily, job cleanup 11:30 daily, weekly crawl Sundays 08:00 for `sujeeth.org` and `topics.sujeeth.org`, monthly crawl on the 1st at 09:00 for every other crawl-enabled domain.
 - Embeddings: Azure OpenAI deployment `sf-embeddings`, 1,536 dimensions.
 - Helpers: `crawl-helper.ps1`, `Add-ManualPage.ps1`, `check_sitemap.py`.
 
