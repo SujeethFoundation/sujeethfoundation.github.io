@@ -121,3 +121,17 @@ Pages: `chat.html`, `circle.html`, `volunteer.html`, `partner.html`, `joinpartne
 Course player embed:
 `<script defer src="https://www.sujeeth.org/js/sujeeth-course-player.js" data-course-id data-contact-id="{{ user.id }}" data-progress-write data-payments-url ...>`
 It needs the Power Pages Web API site settings (see the data model doc), table permissions, and `https://www.sujeeth.org` in the portal CSP `script-src`.
+
+## Repo READMEs
+
+Every repo's README points back to this folder. Run, deploy and settings detail lives in the READMEs; this doc holds the map.
+
+- [sujeethfoundation.github.io](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/README.md): website, wiki, Power Pages CSS
+- [chat](https://github.com/SujeethFoundation/chat/blob/main/README.md): chat agent API
+- [mcp](https://github.com/SujeethFoundation/mcp/blob/main/README.md): MCP server (Sujeeth Foundation Graph)
+- [ontology](https://github.com/SujeethFoundation/ontology/blob/main/README.md): concept graph and Feelings API
+- [websearch](https://github.com/SujeethFoundation/websearch/blob/main/README.md): crawler and hybrid search
+- [wikisearch](https://github.com/SujeethFoundation/wikisearch/blob/main/README.md): wiki search
+- [payments](https://github.com/SujeethFoundation/payments/blob/main/README.md): PayPal checkout for online courses
+- [shortner](https://github.com/SujeethFoundation/shortner/blob/main/README.md): go.sujeeth.org link shortener
+- [acs-sms-bot](https://github.com/SujeethFoundation/acs-sms-bot/blob/main/readme.md): texting through Azure Communication Services

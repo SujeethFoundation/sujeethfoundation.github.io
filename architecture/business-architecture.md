@@ -88,3 +88,9 @@ What the model leaves open:
 1. Revenue has one source. Break-even counts certificates only. Course sales, coupons and partner funding are not in it.
 2. The conversion rate is untested. 0.8% of signed-in users is the assumption that decides whether the model works. The first months of real data will replace the plan's figure.
 3. The signed-in share of 10% is also an assumption. At 5%, the break-even share doubles.
+
+## Related READMEs
+
+- Platform map and repo list: [platform-architecture.md](platform-architecture.md)
+- Test 2 (MCP server and apps reach students): [mcp README](https://github.com/SujeethFoundation/mcp/blob/main/README.md), [ontology README](https://github.com/SujeethFoundation/ontology/blob/main/README.md)
+- Test 4 (cost model, Azure side): [websearch README](https://github.com/SujeethFoundation/websearch/blob/main/README.md), [payments README](https://github.com/SujeethFoundation/payments/blob/main/README.md)
