@@ -32,7 +32,7 @@ Two delivery paths:
 
 | App | Host | Notes |
 |---|---|---|
-| websearch | `websearch-h9arcweeftfrd8e0.eastus-01.azurewebsites.net` | Flex Consumption. Queue `web-crawl` |
+| websearch | `websearch-h9arcweeftfrd8e0.eastus-01.azurewebsites.net` | Flex Consumption. Queue `web-crawl-pages` |
 | wikisearch | `wikisearch-gmebdbewaec6axdp.eastus-01.azurewebsites.net` | Flex Consumption |
 | ontology | `ontology-ghgedphdh6eefych.eastus-01.azurewebsites.net` | Flex Consumption |
 | mcp | `sujeethmcp-c3hjg6g4c2f2f2dn.eastus-01.azurewebsites.net`, custom domain `mcp.sujeeth.org/mcp`, health `/healthz` | Flex Consumption, stateless, tools run on worker threads |
@@ -79,7 +79,7 @@ Search results also include wiki and portal pages, so the portal's public pages 
 - Crawl: ontology-approved domains only. One queue message per page. Page cap `MAX_PAGES_PER_DOMAIN` (10,000), depth `MAX_CRAWL_DEPTH` (5).
 - Storage: chunks and vectors in Blob Storage, index in Table Storage (`searchchunks`), loaded into memory by every instance. Azure AI Search is retired. A prebuilt snapshot under `index-snapshot/` speeds startup.
 - Search: BM25 plus 1-bit vector shortlist re-ranked on 8-bit vectors, fused by reciprocal rank, with concept and phrase bonuses. One result per page.
-- Schedules (UTC): crawl recovery 10:00 daily, index reconcile 11:00 daily, job cleanup 11:30 daily, weekly crawl Sundays 08:00 for `sujeeth.org` and `topics.sujeeth.org`.
+- Schedules (UTC): crawl recovery 10:00 daily, index reconcile 11:00 daily, job cleanup 11:30 daily, weekly crawl Sundays 08:00 for `sujeeth.org` and `topics.sujeeth.org`, monthly crawl on the 1st at 09:00 for every other crawl-enabled domain.
 - Embeddings: Azure OpenAI deployment `sf-embeddings`, 1,536 dimensions.
 - Helpers: `crawl-helper.ps1`, `Add-ManualPage.ps1`, `check_sitemap.py`.
 
@@ -121,3 +121,17 @@ Pages: `chat.html`, `circle.html`, `volunteer.html`, `partner.html`, `joinpartne
 Course player embed:
 `<script defer src="https://www.sujeeth.org/js/sujeeth-course-player.js" data-course-id data-contact-id="{{ user.id }}" data-progress-write data-payments-url ...>`
 It needs the Power Pages Web API site settings (see the data model doc), table permissions, and `https://www.sujeeth.org` in the portal CSP `script-src`.
+
+## Repo READMEs
+
+Every repo's README points back to this folder. Run, deploy and settings detail lives in the READMEs; this doc holds the map.
+
+- [sujeethfoundation.github.io](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/README.md): website, wiki, Power Pages CSS
+- [chat](https://github.com/SujeethFoundation/chat/blob/main/README.md): chat agent API
+- [mcp](https://github.com/SujeethFoundation/mcp/blob/main/README.md): MCP server (Sujeeth Foundation Graph)
+- [ontology](https://github.com/SujeethFoundation/ontology/blob/main/README.md): concept graph and Feelings API
+- [websearch](https://github.com/SujeethFoundation/websearch/blob/main/README.md): crawler and hybrid search
+- [wikisearch](https://github.com/SujeethFoundation/wikisearch/blob/main/README.md): wiki search
+- [payments](https://github.com/SujeethFoundation/payments/blob/main/README.md): PayPal checkout for online courses
+- [shortner](https://github.com/SujeethFoundation/shortner/blob/main/README.md): go.sujeeth.org link shortener
+- [acs-sms-bot](https://github.com/SujeethFoundation/acs-sms-bot/blob/main/readme.md): texting through Azure Communication Services
