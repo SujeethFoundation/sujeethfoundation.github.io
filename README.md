@@ -6,17 +6,15 @@
 
 ## What We Do
 
-Nearly half of college graduates struggle with job placement. We fix that with **Career Circles**—a six-week mentorship program where students practice the skills that actually land jobs.
+Too many college graduates end up underemployed. We work on that with **Career Circles**—a six-week mentorship program where students practice the skills that actually land jobs.
 
 **The model:**
-- 6 students + 1 trained mentor
+- A small group of students and one trained mentor
 - 1 hour per week for 6 weeks
 - Structured curriculum: self-assessment, resume building, networking, interview prep, and follow-up
 - Real skills, not motivation speeches
 
-**The numbers:**
-- 409 students served across partner schools
-- $25 per student to complete the full program
+**The numbers:** program counts, outcomes and cost per student change as each cohort finishes. Read the current figures at [sujeeth.org](https://sujeeth.org) and in the [impact reports](https://topics.sujeeth.org/impact). This README does not repeat them.
 
 ---
 
@@ -51,7 +49,7 @@ Each week builds on the last:
 
 ## Our Partners
 
-We currently work with schools across the country. Our first major partnership is with the **Trulaske School of Business at the University of Missouri**, where we support 30 Career Circles in their Sales and Customer Service program.
+We currently work with schools across the country. Our first major partnership is with the **Trulaske School of Business at the University of Missouri**, where we support Career Circles in their Sales and Customer Service program.
 
 If your school wants to run Career Circles, we handle:
 - Curriculum and content
@@ -80,11 +78,48 @@ We believe that investing in students means investing in a better world. College
 
 **Students:** Apply for Career Circles at your school. Check with your career services or email hello@sujeeth.org.
 
-**Mentors:** Volunteer your time. 12 hours per semester. We provide all the content and support. https://portal.sujeeth.org/volunteer
+**Mentors:** Volunteer your time. We provide all the content and support. https://portal.sujeeth.org/volunteer
 
 **Schools:** Partner with us to run Career Circles on your campus. Email hello@sujeeth.org.
 
-**Donors:** $25 puts one student through the full program. See our published financials at https://www.sujeeth.org.
+**Donors:** See how a gift is used and read our published financials at https://www.sujeeth.org.
+
+---
+
+## About this repository
+
+This repo holds the public website at sujeeth.org (Jekyll on GitHub Pages), the wiki and Discussions, and the front-end code the Power Pages portal and chat widget load from the site.
+
+| Path | What it is |
+|---|---|
+| `index.html`, `partner.html`, `volunteer.html`, `circle.html`, `chat.html`, ... | Site pages |
+| `_posts/`, `_alerts/`, `_feedbacks/`, `impact/`, `report/`, `whitepaper/` | Posts, alerts, student feedback, impact reports and the whitepaper |
+| `js/` | Chat widget (`sujeeth-chat-widget.js`, `foundry-chat-connection.js`), course player (`sujeeth-course-player.js`), `theme.js` |
+| `css/` | Site styles, plus `css/powerpages/` for the stylesheets the portal uses |
+| `architecture/` | How the platform works: repos and Azure services, the Dataverse data model and portal, and the business model |
+| `docs/` | Technical notes, for example the course player |
+
+To preview the site locally, install Ruby and run `bundle install` then `bundle exec jekyll serve`.
+
+## Platform architecture
+
+The Sujeeth Foundation helps college students network into their first job through Career Circles, a six-week mentorship program. Students, mentors and partners use two front ends, the static site at sujeeth.org and a Power Pages portal, both on one Dataverse environment. Azure Function apps add chat, knowledge search, payments, short links and texting. The Dataverse side (Base Camp, circles, book requests, surveys, credentials, the Career Ascent course) ships as Dataverse solutions and has no repo.
+
+| Repo (README) | Role |
+|---|---|
+| [`sujeethfoundation.github.io`](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/README.md) | Website at sujeeth.org, wiki, Discussions, course player and Power Pages CSS |
+| [`chat`](https://github.com/SujeethFoundation/chat/blob/main/README.md) | Chat API behind the site's assistant widget |
+| [`mcp`](https://github.com/SujeethFoundation/mcp/blob/main/README.md) | MCP server (the "Sujeeth Foundation Graph") that AI assistants use to search Foundation knowledge |
+| [`ontology`](https://github.com/SujeethFoundation/ontology/blob/main/README.md) | Concept graph and governance: concepts, approved domains, Feelings API |
+| [`websearch`](https://github.com/SujeethFoundation/websearch/blob/main/README.md) | Crawler and hybrid search over ontology-approved websites |
+| [`wikisearch`](https://github.com/SujeethFoundation/wikisearch/blob/main/README.md) | Keyword search over the GitHub wiki |
+| [`payments`](https://github.com/SujeethFoundation/payments/blob/main/README.md) | PayPal checkout and webhook for online courses |
+| [`shortner`](https://github.com/SujeethFoundation/shortner/blob/main/README.md) | Link shortener for go.sujeeth.org |
+| [`acs-sms-bot`](https://github.com/SujeethFoundation/acs-sms-bot/blob/main/readme.md) | Texting through Azure Communication Services |
+
+Architecture docs, in the website repo's `architecture/` folder: [platform architecture](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/architecture/platform-architecture.md) (repos, Azure apps, how they connect), [data model and portal](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/architecture/platform-data-model-and-portal.md) (Dataverse tables, solutions, Power Pages) and [business architecture](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/architecture/business-architecture.md) (vision, assumptions, tests). This block is the same in every repo's README; the canonical copy is in the platform architecture doc.
+
+**This repo:** the website, wiki and front-end code. The Power Pages portal and the chat widget load JavaScript and CSS from here.
 
 ---
 
