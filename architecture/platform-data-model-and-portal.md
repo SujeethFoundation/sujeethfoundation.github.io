@@ -11,6 +11,29 @@ The companion doc is [platform-architecture.md](platform-architecture.md).
 - Website record: "Program Portal".
 - The Backend App User security role covers all backend apps (payments, shortner, chat).
 
+## Foundation Graph concepts and the tables behind them
+
+The Foundation Graph's ontology (version `1.15.5-proposed`, checked 2026-11-26) names concepts that line up with Dataverse tables. The pairing is by name and is not enforced anywhere.
+
+| Graph concept | Dataverse table or field |
+|---|---|
+| `circle` | `suj_circle` |
+| `partnership`, `partner` | `mshied_scholarship` (the Partnership table) and `account` (schools) |
+| `career_mentor` | `contact` where `suj_ismentor` is true |
+| `substitute_request` | `suj_substitute` |
+| `book`, `book_request` | `suj_book`, `suj_bookrequest` |
+| `onboarding_survey` | `suj_studentonboarding` |
+| `feedback_survey` | `suj_feedback` |
+| `impact_report`, `program_statistics` | No table. Numbers come from sujeeth.org |
+
+No Graph concept exists yet for the online course, certificates or coupons. See the coverage note in `platform-architecture.md`.
+
+Public portal pages the wiki links to: `portal.sujeeth.org/books` (free book request) and `portal.sujeeth.org/circle/coverage` (mentor coverage request). `portal.sujeeth.org` is the production portal host, and an approved domain for the Foundation's search.
+
+## Program shape the tables serve
+
+A circle runs six weekly sessions of about an hour: self-assessment, research and exploration, resume and preparation, networking, applications and interviews, follow-up and negotiation. A mentor facilitates a small group.
+
 ## Base Camp
 
 Base Camp is part of the Power Pages site, and the site ships in the Core solution. It is the student entry point and exposes online circles and online courses. Online courses run on the Career Ascent course (`/Ascent`, course player, PayPal checkout). Online circles use the circle tables and pages.

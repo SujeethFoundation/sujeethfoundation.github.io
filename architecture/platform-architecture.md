@@ -61,6 +61,19 @@ For each question the MCP calls GPT-6 Luna through the Azure Responses API to re
 
 `ontology/ontology.json` is the source of truth for concepts, relationships, crawl governance and search governance, plus the Feelings API. Routes include `/api/ontology/crawl-manifest` and `/api/ontology/search-manifest`. The chat endpoint used to live here and has moved to the chat app.
 
+### Coverage check (2026-11-26, ontology version `1.15.5-proposed`)
+
+Eleven searches through `search_sujeeth_foundation` produced this. What the Graph resolved and what it did not:
+
+- **Resolved:** career development, first job, interviewing, job application strategy, Career Circle Program, circle, partnership, partner, career mentor, substitute request, book and book request, onboarding survey, feedback survey, impact report, program statistics, spotlight, Right Kind of Wrong, Permission to Feel.
+- **Out of scope (no concept matched):** "Career Ascent online course certificate" and "mentor training and onboarding". The Graph returns its standard out-of-scope message for both.
+- **Partial:** "Base Camp online circles" matched only the `circle` concept. Base Camp has no concept of its own.
+- **Approved domains seen:** `sujeeth.org`, `topics.sujeeth.org`, `portal.sujeeth.org`, `app.candid.org`, plus third-party career sources (LinkedIn for Students, Teal, The Muse, Working Out Loud, YouSpot and others).
+
+Why it matters: the MCP server only answers about concepts the ontology contains. The online course, certificates and mentor training are real parts of the platform, and an AI assistant connected to the MCP server cannot answer questions about them until concepts and source pages exist. The B2C test in `business-architecture.md` depends on this.
+
+Search results also include wiki and portal pages, so the portal's public pages (for example `/books`) are searchable alongside the site.
+
 ## websearch
 
 - Crawl: ontology-approved domains only. One queue message per page. Page cap `MAX_PAGES_PER_DOMAIN` (10,000), depth `MAX_CRAWL_DEPTH` (5).

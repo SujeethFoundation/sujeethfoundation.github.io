@@ -12,11 +12,21 @@ End underemployment for college graduates.
 
 The Foundation partners with schools to deliver circles. A circle puts a small group of students with a mentor. Mizzou is the main partner. The platform behind it (Base Camp, online circles, the Career Ascent course, credentials) is described in the two companion docs.
 
+## What the Foundation says publicly
+
+From the Foundation Graph (the Foundation's site and wiki), checked 2026-11-26. Program figures are not repeated here. Get current numbers from [sujeeth.org](https://sujeeth.org).
+
+- **Mission.** Solve underemployment for recent college graduates through mentorship and career development, and activate students' agency in their career journey ([Partner page](https://sujeeth.org/partner)).
+- **Format.** A six-week program. A mentor facilitates a small group. The Foundation provides the content, mentors facilitate, and students do the work ([Donor FAQ](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki/FAQ-for-Donors)). Each session lasts about an hour, runs on Microsoft Teams, and is not graded ([Student FAQ](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki/FAQ-for-Students)).
+- **Weekly arc.** Self-assessment, research and exploration, resume and preparation, networking, applications and interviews, follow-up and negotiation ([Program Overview](https://github.com/SujeethFoundation/sujeethfoundation.github.io/wiki/Program-Overview%3A)).
+- **Books.** Registered students can request free books, and the Foundation moved to an on-demand book model in 2025 ([Books page](https://portal.sujeeth.org/books), Donor FAQ).
+- **Where it ran.** A spring 2025 cohort at the University of Missouri, with a published report ([Impact reports](https://topics.sujeeth.org/impact)). The Donor FAQ says no fall 2025 cohort ran, and the plan since then is to restart with trained mentors, a tested cohort and a partner school that is ready, using a Plan, Launch, Learn process.
+
 ## Assumptions we operate on
 
-1. **Students treat the job search like an audition.** They prepare, perform and get judged, so practice and feedback help.
-2. **Teaching students about agency can produce meaningfully better outcomes.** Students who act on their own search do better than students who wait.
-3. **Mentors and career centers have the most lasting impact on students.** A person who knows the student beats any content.
+1. **Students treat the job search like an audition.** They prepare, perform and get judged, so practice and feedback help. *In the program:* Week 5 (applications and interviews, including storytelling answers) and Week 6 (follow-up). The Graph returned no page that uses the audition framing, so this assumption may not be stated publicly yet.
+2. **Teaching students about agency can produce meaningfully better outcomes.** Students who act on their own search do better than students who wait. *In the program:* the home and partner pages say the program encourages students to exercise agency, and the Program Overview describes students taking ownership of their career journey.
+3. **Mentors and career centers have the most lasting impact on students.** A person who knows the student beats any content. *In the program:* mentors are the main volunteer role, substitutes exist so students get consistent sessions, and the impact reports track career center engagement at partner schools.
 
 ## Challenges to those assumptions
 
@@ -41,6 +51,12 @@ Read together: timing and conversation drive the value, and a mandated, schedule
 | 2 | A B2C model, made of an OpenAI app, a Claude app and online courses, can catch students where they are | The MCP server and apps reach students at the moment they search, without a school mandate |
 | 3 | Students can use the online tools and courses to run self-administered circles | Circles can run without a Foundation-staffed mentor |
 | 4 | Serving 1 million people costs about $38K a month | The B2C model can fund itself |
+
+What the Graph shows about the tests (searched 2026-11-26):
+
+- **Test 1.** The Foundation's public restart plan already names trained mentors. The Graph returned nothing on mentor training or onboarding, so there is no public baseline to improve on yet.
+- **Test 2.** The Graph covers circles, mentors, books, surveys, partners and career guidance. It returned nothing on Career Ascent, the online course or certificates, so an AI assistant connected to the MCP server cannot answer questions about the course today. The B2C path depends on closing that gap.
+- **Tests 3 and 4.** Not searched. They concern plans, not published material.
 
 ## Cost model for test 4
 
