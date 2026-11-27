@@ -55,7 +55,7 @@ Chat repo files: `chat_blueprint.py`, `chat_stream.py` (SSE), `chat_attachments.
 Public tools: `search_sujeeth_foundation`, `get_documents` (plural, max 2 urls), `search_website`, `search_wiki`.
 Admin tools, gated by `MCP_ADMIN_TOOLS`: `check_services`, `resolve_ontology`, `get_ontology_context`.
 
-For each question the MCP calls GPT-6 Luna through the Azure Responses API to resolve ontology concepts, then sends the matched concepts and approved domains to websearch and wikisearch. Rate limits have three buckets: public, trusted and global. Trusted means a known partner address range or the `x-mcp-client-key` header. Env template: `mcp/mcp.env.example`.
+For each question the MCP calls GPT-6 Luna through the Azure Responses API to resolve ontology concepts, then sends the matched concepts and approved domains to websearch and wikisearch. When the question names feelings, the MCP also calls the ontology's Feelings API (`POST /api/ontology/feelings/resolve`), adds the ranked frameworks to the matched concepts, and returns the framework guardrails to the agent. If that call fails, the response says so and is not cached. Rate limits have three buckets: public, trusted and global. Trusted means a known partner address range or the `x-mcp-client-key` header. Env template: `mcp/mcp.env.example`.
 
 ## Ontology
 
@@ -124,7 +124,7 @@ It needs the Power Pages Web API site settings (see the data model doc), table p
 
 ## Repo READMEs
 
-Every repo's README points back to this folder. Run, deploy and settings detail lives in the READMEs; this doc holds the map.
+Every repo's README opens with the same "Platform architecture" block (what the platform is, all nine repos, links to these docs) so any repo works as an entry point. Run, deploy and settings detail lives in the READMEs; this doc holds the map. Release history for `ontology` and `websearch` is in a `CHANGELOG.md` in each repo.
 
 - [sujeethfoundation.github.io](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/README.md): website, wiki, Power Pages CSS
 - [chat](https://github.com/SujeethFoundation/chat/blob/main/README.md): chat agent API
