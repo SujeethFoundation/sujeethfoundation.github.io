@@ -1,3 +1,7 @@
+---
+skip: true
+---
+
 # Sujeeth Foundation: Dataverse Data Model, Solutions and Power Pages Portal
 
 Last verified: 2026-11-26. Table and column names are logical names. Option values are the stored integers. Items marked "inferred" come from names and install dates, not from reading solution components.

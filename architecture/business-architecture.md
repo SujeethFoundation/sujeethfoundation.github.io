@@ -1,3 +1,7 @@
+---
+skip: true
+---
+
 # Sujeeth Foundation: Business Architecture
 
 Draft 2026-11-26. Program figures here are Avi's planning numbers, not figures from sujeeth.org. Check them against the site before using them in an external document.

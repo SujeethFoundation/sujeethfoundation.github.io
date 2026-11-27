@@ -1,3 +1,7 @@
+---
+skip: true
+---
+
 # Sujeeth Foundation Platform: Architecture and Repos
 
 Last verified: 2026-11-26, from the GitHub org, Dataverse and the Foundation Graph. This doc records names and locations only. Secret values never go in it.
