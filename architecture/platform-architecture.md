@@ -32,7 +32,7 @@ Two delivery paths:
 
 | App | Host | Notes |
 |---|---|---|
-| websearch | `websearch-h9arcweeftfrd8e0.eastus-01.azurewebsites.net` | Flex Consumption. Queue `web-crawl` |
+| websearch | `websearch-h9arcweeftfrd8e0.eastus-01.azurewebsites.net` | Flex Consumption. Queue `web-crawl-pages` |
 | wikisearch | `wikisearch-gmebdbewaec6axdp.eastus-01.azurewebsites.net` | Flex Consumption |
 | ontology | `ontology-ghgedphdh6eefych.eastus-01.azurewebsites.net` | Flex Consumption |
 | mcp | `sujeethmcp-c3hjg6g4c2f2f2dn.eastus-01.azurewebsites.net`, custom domain `mcp.sujeeth.org/mcp`, health `/healthz` | Flex Consumption, stateless, tools run on worker threads |
