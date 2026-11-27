@@ -99,9 +99,27 @@ This repo holds the public website at sujeeth.org (Jekyll on GitHub Pages), the 
 | `architecture/` | How the platform works: repos and Azure services, the Dataverse data model and portal, and the business model |
 | `docs/` | Technical notes, for example the course player |
 
-Other Foundation repos: `chat`, `mcp`, `ontology`, `websearch`, `wikisearch`, `payments`, `shortner` and `acs-sms-bot`. Start with [`architecture/platform-architecture.md`](architecture/platform-architecture.md) for how they fit together.
-
 To preview the site locally, install Ruby and run `bundle install` then `bundle exec jekyll serve`.
+
+## Platform architecture
+
+The Sujeeth Foundation helps college students network into their first job through Career Circles, a six-week mentorship program. Students, mentors and partners use two front ends, the static site at sujeeth.org and a Power Pages portal, both on one Dataverse environment. Azure Function apps add chat, knowledge search, payments, short links and texting. The Dataverse side (Base Camp, circles, book requests, surveys, credentials, the Career Ascent course) ships as Dataverse solutions and has no repo.
+
+| Repo (README) | Role |
+|---|---|
+| [`sujeethfoundation.github.io`](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/README.md) | Website at sujeeth.org, wiki, Discussions, course player and Power Pages CSS |
+| [`chat`](https://github.com/SujeethFoundation/chat/blob/main/README.md) | Chat API behind the site's assistant widget |
+| [`mcp`](https://github.com/SujeethFoundation/mcp/blob/main/README.md) | MCP server (the "Sujeeth Foundation Graph") that AI assistants use to search Foundation knowledge |
+| [`ontology`](https://github.com/SujeethFoundation/ontology/blob/main/README.md) | Concept graph and governance: concepts, approved domains, Feelings API |
+| [`websearch`](https://github.com/SujeethFoundation/websearch/blob/main/README.md) | Crawler and hybrid search over ontology-approved websites |
+| [`wikisearch`](https://github.com/SujeethFoundation/wikisearch/blob/main/README.md) | Keyword search over the GitHub wiki |
+| [`payments`](https://github.com/SujeethFoundation/payments/blob/main/README.md) | PayPal checkout and webhook for online courses |
+| [`shortner`](https://github.com/SujeethFoundation/shortner/blob/main/README.md) | Link shortener for go.sujeeth.org |
+| [`acs-sms-bot`](https://github.com/SujeethFoundation/acs-sms-bot/blob/main/readme.md) | Texting through Azure Communication Services |
+
+Architecture docs, in the website repo's `architecture/` folder: [platform architecture](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/architecture/platform-architecture.md) (repos, Azure apps, how they connect), [data model and portal](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/architecture/platform-data-model-and-portal.md) (Dataverse tables, solutions, Power Pages) and [business architecture](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/architecture/business-architecture.md) (vision, assumptions, tests). This block is the same in every repo's README; the canonical copy is in the platform architecture doc.
+
+**This repo:** the website, wiki and front-end code. The Power Pages portal and the chat widget load JavaScript and CSS from here.
 
 ---
 
@@ -116,7 +134,3 @@ To preview the site locally, install Ruby and run `bundle install` then `bundle 
 ---
 
 *Unlock the opportunity of education.*
-
-## Platform architecture
-
-This repo is one of nine in the SujeethFoundation org. The architecture docs live in this repo's `architecture/` folder: [platform-architecture.md](architecture/platform-architecture.md), [platform-data-model-and-portal.md](architecture/platform-data-model-and-portal.md) and [business-architecture.md](architecture/business-architecture.md). This repo is the website, wiki and Power Pages CSS. See "GitHub org" and "Website repo: JavaScript and CSS" in the platform architecture doc. Each repo's README is listed in the platform architecture doc under "Repo READMEs".
