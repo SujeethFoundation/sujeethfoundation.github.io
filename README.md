@@ -116,3 +116,7 @@ To preview the site locally, install Ruby and run `bundle install` then `bundle 
 ---
 
 *Unlock the opportunity of education.*
+
+## Platform architecture
+
+This repo is one of nine in the SujeethFoundation org. The architecture docs live in this repo's `architecture/` folder: [platform-architecture.md](architecture/platform-architecture.md), [platform-data-model-and-portal.md](architecture/platform-data-model-and-portal.md) and [business-architecture.md](architecture/business-architecture.md). This repo is the website, wiki and Power Pages CSS. See "GitHub org" and "Website repo: JavaScript and CSS" in the platform architecture doc. Each repo's README is listed in the platform architecture doc under "Repo READMEs".
