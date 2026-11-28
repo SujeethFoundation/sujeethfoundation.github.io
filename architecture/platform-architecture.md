@@ -15,7 +15,7 @@ The companion doc is [platform-data-model-and-portal.md](platform-data-model-and
 Students, mentors and partners use two front ends: the static site at sujeeth.org (Jekyll on GitHub Pages) and the Power Pages portal (the "Program Portal" website). Both sit on one Dataverse environment. Seven Azure Function apps add the services Power Pages can't do: chat, knowledge search, payments, short links and texting.
 
 Two delivery paths:
-- **Code in GitHub, deployed to Azure:** chat, MCP, ontology, websearch, wikisearch, payments, shortner, acs-sms-bot, and the website.
+- **Code in GitHub, deployed to Azure:** chat, MCP, ontology, websearch, wikisearch, payments, shortener, acs-sms-bot, and the website.
 - **Dataverse solutions, published to prod by Avi:** Base Camp, book requests, credentials, surveys, circles, online course tables. No repo. See the data model doc for the solution list.
 
 ## GitHub org: SujeethFoundation (9 repos, default branch `main`)
@@ -29,7 +29,7 @@ Two delivery paths:
 | `websearch` | Crawler plus hybrid search over approved domains | Azure Functions, Python v2 |
 | `wikisearch` | BM25 search over the GitHub wiki | Azure Functions, Python v2 |
 | `payments` | PayPal checkout and webhook for online courses | Azure Functions, TypeScript, Node 24 |
-| `shortner` | Link shortener for `go.sujeeth.org` (repo spelling is "shortner") | Azure Functions, Python |
+| `shortener` | Link shortener for `go.sujeeth.org` | Azure Functions, Python |
 | `acs-sms-bot` | Texting through Azure Communication Services: `SendSMS` and `RelayReply`. Apache-2.0 | Azure Functions, Node.js (v3 model, `function.json`) |
 
 ## Azure Function apps
@@ -42,7 +42,7 @@ Two delivery paths:
 | mcp | `sujeethmcp-c3hjg6g4c2f2f2dn.eastus-01.azurewebsites.net`, custom domain `mcp.sujeeth.org/mcp`, health `/healthz` | Flex Consumption, stateless, tools run on worker threads |
 | chat | `sujeethchat-bwbrhgb9f2gbhubt.centralus-01.azurewebsites.net` | Central US, the only app outside East US |
 | payments | `suj-payments`, custom domain `payments.sujeeth.org` | Deploy workflow `.github/workflows/main_suj-payments.yml` |
-| shortner | `go.sujeeth.org` | Table Storage for links |
+| shortener | `go.sujeeth.org` | Table Storage for links |
 | acs-sms-bot | Deploy workflow `.github/workflows/main_acs-sms-bot.yml` | Two functions, see below |
 
 ## Chat agent
@@ -95,7 +95,7 @@ Clones the GitHub wiki with Dulwich, builds a BM25 index, saves a snapshot blob 
 
 Routes: `GET /api/health`, `POST /api/checkout` (quote, PayPal order, or $0 enroll), `POST /api/paypal/webhook`, and a checkout status route described in `docs/course-player.md`. The environment (dev, test, prod) is picked by allowlisted origin. Settings follow `PAYMENTS_{DEV|TEST|PROD}_*`. Secrets live in Azure Key Vault. Dev and Test charge $0.01. The webhook keys on the PayPal order ID, so a redelivered event changes nothing. Template: `payments/local.settings.json.example`.
 
-## shortner (go.sujeeth.org)
+## shortener (go.sujeeth.org)
 
 - Public: `GET /{code}` returns a 302.
 - `POST /api/shorten` needs a function key (used by Power Automate).
@@ -137,5 +137,5 @@ Every repo's README opens with the same "Platform architecture" block (what the 
 - [websearch](https://github.com/SujeethFoundation/websearch/blob/main/README.md): crawler and hybrid search
 - [wikisearch](https://github.com/SujeethFoundation/wikisearch/blob/main/README.md): wiki search
 - [payments](https://github.com/SujeethFoundation/payments/blob/main/README.md): PayPal checkout for online courses
-- [shortner](https://github.com/SujeethFoundation/shortner/blob/main/README.md): go.sujeeth.org link shortener
+- [shortener](https://github.com/SujeethFoundation/shortener/blob/main/README.md): go.sujeeth.org link shortener
 - [acs-sms-bot](https://github.com/SujeethFoundation/acs-sms-bot/blob/main/readme.md): texting through Azure Communication Services
