@@ -13,7 +13,7 @@ The companion doc is [platform-architecture.md](platform-architecture.md).
 - Prod: the Foundation's Dataverse environment.
 - Dev: "Portal Dev", a sandbox with its own Power Pages site.
 - Website record: "Program Portal".
-- The Backend App User security role covers all backend apps (payments, shortner, chat).
+- The Backend App User security role covers all backend apps (payments, shortener, chat).
 
 ## Foundation Graph concepts and the tables behind them
 
@@ -150,6 +150,6 @@ Quick Tasks run two jobs: IndexNow, which submits site URLs to search engines af
 - Platform map and repo list: [platform-architecture.md](platform-architecture.md)
 - Online course checkout and enrollment status: [payments README](https://github.com/SujeethFoundation/payments/blob/main/README.md)
 - Substitute request texts: [acs-sms-bot readme](https://github.com/SujeethFoundation/acs-sms-bot/blob/main/readme.md)
-- Short links used by Power Automate: [shortner README](https://github.com/SujeethFoundation/shortner/blob/main/README.md)
+- Short links used by Power Automate: [shortener README](https://github.com/SujeethFoundation/shortener/blob/main/README.md)
 - Course player and Power Pages CSS: [website README](https://github.com/SujeethFoundation/sujeethfoundation.github.io/blob/main/README.md)
 - Concepts the Graph knows about these tables: [ontology README](https://github.com/SujeethFoundation/ontology/blob/main/README.md)
